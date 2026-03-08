@@ -1,0 +1,96 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Product",
+        "name": "Automatic Case Packers",
+        "description": "High-speed automatic case packing systems for cartons, bottles, and flexible packaging",
+        "brand": {
+          "@type": "Brand",
+          "name": "[Your Company Name]"
+        },
+        "category": "Industrial Equipment > Packaging Machinery > Case Packers",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Medical Device Manufacturers, Pharmaceutical Companies, FMCG"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "Product",
+        "name": "Robotic Palletizers",
+        "description": "Versatile robotic palletizing solutions for various product types",
+        "brand": {
+          "@type": "Brand",
+          "name": "[Your Company Name]"
+        },
+        "category": "Industrial Equipment > Packaging Machinery > Palletizers",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Manufacturing Companies"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "Product",
+        "name": "Stretch Wrapping Machines",
+        "description": "Turntable and rotary arm stretch wrapping machines for pallet loads",
+        "brand": {
+          "@type": "Brand",
+          "name": "[Your Company Name]"
+        },
+        "category": "Industrial Equipment > Packaging Machinery > Wrapping Machines",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Warehousing and Distribution"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@type": "Product",
+        "name": "Conveying Systems",
+        "description": "Roller, belt, and chain conveyor systems for seamless product flow",
+        "brand": {
+          "@type": "Brand",
+          "name": "[Your Company Name]"
+        },
+        "category": "Industrial Equipment > Material Handling > Conveyors",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Manufacturing and Production"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "item": {
+        "@type": "Product",
+        "name": "Custom Automation Solutions",
+        "description": "Tailored automation systems designed for unique production challenges",
+        "brand": {
+          "@type": "Brand",
+          "name": "[Your Company Name]"
+        },
+        "category": "Industrial Equipment > Custom Machinery",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Specialized Manufacturing"
+        }
+      }
+    }
+  ]
+}

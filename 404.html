@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | 404 Error</title>
+    <meta name="description" content="The page you are looking for could not be found. Return to our homepage or contact us for assistance.">
+    <meta name="robots" content="noindex, follow">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a365d 0%, #0f2942 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            padding: 20px;
+        }
+        
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-size: 150px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ed8936 0%, #f6ad55 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .error-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .error-message {
+            font-size: 18px;
+            color: #cbd5e0;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #ed8936;
+            color: #ffffff;
+        }
+        
+        .btn-primary:hover {
+            background-color: #c05621;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ffffff;
+            color: #1a365d;
+        }
+        
+        .search-box {
+            margin-top: 40px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .search-box input::placeholder {
+            color: #a0aec0;
+        }
+        
+        .search-box input:focus {
+            border-color: #ed8936;
+        }
+        
+        .illustration {
+            font-size: 100px;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 600px) {
+            .error-code {
+                font-size: 100px;
+            }
+            
+            .error-title {
+                font-size: 24px;
+            }
+            
+            .error-message {
+                font-size: 16px;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="illustration">🔍</div>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Page Not Found</h2>
+        <p class="error-message">
+            Oops! The page you're looking for seems to have wandered off. 
+            It might have been moved, deleted, or perhaps never existed at all.
+        </p>
+        
+        <div class="error-actions">
+            <a href="index.html" class="btn btn-primary">
+                <span>🏠</span> Back to Homepage
+            </a>
+            <a href="index.html#contact" class="btn btn-secondary">
+                <span>📧</span> Contact Us
+            </a>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" placeholder="Try searching for what you need..." 
+                   onkeypress="if(event.key==='Enter'){window.location.href='index.html#contact';}">
+        </div>
+    </div>
+    
+    <script>
+        // Track 404 errors in analytics (if configured)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_not_found', {
+                'page_location': window.location.href,
+                'page_path': window.location.pathname
+            });
+        }
+        
+        // Log error for debugging
+        console.log('404 Error: Page not found -', window.location.pathname);
+    </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error | 500 Error</title>
+    <meta name="description" content="We're experiencing technical difficulties. Please try again later or contact our support team.">
+    <meta name="robots" content="noindex, follow">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a365d 0%, #0f2942 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            padding: 20px;
+        }
+        
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-size: 150px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .error-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .error-message {
+            font-size: 18px;
+            color: #cbd5e0;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .error-details {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #e53e3e;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #ed8936;
+            color: #ffffff;
+        }
+        
+        .btn-primary:hover {
+            background-color: #c05621;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ffffff;
+            color: #1a365d;
+        }
+        
+        .illustration {
+            font-size: 100px;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .support-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .support-info h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #f7fafc;
+        }
+        
+        .support-info p {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+        
+        .support-info a {
+            color: #ed8936;
+            text-decoration: none;
+        }
+        
+        .support-info a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .error-code {
+                font-size: 100px;
+            }
+            
+            .error-title {
+                font-size: 24px;
+            }
+            
+            .error-message {
+                font-size: 16px;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="illustration">⚙️</div>
+        <h1 class="error-code">500</h1>
+        <h2 class="error-title">Internal Server Error</h2>
+        <p class="error-message">
+            We're experiencing some technical difficulties on our end. 
+            Our team has been notified and is working to fix the issue.
+        </p>
+        
+        <div class="error-details">
+            <strong>Error ID:</strong> <span id="error-id">Loading...</span><br>
+            <strong>Timestamp:</strong> <span id="timestamp">Loading...</span>
+        </div>
+        
+        <div class="error-actions">
+            <button onclick="window.location.reload()" class="btn btn-primary">
+                <span>🔄</span> Try Again
+            </button>
+            <a href="index.html" class="btn btn-secondary">
+                <span>🏠</span> Go to Homepage
+            </a>
+        </div>
+        
+        <div class="support-info">
+            <h3>Need Immediate Assistance?</h3>
+            <p>
+                📞 Call us: <a href="tel:+60XXXXXXXXXX">+60 XX-XXXX XXXX</a><br>
+                📧 Email: <a href="mailto:support@yourcompany.com">support@yourcompany.com</a>
+            </p>
+            <p style="font-size: 12px; color: #718096; margin-top: 15px;">
+                Please mention Error ID: <span class="error-id-display">Loading...</span> when contacting support.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Generate error ID and timestamp
+        const errorId = 'ERR-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        const timestamp = new Date().toISOString();
+        
+        document.getElementById('error-id').textContent = errorId;
+        document.getElementById('timestamp').textContent = timestamp;
+        document.querySelector('.error-id-display').textContent = errorId;
+        
+        // Track error in analytics (if configured)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'server_error', {
+                'error_id': errorId,
+                'page_location': window.location.href
+            });
+        }
+        
+        // Log error for debugging
+        console.error('500 Error:', errorId, timestamp);
+    </script>
+</body>
+</html>

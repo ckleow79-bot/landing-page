@@ -1,0 +1,325 @@
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="cookie-banner" style="display: none;">
+    <div class="cookie-container" style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+        <div class="cookie-content" style="flex: 1; min-width: 300px;">
+            <h3 style="font-size: 18px; margin: 0 0 10px 0; color: #fff;">🍪 We Use Cookies</h3>
+            <p style="margin: 0; color: #cbd5e0; font-size: 14px; line-height: 1.5;">
+                We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. 
+                By clicking "Accept All", you consent to our use of cookies. 
+                <a href="cookie-policy.html" style="color: #ed8936; text-decoration: underline;">Read our Cookie Policy</a>
+            </p>
+        </div>
+        <div class="cookie-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button onclick="cookieConsent.acceptAll()" class="cookie-btn cookie-btn-primary" 
+                    style="background: #ed8936; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                Accept All
+            </button>
+            <button onclick="cookieConsent.acceptEssential()" class="cookie-btn cookie-btn-secondary" 
+                    style="background: transparent; color: #fff; border: 2px solid #fff; padding: 12px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                Essential Only
+            </button>
+            <button onclick="cookieConsent.showSettings()" class="cookie-btn cookie-btn-text" 
+                    style="background: transparent; color: #cbd5e0; border: none; padding: 12px; cursor: pointer; text-decoration: underline;">
+                Customize
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="cookie-modal" class="cookie-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+    <div class="cookie-modal-content" style="background: #fff; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;">
+        <div class="cookie-modal-header" style="padding: 30px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0; color: #1a365d; font-size: 24px;">Cookie Settings</h2>
+            <button onclick="cookieConsent.closeModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #718096;">×</button>
+        </div>
+        <div class="cookie-modal-body" style="padding: 30px;">
+            <p style="margin-bottom: 30px; color: #4a5568; line-height: 1.6;">
+                Manage your cookie preferences. Essential cookies are always enabled as they are necessary for the website to function properly.
+            </p>
+            
+            <div class="cookie-category" style="margin-bottom: 25px; padding: 20px; background: #f7fafc; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="margin: 0; color: #1a202c;">Essential Cookies</h4>
+                    <span style="background: #38a169; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">Required</span>
+                </div>
+                <p style="margin: 0; color: #718096; font-size: 14px;">
+                    These cookies are necessary for the website to function and cannot be switched off.
+                </p>
+            </div>
+            
+            <div class="cookie-category" style="margin-bottom: 25px; padding: 20px; background: #f7fafc; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="margin: 0; color: #1a202c;">Analytics Cookies</h4>
+                    <label class="cookie-toggle" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+                        <input type="checkbox" id="analytics-cookies" style="opacity: 0; width: 0; height: 0;">
+                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e0; transition: .4s; border-radius: 26px;"></span>
+                    </label>
+                </div>
+                <p style="margin: 0; color: #718096; font-size: 14px;">
+                    Help us understand how visitors interact with our website by collecting and reporting information anonymously.
+                </p>
+            </div>
+            
+            <div class="cookie-category" style="margin-bottom: 25px; padding: 20px; background: #f7fafc; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="margin: 0; color: #1a202c;">Marketing Cookies</h4>
+                    <label class="cookie-toggle" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+                        <input type="checkbox" id="marketing-cookies" style="opacity: 0; width: 0; height: 0;">
+                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e0; transition: .4s; border-radius: 26px;"></span>
+                    </label>
+                </div>
+                <p style="margin: 0; color: #718096; font-size: 14px;">
+                    Used to deliver advertisements more relevant to you and your interests.
+                </p>
+            </div>
+        </div>
+        <div class="cookie-modal-footer" style="padding: 20px 30px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 10px;">
+            <button onclick="cookieConsent.closeModal()" style="padding: 10px 20px; border: 1px solid #e2e8f0; background: #fff; border-radius: 6px; cursor: pointer; color: #4a5568;">
+                Cancel
+            </button>
+            <button onclick="cookieConsent.savePreferences()" style="padding: 10px 20px; background: #1a365d; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                Save Preferences
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cookie-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #1a365d;
+        padding: 20px;
+        z-index: 9998;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+        animation: slideUp 0.5s ease;
+    }
+    
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+    
+    .cookie-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .cookie-toggle input:checked + span {
+        background-color: #38a169;
+    }
+    
+    .cookie-toggle input:checked + span:before {
+        transform: translateX(24px);
+    }
+    
+    .cookie-toggle span:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    
+    @media (max-width: 768px) {
+        .cookie-container {
+            flex-direction: column;
+        }
+        
+        .cookie-content {
+            min-width: auto;
+        }
+        
+        .cookie-actions {
+            width: 100%;
+        }
+        
+        .cookie-btn {
+            flex: 1;
+        }
+    }
+</style>
+
+<script>
+    // Cookie Consent Manager
+    const cookieConsent = {
+        // Initialize
+        init() {
+            // Check if user has already made a choice
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                this.showBanner();
+            } else {
+                this.applyConsent(JSON.parse(consent));
+            }
+        },
+        
+        // Show cookie banner
+        showBanner() {
+            const banner = document.getElementById('cookie-banner');
+            if (banner) {
+                banner.style.display = 'block';
+            }
+        },
+        
+        // Hide cookie banner
+        hideBanner() {
+            const banner = document.getElementById('cookie-banner');
+            if (banner) {
+                banner.style.display = 'none';
+            }
+        },
+        
+        // Accept all cookies
+        acceptAll() {
+            const consent = {
+                essential: true,
+                analytics: true,
+                marketing: true,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('cookieConsent', JSON.stringify(consent));
+            this.applyConsent(consent);
+            this.hideBanner();
+            
+            // Track consent (if analytics allowed)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'cookie_consent', {
+                    'consent_type': 'accept_all'
+                });
+            }
+        },
+        
+        // Accept only essential cookies
+        acceptEssential() {
+            const consent = {
+                essential: true,
+                analytics: false,
+                marketing: false,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('cookieConsent', JSON.stringify(consent));
+            this.applyConsent(consent);
+            this.hideBanner();
+            
+            // Track consent (if analytics allowed)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'cookie_consent', {
+                    'consent_type': 'essential_only'
+                });
+            }
+        },
+        
+        // Show settings modal
+        showSettings() {
+            const modal = document.getElementById('cookie-modal');
+            const banner = document.getElementById('cookie-banner');
+            if (modal) {
+                modal.style.display = 'flex';
+                // Load current preferences
+                const consent = JSON.parse(localStorage.getItem('cookieConsent') || '{}');
+                document.getElementById('analytics-cookies').checked = consent.analytics || false;
+                document.getElementById('marketing-cookies').checked = consent.marketing || false;
+            }
+            if (banner) {
+                banner.style.display = 'none';
+            }
+        },
+        
+        // Close modal
+        closeModal() {
+            const modal = document.getElementById('cookie-modal');
+            const banner = document.getElementById('cookie-banner');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            // Show banner again if no consent given
+            if (!localStorage.getItem('cookieConsent') && banner) {
+                banner.style.display = 'block';
+            }
+        },
+        
+        // Save custom preferences
+        savePreferences() {
+            const consent = {
+                essential: true,
+                analytics: document.getElementById('analytics-cookies').checked,
+                marketing: document.getElementById('marketing-cookies').checked,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('cookieConsent', JSON.stringify(consent));
+            this.applyConsent(consent);
+            this.closeModal();
+            this.hideBanner();
+            
+            // Track consent (if analytics allowed)
+            if (typeof gtag !== 'undefined' && consent.analytics) {
+                gtag('event', 'cookie_consent', {
+                    'consent_type': 'custom',
+                    'analytics': consent.analytics,
+                    'marketing': consent.marketing
+                });
+            }
+        },
+        
+        // Apply consent settings
+        applyConsent(consent) {
+            // Enable/disable analytics
+            if (consent.analytics && typeof gtag !== 'undefined') {
+                // Analytics already enabled by default, but could add custom logic here
+                console.log('Analytics cookies enabled');
+            }
+            
+            // Enable/disable marketing
+            if (consent.marketing) {
+                console.log('Marketing cookies enabled');
+                // Load marketing scripts here if needed
+            }
+            
+            // Essential cookies are always enabled
+            console.log('Essential cookies enabled');
+        },
+        
+        // Check if analytics is allowed
+        hasAnalyticsConsent() {
+            const consent = JSON.parse(localStorage.getItem('cookieConsent') || '{}');
+            return consent.analytics === true;
+        },
+        
+        // Check if marketing is allowed
+        hasMarketingConsent() {
+            const consent = JSON.parse(localStorage.getItem('cookieConsent') || '{}');
+            return consent.marketing === true;
+        },
+        
+        // Reset consent (for testing)
+        reset() {
+            localStorage.removeItem('cookieConsent');
+            this.showBanner();
+        }
+    };
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        cookieConsent.init();
+    });
+    
+    // Close modal when clicking outside
+    document.addEventListener('click', (e) => {
+        const modal = document.getElementById('cookie-modal');
+        if (modal && e.target === modal) {
+            cookieConsent.closeModal();
+        }
+    });
+</script>

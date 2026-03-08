@@ -1,0 +1,706 @@
+/* ============================================
+   ANIMATIONS CSS - Anime.js & CSS Animations
+   End-of-Line Packaging Automation Company
+   ============================================ */
+
+/* ============================================
+   HERO ANIMATIONS
+   ============================================ */
+
+/* Hero Background Animation */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, var(--primary-color) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Hero Overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* Animated Company Name */
+.company-name {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.company-name .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%) rotateX(-90deg);
+}
+
+.company-name.animated .char {
+    animation: charReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes charReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(100%) rotateX(-90deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+/* Hero Content Entrance */
+.hero-content {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.hero-content.animated {
+    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hero CTA Buttons */
+.hero-ctas .btn {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.hero-ctas.animated .btn {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-ctas.animated .btn:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.hero-ctas.animated .btn:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+
+/* Default reveal animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Reveal from left */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Reveal from right */
+.reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Reveal scale */
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Stagger children */
+.stagger-children > * {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.stagger-children.active > * {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stagger-children.active > *:nth-child(1) { animation-delay: 0s; }
+.stagger-children.active > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children.active > *:nth-child(3) { animation-delay: 0.2s; }
+.stagger-children.active > *:nth-child(4) { animation-delay: 0.3s; }
+.stagger-children.active > *:nth-child(5) { animation-delay: 0.4s; }
+.stagger-children.active > *:nth-child(6) { animation-delay: 0.5s; }
+
+/* ============================================
+   INDUSTRIES SECTION ANIMATIONS
+   ============================================ */
+
+/* Industry Card Animations */
+.industry-card {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.industry-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.industry-card:nth-child(1).visible { transition-delay: 0s; }
+.industry-card:nth-child(2).visible { transition-delay: 0.1s; }
+.industry-card:nth-child(3).visible { transition-delay: 0.2s; }
+.industry-card:nth-child(4).visible { transition-delay: 0.3s; }
+
+/* Industry Card Hover */
+.industry-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.industry-card:hover .industry-icon {
+    transform: scale(1.1) rotate(5deg);
+    background-color: var(--secondary-color);
+}
+
+.industry-icon {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   TIMELINE ANIMATIONS
+   ============================================ */
+
+/* Timeline Line Drawing */
+.timeline-line {
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-line.visible {
+    transform: scaleY(1);
+}
+
+/* Timeline Steps */
+.timeline-step {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-step.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-step:nth-child(1).visible { transition-delay: 0.2s; }
+.timeline-step:nth-child(2).visible { transition-delay: 0.4s; }
+.timeline-step:nth-child(3).visible { transition-delay: 0.6s; }
+.timeline-step:nth-child(4).visible { transition-delay: 0.8s; }
+.timeline-step:nth-child(5).visible { transition-delay: 1s; }
+
+/* Step Number Pulse */
+.step-number {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(237, 137, 54, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 15px rgba(237, 137, 54, 0);
+    }
+}
+
+/* ============================================
+   DIFFERENTIATORS ANIMATIONS
+   ============================================ */
+
+/* Differentiator Cards */
+.differentiator-card {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.differentiator-card.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.differentiator-card:hover {
+    transform: translateY(-5px);
+}
+
+.differentiator-card:hover .differentiator-icon {
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ============================================
+   TESTIMONIALS ANIMATIONS
+   ============================================ */
+
+/* Testimonial Card Entrance */
+.testimonial-card {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.testimonial-card.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Testimonial Rating Stars */
+.testimonial-rating i {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.testimonial-card.active .testimonial-rating i {
+    animation: starPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.testimonial-card.active .testimonial-rating i:nth-child(1) { animation-delay: 0.2s; }
+.testimonial-card.active .testimonial-rating i:nth-child(2) { animation-delay: 0.3s; }
+.testimonial-card.active .testimonial-rating i:nth-child(3) { animation-delay: 0.4s; }
+.testimonial-card.active .testimonial-rating i:nth-child(4) { animation-delay: 0.5s; }
+.testimonial-card.active .testimonial-rating i:nth-child(5) { animation-delay: 0.6s; }
+
+@keyframes starPop {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* Carousel Dots */
+.testimonials-dot {
+    transition: all 0.3s ease;
+}
+
+.testimonials-dot.active {
+    width: 30px;
+    background-color: var(--secondary-color);
+}
+
+/* ============================================
+   PROJECT CARDS ANIMATIONS
+   ============================================ */
+
+/* Project Card Hover */
+.project-card {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.1);
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.project-image img {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-overlay {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* ============================================
+   BUTTON MICRO-INTERACTIONS
+   ============================================ */
+
+/* Button Hover Effects */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Primary Button Shine Effect */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg) translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.btn-primary:hover::after {
+    transform: rotate(30deg) translateX(100%);
+}
+
+/* ============================================
+   FORM INPUT ANIMATIONS
+   ============================================ */
+
+/* Input Focus Animation */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(26, 54, 93, 0.15);
+}
+
+/* Label Float Animation */
+.form-group label {
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus + label,
+.form-group textarea:focus + label {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   CHATBOT ANIMATIONS
+   ============================================ */
+
+/* Chatbot Button Pulse */
+.chatbot-toggle {
+    animation: chatbotPulse 2s infinite;
+}
+
+@keyframes chatbotPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(237, 137, 54, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(237, 137, 54, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(237, 137, 54, 0);
+    }
+}
+
+/* Chatbot Window Entrance */
+.chatbot-window {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+.chatbot-window.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: all;
+}
+
+/* Chat Message Animation */
+.chat-message {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: messageSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes messageSlide {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: var(--spacing-3);
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background-color: var(--gray-400);
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   NAVIGATION ANIMATIONS
+   ============================================ */
+
+/* Header Scroll Effect */
+.header {
+    transition: all 0.3s ease;
+}
+
+.header.scrolled {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Mobile Menu Slide */
+.nav-menu {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Nav Link Hover */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   PAGE TRANSITIONS
+   ============================================ */
+
+/* Smooth Page Load */
+main {
+    animation: pageLoad 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pageLoad {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+/* Skeleton Loading */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--gray-200) 25%,
+        var(--gray-100) 50%,
+        var(--gray-200) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonLoading 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+
+@keyframes skeletonLoading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ============================================
+   SPECIAL EFFECTS
+   ============================================ */
+
+/* Parallax Background */
+.parallax-bg {
+    will-change: transform;
+}
+
+/* Floating Animation */
+.floating {
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Shake Animation for Errors */
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Success Checkmark */
+.success-checkmark {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: checkmarkScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.success-checkmark i {
+    color: var(--white);
+    font-size: 30px;
+    animation: checkmarkDraw 0.4s ease 0.2s both;
+}
+
+@keyframes checkmarkScale {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes checkmarkDraw {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .hero-background {
+        animation: none;
+    }
+    
+    .parallax-bg {
+        transform: none !important;
+    }
+}

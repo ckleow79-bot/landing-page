@@ -1,0 +1,56 @@
+<div class="chatbot-container">
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-toggle" aria-label="Open chat">
+        <div class="chatbot-icon">
+            <i class="fas fa-comments"></i>
+        </div>
+        <div class="chatbot-badge">1</div>
+        <div class="chatbot-tooltip">How can we help?</div>
+    </button>
+    
+    <!-- Chatbot Window -->
+    <div class="chatbot-window">
+        <!-- Chatbot Header -->
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="chatbot-title">
+                    <h4>[Company Name] Assistant</h4>
+                    <span class="chatbot-status">
+                        <span class="status-dot"></span>
+                        Online
+                    </span>
+                </div>
+            </div>
+            <button class="chatbot-close" aria-label="Close chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Chatbot Messages -->
+        <div class="chatbot-messages">
+            <!-- Messages will be dynamically added here -->
+        </div>
+        
+        <!-- Chatbot Input -->
+        <div class="chatbot-input-area">
+            <form class="chatbot-input" onsubmit="return false;">
+                <input 
+                    type="text" 
+                    placeholder="Type your message..." 
+                    autocomplete="off"
+                    aria-label="Type your message"
+                >
+                <button type="button" class="chatbot-send" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            <p class="chatbot-disclaimer">
+                <i class="fas fa-shield-alt"></i>
+                Your conversation is secure and confidential
+            </p>
+        </div>
+    </div>
+</div>

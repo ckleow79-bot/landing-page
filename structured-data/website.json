@@ -1,0 +1,33 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "[Your Company Name]",
+  "url": "https://yourcompany.com",
+  "description": "End-to-end packaging automation solutions for manufacturing industries",
+  "potentialAction": [
+    {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://yourcompany.com/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    },
+    {
+      "@type": "ViewAction",
+      "target": [
+        "https://yourcompany.com/products.html",
+        "https://yourcompany.com/about.html",
+        "https://yourcompany.com/contact.html"
+      ]
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "[Your Company Name]",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://yourcompany.com/assets/images/logo.png"
+    }
+  }
+}

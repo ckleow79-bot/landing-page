@@ -1,0 +1,86 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "[Your Company Name]",
+  "alternateName": "[Short Company Name]",
+  "url": "https://yourcompany.com",
+  "logo": "https://yourcompany.com/assets/images/logo.png",
+  "description": "Leading provider of end-of-line packaging automation solutions for Medical Devices, Pharmaceutical, Gloves, and FMCG industries in Malaysia and Southeast Asia.",
+  "foundingDate": "[YYYY]",
+  "founders": [
+    {
+      "@type": "Person",
+      "name": "[Founder Name]"
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "[Street Address]",
+    "addressLocality": "[City]",
+    "addressRegion": "[State]",
+    "postalCode": "[Postal Code]",
+    "addressCountry": "MY"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+60-XX-XXXX-XXXX",
+      "contactType": "sales",
+      "areaServed": "MY",
+      "availableLanguage": ["English", "Malay"]
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+60-XX-XXXX-XXXX",
+      "contactType": "technical support",
+      "areaServed": ["MY", "SG", "TH", "ID"],
+      "availableLanguage": ["English"]
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/yourcompany",
+    "https://www.facebook.com/yourcompany",
+    "https://www.youtube.com/yourcompany"
+  ],
+  "industry": "Industrial Automation",
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": 3.1390,
+      "longitude": 101.6869
+    },
+    "geoRadius": "2000",
+    "description": "Southeast Asia"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Packaging Automation Solutions",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Case Packers",
+          "description": "Automatic case packing solutions for various product types"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Palletizers",
+          "description": "Automated palletizing systems for end-of-line operations"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Wrapping Machines",
+          "description": "Stretch wrapping and shrink wrapping solutions"
+        }
+      }
+    ]
+  }
+}
