@@ -113,7 +113,7 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 
 ### Before Launch:
 1. **js/supabase.js**: confirm Supabase URL/anon key; apply `migrations/001` and `002`
-2. **Remaining placeholders**: Kuching venue for 23 Nov 2026 (data/programmes.json). HRD Corp TP registration for B & K Training Services PLT: serial LLP0046779LGN, approved 29 Oct 2026, expires 28 Oct 2027 (renewal reminder).
+2. **HRD Corp TP registration for B & K Training Services PLT: serial LLP0046779LGN, approved 29 Oct 2026, expires 28 Oct 2027 (renewal reminder).
 3. **Domain**: `bkcorporate.com` is a placeholder in canonical/OG tags, sitemap.xml, robots.txt, structured-data/
 4. **Brand**: the B&K Academy Design System (repo `ckleow79-bot/bk-academy-design-system`) is the source of truth. Tokens are vendored in `css/tokens/` (colors, typography, spacing, fonts, theme-dark, signature); fonts self-hosted in `assets/fonts/`; Ascend logo set in `assets/brand/`. Site variables in `css/main.css` are aliases onto those tokens. Rules: paper `#FCFBF8` not white, ink `#15213B` for text, brand blue `#3457E5` as the only action colour, amber is fill-only (amber text uses `--bk-warning`), max 2 signature moves per view, sentence case for headings and buttons, no heavy gradients.
 

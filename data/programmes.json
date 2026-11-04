@@ -1,9 +1,18 @@
 {
   "_comment": "Source of truth for public programmes when Supabase is unavailable. Built from KEITH'S TRAINING SCHEDULE (Drive) and the Nov 2026 roadshow brief as at 4 Nov 2026. Only confirmed sessions are listed. Do not add CPD hours or HRD Corp claimability unless confirmed. provider: bk-training | high-impact | bk-academy | external (then set organiser).",
   "providers": {
-    "bk-training": { "name": "B & K Training Services PLT", "short": "B & K Training" },
-    "high-impact": { "name": "High Impact Training Services", "short": "High Impact" },
-    "bk-academy": { "name": "B & K Academy PLT", "short": "B & K Academy" }
+    "bk-training": {
+      "name": "B & K Training Services PLT",
+      "short": "B & K Training"
+    },
+    "high-impact": {
+      "name": "High Impact Training Services",
+      "short": "High Impact"
+    },
+    "bk-academy": {
+      "name": "B & K Academy PLT",
+      "short": "B & K Academy"
+    }
   },
   "programmes": [
     {
@@ -70,7 +79,7 @@
       "category": "e-Invoice",
       "format": "Seminar",
       "mode": "In-person",
-      "venue": "Kuching (venue to be confirmed)",
+      "venue": "Raia Hotel, Kuching",
       "start_date": "2026-11-23T09:00:00+08:00",
       "end_date": "2026-11-23T17:00:00+08:00",
       "cpd_hours": null,
