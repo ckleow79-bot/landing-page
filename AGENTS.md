@@ -110,7 +110,7 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 
 ### Before Launch:
 1. **js/supabase.js**: confirm Supabase URL/anon key; apply `migrations/001` and `002`
-2. **Remaining placeholders**: B & K Academy PLT LLP number (about.html), HRD Corp training-provider number once approved, Kuching venue for 23 Nov 2026 (data/programmes.json)
+2. **Remaining placeholders**: B & K Academy PLT LLP number (about.html), Kuching venue for 23 Nov 2026 (data/programmes.json). HRD Corp TP registration for B & K Training Services PLT: serial LLP0046779LGN, approved 29 Oct 2026, expires 28 Oct 2027 (renewal reminder).
 3. **Domain**: `bkcorporate.com` is a placeholder in canonical/OG tags, sitemap.xml, robots.txt, structured-data/
 4. **Brand colours**: Style A "Boardroom Editorial" from the 29 Oct 2026 website outline: deep navy `#0B1F3A`, navy `#13305A`, saffron `#F2A33A`, coral `#E8664A`, cream `#F7F3EA`. Display type Fraunces (serif), body Inter.
 
