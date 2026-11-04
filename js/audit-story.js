@@ -16,6 +16,7 @@
         section.querySelectorAll('.as-lab').forEach(g => {
             const cx = +g.dataset.cx, tx = g.querySelector('.as-lab-tx'), bg = g.querySelector('.as-lab-bg'), ic = g.querySelector('.as-lab-ic');
             let w = 100; try { w = tx.getComputedTextLength(); } catch (e) {}
+            if (!w) return;
             const total = 8 + 26 + 8 + w + 16, x = cx - total / 2, y = +bg.getAttribute('y');
             bg.setAttribute('x', x); bg.setAttribute('width', total);
             ic.setAttribute('transform', `translate(${x + 8 + 13} ${y + 18})`);
@@ -23,128 +24,136 @@
         });
     }
 
-    function initStory() {
-        const section = document.getElementById('audit-story');
-        if (!section) return;
-        const relabel = () => sizeLabels(section);
-        relabel();
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(relabel);
-        if (!hasGsap || reduce) return;
-        section.classList.add('is-animated');
-        gsap.registerPlugin(ScrollTrigger);
-
-        const q = s => section.querySelector(s);
-        const qa = s => Array.from(section.querySelectorAll(s));
-        const caps = qa('.as-cap');
-        const dots = qa('.as-dots i');
-        const receipts = qa('.as-r');
-        const ticks = qa('.as-tick');
+    /* Build one story (tax audit "as" or e-Invoice review "ei") inside its section. */
+    function buildStory(section) {
+        const P = section.dataset.kind;              // 'as' | 'ei'
+        const $ = id => section.querySelector('#' + P + '-' + id);
+        const $$ = sel => Array.from(section.querySelectorAll(sel));
+        const caps = $$('.as-cap'), dots = $$('.as-dots i'), files = $$('.as-r'), ticks = $$('.as-tick');
+        const tags = { tp: $('lab-tp'), off: $('lab-off'), bk: $('lab-bk') };
         ticks.forEach(t => { const L = t.getTotalLength(); t.style.strokeDasharray = L; t.style.strokeDashoffset = L; });
-
         const binderSlots = [{ x: 149, y: 300 }, { x: 187, y: 300 }, { x: 225, y: 300 }];
 
-        // ---- initial state (scene 0) ----
-        gsap.set('#as-env', { y: -420 });
-        gsap.set('#as-letter', { y: 70 });
-        gsap.set(['#as-off'], { x: 320 });
-        gsap.set('#as-bk', { y: 260, opacity: 0 });
-        gsap.set(['#as-bub1', '#as-bub2'], { opacity: 0, scale: 0.6, transformOrigin: '50% 100%' });
-        gsap.set('#as-bub3', { opacity: 0, scale: 0.6, transformOrigin: '0% 50%' });
-        gsap.set('#as-ledger', { opacity: 0, scale: 0.85, transformOrigin: '50% 50%' });
-        gsap.set('.as-flag', { opacity: 0, x: '-=20' });
-        gsap.set('.as-hl', { opacity: 0 });
-        gsap.set('#as-mag', { x: 250, y: 145 });
-        gsap.set('#as-binders > g', { scaleY: 0, transformOrigin: '50% 100%' });
-        gsap.set('#as-check', { opacity: 0, y: -24 });
-        gsap.set('#as-file', { opacity: 0, y: 40 });
-        gsap.set('#as-stamp', { opacity: 0, scale: 2.4, transformOrigin: '50% 50%' });
-        gsap.set('#as-tp-smile', { opacity: 0 });
-        gsap.set('.as-lab', { scale: 0, opacity: 0, transformOrigin: '50% 100%' });
-        gsap.set(['#as-sweat', '#as-headreceipt'], { opacity: 0 });
-        gsap.set(receipts, { x: 180, y: 310, scale: 0.2, opacity: 0, rotation: 0 });
-        gsap.set('#as-lid', { transformOrigin: '0% 100%' });
-        gsap.set('#as-tower', { transformOrigin: '50% 100%' });
-        gsap.set('#as-off-head', { transformOrigin: '50% 90%' });
-        gsap.set(['#as-cal-p1', '#as-cal-p2'], { transformOrigin: '50% 0%' });
+        // ---- initial state ----
+        gsap.set($('env'), P === 'as' ? { y: -420 } : { opacity: 1 });
+        gsap.set($('letter'), P === 'as' ? { y: 70 } : { scale: 0, opacity: 0, transformOrigin: '50% 50%' });
+        gsap.set($('off'), { x: 320 });
+        gsap.set($('bk'), { y: 260, opacity: 0 });
+        gsap.set([$('bub1'), $('bub2')], { opacity: 0, scale: 0.6, transformOrigin: '50% 100%' });
+        gsap.set($('bub3'), { opacity: 0, scale: 0.6, transformOrigin: '0% 50%' });
+        gsap.set($('ledger'), { opacity: 0, scale: 0.85, transformOrigin: '50% 50%' });
+        gsap.set($$('.as-flag'), { opacity: 0, x: '-=20' });
+        gsap.set($$('.ei-ok'), { opacity: 0, scale: 0.6, transformOrigin: '50% 50%' });
+        gsap.set($$('.as-hl'), { opacity: 0 });
+        gsap.set($('mag'), { x: 250, y: P === 'as' ? 145 : 192 });
+        gsap.set($$('#' + P + '-binders > g'), { scaleY: 0, transformOrigin: '50% 100%' });
+        gsap.set($('check'), { opacity: 0, y: -24 });
+        gsap.set($('file'), { opacity: 0, y: 40 });
+        gsap.set($('stamp'), { opacity: 0, scale: 2.4, transformOrigin: '50% 50%' });
+        gsap.set($('tp-smile'), { opacity: 0 });
+        gsap.set([$('sweat'), $('headreceipt')], { opacity: 0 });
+        gsap.set(Object.values(tags), { scale: 0, opacity: 0, transformOrigin: '50% 100%' });
+        gsap.set(files, { x: P === 'as' ? 180 : 400, y: P === 'as' ? 310 : 275, scale: 0.2, opacity: 0, rotation: 0 });
+        gsap.set($('lid'), { transformOrigin: '0% 100%' });
+        gsap.set($('tower'), { transformOrigin: '50% 100%' });
+        gsap.set($('off-head'), { transformOrigin: '50% 90%' });
+        gsap.set([$('cal-p1'), $('cal-p2')], { transformOrigin: '50% 0%' });
+        const pop = { scale: 1, opacity: 1, duration: 0.18, ease: 'back.out(3)' };
 
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-        // ---- Scene 1: the letter ----
-        tl.addLabel('s1', 0)
-          .to('#as-lab-tp', { scale: 1, opacity: 1, duration: 0.18, ease: 'back.out(3)' }, 's1')
-          .to('#as-env', { y: 0, duration: 0.45, ease: 'bounce.out' }, 's1')
-          .to('#as-letter', { y: 0, duration: 0.3 }, 's1+=0.45')
-          .to('#as-cal-p1', { scaleY: 0, duration: 0.15 }, 's1+=0.5')
-          .to('#as-cal-p2', { scaleY: 0, duration: 0.15 }, 's1+=0.65')
-          .to('#as-sweat', { opacity: 0.75, y: 6, duration: 0.2 }, 's1+=0.7')
+        // ---- Scene 1: the notice ----
+        tl.addLabel('s1', 0).to(tags.tp, pop, 's1');
+        if (P === 'as') {
+            tl.to($('env'), { y: 0, duration: 0.45, ease: 'bounce.out' }, 's1')
+              .to($('letter'), { y: 0, duration: 0.3 }, 's1+=0.45');
+        } else {
+            tl.to($('letter'), { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2.2)' }, 's1+=0.15')
+              .to($('letter'), { x: 3, duration: 0.04, yoyo: true, repeat: 5 }, 's1+=0.45');
+        }
+        tl.to($('cal-p1'), { scaleY: 0, duration: 0.15 }, 's1+=0.5')
+          .to($('cal-p2'), { scaleY: 0, duration: 0.15 }, 's1+=0.65')
+          .to($('sweat'), { opacity: 0.75, y: 6, duration: 0.2 }, 's1+=0.7')
           .to({}, { duration: 0.15 });
 
-        // ---- Scene 2: the shoebox ----
+        // ---- Scene 2: the records come out ----
         tl.addLabel('s2', 1)
-          .to('#as-off', { x: 0, duration: 0.4, ease: 'power3.out' }, 's2')
-          .to('#as-lab-off', { scale: 1, opacity: 1, duration: 0.18, ease: 'back.out(3)' }, 's2+=0.32')
-          .to('#as-bub1', { opacity: 1, scale: 1, duration: 0.2, ease: 'back.out(2)' }, 's2+=0.35')
-          .to('#as-lid', { y: -26, x: -10, rotation: -14, duration: 0.2, ease: 'back.out(2)' }, 's2+=0.45')
-          .to(receipts, {
+          .to($('off'), { x: 0, duration: 0.4, ease: 'power3.out' }, 's2')
+          .to(tags.off, pop, 's2+=0.32')
+          .to($('bub1'), { opacity: 1, scale: 1, duration: 0.2, ease: 'back.out(2)' }, 's2+=0.35');
+        if (P === 'as') tl.to($('lid'), { y: -26, x: -10, rotation: -14, duration: 0.2, ease: 'back.out(2)' }, 's2+=0.45');
+        else tl.to($('lid'), { y: -6, rotation: 10, duration: 0.08, yoyo: true, repeat: 3 }, 's2+=0.45');
+        tl.to(files, {
               x: (i, el) => +el.dataset.x, y: (i, el) => +el.dataset.y,
               rotation: (i, el) => +el.dataset.r, scale: 1, opacity: 1,
               duration: 0.35, stagger: 0.03, ease: 'back.out(1.6)'
           }, 's2+=0.55')
-          .to('#as-headreceipt', { opacity: 1, duration: 0.1 }, 's2+=0.7')
-          .to('#as-tower', { rotation: -7, duration: 0.15 }, 's2+=0.6')
-          .to('#as-tower', { rotation: 5, duration: 0.15 }, 's2+=0.75')
-          .to('#as-tower', { rotation: -3, duration: 0.1 }, 's2+=0.9');
+          .to($('headreceipt'), { opacity: 1, duration: 0.1 }, 's2+=0.7')
+          .to($('tower'), { rotation: -7, duration: 0.15 }, 's2+=0.6')
+          .to($('tower'), { rotation: 5, duration: 0.15 }, 's2+=0.75')
+          .to($('tower'), { rotation: -3, duration: 0.1 }, 's2+=0.9');
 
         // ---- Scene 3: the questions ----
+        const r1 = P === 'as' ? 145 : 192, step = 32;
         tl.addLabel('s3', 2)
-          .to('#as-bub1', { opacity: 0, scale: 0.6, duration: 0.12 }, 's3')
-          .to('#as-env', { opacity: 0, y: 30, duration: 0.15 }, 's3')
-          .to('#as-ledger', { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(1.4)' }, 's3+=0.1')
-          .to('#as-mag', { x: 520, y: 145, duration: 0.2 }, 's3+=0.35')
-          .to('.as-hl', { opacity: 1, duration: 0.06, stagger: 0.12 }, 's3+=0.4')
-          .to('.as-flag', { opacity: 1, x: '+=20', duration: 0.12, stagger: 0.12, ease: 'back.out(2)' }, 's3+=0.42')
-          .to('#as-mag', { x: 300, y: 177, duration: 0.15 }, 's3+=0.55')
-          .to('#as-mag', { x: 470, y: 209, duration: 0.15 }, 's3+=0.7')
-          .to('#as-off-brow', { y: -5, duration: 0.1 }, 's3+=0.5')
-          .to('#as-bub2', { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(2)' }, 's3+=0.8');
+          .to($('bub1'), { opacity: 0, scale: 0.6, duration: 0.12 }, 's3')
+          .to($('env'), { opacity: 0, y: 30, duration: 0.15 }, 's3')
+          .to($('ledger'), { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(1.4)' }, 's3+=0.1')
+          .to($('mag'), { x: 520, y: r1, duration: 0.2 }, 's3+=0.35')
+          .to($$('.as-hl'), { opacity: 1, duration: 0.06, stagger: 0.12 }, 's3+=0.4')
+          .to($$('.as-flag'), { opacity: 1, x: '+=20', duration: 0.12, stagger: 0.12, ease: 'back.out(2)' }, 's3+=0.42')
+          .to($('mag'), { x: 300, y: r1 + step, duration: 0.15 }, 's3+=0.55')
+          .to($('mag'), { x: 470, y: r1 + step * 2, duration: 0.15 }, 's3+=0.7')
+          .to($('off-brow'), { y: -5, duration: 0.1 }, 's3+=0.5')
+          .to($('bub2'), { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(2)' }, 's3+=0.8');
 
-        // ---- Scene 4: B&K sorts it ----
-        tl.addLabel('s4', 3)
-          .to(['#as-ledger', '#as-bub2'], { opacity: 0, scale: 0.9, duration: 0.15 }, 's4')
-          .to('#as-off-brow', { y: 0, duration: 0.1 }, 's4')
-          .to('#as-bk', { y: 0, opacity: 1, duration: 0.3, ease: 'back.out(1.4)' }, 's4+=0.1')
-          .to('#as-lab-bk', { scale: 1, opacity: 1, duration: 0.18, ease: 'back.out(3)' }, 's4+=0.35')
-          .to('#as-box', { opacity: 0, scale: 0.6, transformOrigin: '50% 100%', duration: 0.15 }, 's4+=0.25')
-          .to('#as-binders > g', { scaleY: 1, duration: 0.2, stagger: 0.06, ease: 'back.out(1.6)' }, 's4+=0.35')
-          .to(receipts, {
+        // ---- Scene 4: the tax agent sorts it ----
+        tl.addLabel('s4', 3);
+        if (P === 'ei') {
+            tl.to($('bub2'), { opacity: 0, scale: 0.9, duration: 0.1 }, 's4')
+              .to($('mag'), { opacity: 0, duration: 0.1 }, 's4')
+              .to($$('.as-hl'), { fill: '#DCF3E9', duration: 0.1, stagger: 0.06 }, 's4+=0.05')
+              .to($$('.as-flag'), { opacity: 0, duration: 0.08, stagger: 0.06 }, 's4+=0.05')
+              .to($$('.ei-ok'), { opacity: 1, scale: 1, duration: 0.12, stagger: 0.06, ease: 'back.out(2.4)' }, 's4+=0.1')
+              .to($('ledger'), { opacity: 0, scale: 0.9, duration: 0.15 }, 's4+=0.4');
+        } else {
+            tl.to([$('ledger'), $('bub2')], { opacity: 0, scale: 0.9, duration: 0.15 }, 's4');
+        }
+        tl.to($('off-brow'), { y: 0, duration: 0.1 }, 's4')
+          .to($('bk'), { y: 0, opacity: 1, duration: 0.3, ease: 'back.out(1.4)' }, 's4+=0.1')
+          .to(tags.bk, pop, 's4+=0.35')
+          .to($('box'), { opacity: 0, scale: 0.6, transformOrigin: '50% 100%', duration: 0.15 }, 's4+=0.4')
+          .to($$('#' + P + '-binders > g'), { scaleY: 1, duration: 0.2, stagger: 0.06, ease: 'back.out(1.6)' }, 's4+=0.45')
+          .to(files, {
               x: (i) => binderSlots[i % 3].x, y: (i) => binderSlots[i % 3].y,
               rotation: 0, scale: 0, opacity: 0, duration: 0.3, stagger: 0.025, ease: 'power2.in'
-          }, 's4+=0.45')
-          .to('#as-headreceipt', { y: 40, opacity: 0, rotation: 30, duration: 0.2 }, 's4+=0.5')
-          .to('#as-tower', { rotation: 0, scaleY: 0.4, opacity: 0, duration: 0.2 }, 's4+=0.55')
-          .to('#as-check', { opacity: 1, y: 0, duration: 0.2 }, 's4+=0.6')
-          .to(ticks, { strokeDashoffset: 0, duration: 0.12, stagger: 0.08 }, 's4+=0.72');
+          }, 's4+=0.5')
+          .to($('headreceipt'), { y: 40, opacity: 0, rotation: 30, duration: 0.2 }, 's4+=0.55')
+          .to($('tower'), { rotation: 0, scaleY: 0.4, opacity: 0, duration: 0.2 }, 's4+=0.6')
+          .to($('check'), { opacity: 1, y: 0, duration: 0.2 }, 's4+=0.65')
+          .to(ticks, { strokeDashoffset: 0, duration: 0.1, stagger: 0.07 }, 's4+=0.75');
 
-        // ---- Scene 5: file closes ----
+        // ---- Scene 5: closed ----
         tl.addLabel('s5', 4)
-          .to('#as-file', { opacity: 1, y: 0, duration: 0.2 }, 's5')
-          .to('#as-stamp', { opacity: 1, scale: 1, duration: 0.18, ease: 'back.out(3)' }, 's5+=0.2')
-          .to('#as-off-head', { rotation: 6, duration: 0.1, yoyo: true, repeat: 3 }, 's5+=0.35')
-          .to('#as-bub3', { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(2)' }, 's5+=0.45')
-          .to('#as-tp-worry', { opacity: 0, duration: 0.08 }, 's5+=0.5')
-          .to('#as-tp-smile', { opacity: 1, duration: 0.08 }, 's5+=0.5')
-          .to('#as-sweat', { opacity: 0, duration: 0.1 }, 's5+=0.5')
+          .to($('file'), { opacity: 1, y: 0, duration: 0.2 }, 's5')
+          .to($('stamp'), { opacity: 1, scale: 1, duration: 0.18, ease: 'back.out(3)' }, 's5+=0.2')
+          .to($('off-head'), { rotation: 6, duration: 0.1, yoyo: true, repeat: 3 }, 's5+=0.35')
+          .to($('bub3'), { opacity: 1, scale: 1, duration: 0.15, ease: 'back.out(2)' }, 's5+=0.45')
+          .to($('tp-worry'), { opacity: 0, duration: 0.08 }, 's5+=0.5')
+          .to($('tp-smile'), { opacity: 1, duration: 0.08 }, 's5+=0.5')
+          .to($('sweat'), { opacity: 0, duration: 0.1 }, 's5+=0.5')
           .to({}, { duration: 0.35 });
 
-        let current = 0;
+        let current = -1;
         function setStep(i) {
             if (i === current) return;
             current = i;
             caps.forEach((c, k) => c.classList.toggle('is-active', k === i));
             dots.forEach((d, k) => d.classList.toggle('is-active', k <= i));
         }
+        setStep(0);
 
-        ScrollTrigger.create({
+        const st = ScrollTrigger.create({
             trigger: section,
             start: 'top top',
             end: () => '+=' + Math.round(window.innerHeight * 4),
@@ -155,8 +164,43 @@
             animation: tl,
             onUpdate: self => setStep(Math.min(4, Math.floor(self.progress * 5 * 0.999)))
         });
+        return { kill() { st.kill(true); tl.progress(0).kill(); setStep(0); } };
+    }
 
-        if (window.BKMotion && window.BKMotion.refresh) window.addEventListener('load', () => ScrollTrigger.refresh());
+    function initStory() {
+        const sections = Array.from(document.querySelectorAll('.audit-story[data-kind]'));
+        if (!sections.length) return;
+        sections.forEach(s => {
+            const relabel = () => sizeLabels(s);
+            relabel();
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(relabel);
+        });
+        const animate = hasGsap && !reduce;
+        if (animate) { gsap.registerPlugin(ScrollTrigger); sections.forEach(s => s.classList.add('is-animated')); }
+
+        let live = null;
+        function show(id, scroll) {
+            if (live) { live.kill(); live = null; }
+            sections.forEach(s => { s.hidden = s.id !== id; });
+            const sec = document.getElementById(id);
+            document.querySelectorAll('.story-tab').forEach(b => {
+                const on = b.dataset.story === id;
+                b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            sizeLabels(sec);
+            const lenis = window.BKMotion && window.BKMotion.lenis;
+            if (lenis && lenis.resize) lenis.resize();
+            if (scroll) {
+                const y = sec.getBoundingClientRect().top + window.scrollY;
+                if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y);
+            }
+            if (animate) { ScrollTrigger.refresh(); live = buildStory(sec); ScrollTrigger.refresh(); }
+        }
+        document.querySelectorAll('.story-tab').forEach(b => b.addEventListener('click', () => show(b.dataset.story, true)));
+        const wantEi = location.hash === '#einvoice-review';
+        show(wantEi ? 'einvoice-review' : 'audit-story', false);
+        if (wantEi) setTimeout(() => show('einvoice-review', true), 300);
+        if (animate) window.addEventListener('load', () => ScrollTrigger.refresh());
     }
 
     /* ------------------------------------------------------------------ */

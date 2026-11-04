@@ -41,10 +41,18 @@
 
 /* static fallback shows the tidy ending only */
 .audit-story:not(.is-animated) .as-messy,
-.audit-story:not(.is-animated) #as-ledger,
-.audit-story:not(.is-animated) #as-bub1,
-.audit-story:not(.is-animated) #as-bub2,
+.audit-story:not(.is-animated) .as-panel,
+.audit-story:not(.is-animated) [id$="-bub1"],
+.audit-story:not(.is-animated) [id$="-bub2"],
 .audit-story:not(.is-animated) .as-dots { display: none; }
+.audit-story[hidden] { display: none; }
+
+/* story switch */
+.story-tabs { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 1.2rem; border: 2px solid var(--bk-ink); border-radius: var(--r-pill); background: var(--surface-card); box-shadow: var(--shadow-pop-sm, 2px 2px 0 var(--bk-ink)); }
+.story-tab { border: 0; background: transparent; color: var(--text-body); font-family: var(--font-body); font-weight: var(--fw-bold); font-size: 14px; padding: 9px 16px; border-radius: var(--r-pill); cursor: pointer; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.story-tab:hover { color: var(--text-strong); }
+.story-tab.is-on { background: var(--bk-ink); color: #fff; }
+.story-tab:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
 
 /* ---------- Readiness check ---------- */
 .audit-check { background: var(--surface-sunken); padding: 5rem 0; }
@@ -76,6 +84,8 @@
 .at-copy p { color: var(--text-body); line-height: 1.6; margin: 0 0 1.1rem; }
 .audit-teaser .hero-kicker { color: var(--bk-blue); }
 .at-ctas { display: flex; flex-wrap: wrap; gap: .6rem; }
+.at-link { display: inline-block; margin-top: .9rem; font-weight: 600; font-size: .92rem; color: var(--bk-blue); }
+.at-link:hover { text-decoration: underline; }
 .at-r { transition: transform .7s var(--ease-bounce); transform-box: fill-box; transform-origin: center; }
 .at-lid { transition: transform .5s var(--ease-out); transform-box: fill-box; transform-origin: left bottom; }
 .at-letter { transition: transform .6s var(--ease-out); }
@@ -91,6 +101,9 @@
     .audit-story.is-animated .as-pin { min-height: 100vh; padding: 4.8rem 0 1rem; align-items: flex-start; }
     .as-title { font-size: 1.6rem; margin-bottom: 1rem; }
     .audit-story.is-animated .as-copy .hero-kicker, .audit-story.is-animated .as-title { display: none; }
+    .as-copy { display: flex; flex-direction: column; }
+    .story-tabs { align-self: center; margin-bottom: .8rem; order: -1; }
+    .story-tab { padding: 8px 13px; font-size: 13px; }
     .as-captions { min-height: 170px; margin-bottom: 1rem; }
     .as-cap h3 { font-size: 1.12rem; }
     .as-cap p { font-size: .95rem; }
