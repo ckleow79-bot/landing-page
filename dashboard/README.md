@@ -80,6 +80,10 @@ load time; nothing assumes a December year end. All amounts are
 | BKTS | B & K Training Services PLT | LLP0046779-LGN | TBC | TBC |
 | HITS | High Impact Training Services | training partner, not a group book | n/a | n/a |
 
+## Excel import (first load, before the API is connected)
+
+`ingestion/autocount-excel/` loads AutoCount report exports (Trial Balance, Chart of Accounts, Debtor and Creditor Aging, bank summary; .xlsx or .csv) into the warehouse. Run `--dry-run` first: it detects header rows under the report title rows, parses amounts, checks each trial balance balances, classifies accounts, and writes a mapping report plus `account_map_suggested.csv` for the owner to confirm. Then `--write`. Apply `supabase/migrations/004_excel_import_source.sql` first so runs log as `excel_import`. See the folder README for details and the TODO-VERIFY list.
+
 ## Role model
 
 One data model, three audiences, enforced in the database (not in the BI tool):
