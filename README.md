@@ -18,7 +18,7 @@ The site implements the **B&K Academy Design System** (`ckleow79-bot/bk-academy-
 - Programme calendar reads Supabase first and falls back to `data/programmes.json`.
 
 ## Pages
-`index.html` · `advisory.html` · `academy.html` · `programmes.html` · `insights.html` · `about.html` · `contact.html` · legal pages
+`index.html` · `advisory.html` · `academy.html` · `programmes.html` · `insights.html` · `about.html` · `faq.html` · `contact.html` (Request a quote, service area, click-to-load map) · legal pages
 
 ## Publishing a new seminar
 Real programme data comes from the Drive sheet "KEITH'S TRAINING SCHEDULE". Third-party guest-speaking slots use `provider: external` with an `organiser`.

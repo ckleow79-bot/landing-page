@@ -317,13 +317,17 @@
     /* ---------- Boot ---------- */
     async function init() {
         const targets = document.querySelectorAll('[data-programmes]');
-        if (!targets.length) return;
+        const counts = document.querySelectorAll('[data-count-src="upcoming"]');
+        if (!targets.length && !counts.length) return;
         let data;
         try { data = await loadProgrammes(); }
         catch (e) {
             targets.forEach(t => t.innerHTML = '<p class="prog-empty">Programme list is temporarily unavailable.</p>');
             return;
         }
+        // live stat: number of upcoming public sessions (counted up by cinematic.js when it scrolls in)
+        const n = data.list.filter(p => p.status === 'upcoming').length;
+        counts.forEach(el => { el.dataset.count = n; if (!el.dataset.counting) el.textContent = n; });
         targets.forEach(t => t.getAttribute('data-programmes') === 'list' ? renderList(t, data.list) : renderFeatured(t, data.list));
         document.addEventListener('click', e => {
             const r = e.target.closest('[data-register]');

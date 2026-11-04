@@ -135,15 +135,38 @@
         });
     }
 
-    /* ---------- Counters ---------- */
+    /* ---------- Counters ----------
+     * Big numbers count up from zero when they scroll into view. The real figure
+     * is in the HTML so it shows without JS or with reduced motion. Each card in a
+     * .numbers-grid also draws an amber rule and lifts its label, staggered. */
     function initCounters() {
-        document.querySelectorAll('[data-count]').forEach(el => {
-            const target = parseFloat(el.dataset.count), dec = (el.dataset.decimals | 0);
-            const obj = { v: 0 };
+        const fmt = (v, dec) => v.toLocaleString('en-MY', { maximumFractionDigits: dec, minimumFractionDigits: dec });
+        function run(el, delay) {
+            const target = parseFloat(el.dataset.count);
+            if (isNaN(target)) return;
+            const dec = (el.dataset.decimals | 0), obj = { v: 0 };
+            el.dataset.counting = '1';
+            el.textContent = fmt(0, dec);
+            gsap.fromTo(el, { filter: 'blur(6px)', opacity: 0.35 }, { filter: 'blur(0px)', opacity: 1, duration: 0.9, delay, ease: 'power2.out' });
+            gsap.to(obj, { v: target, duration: 2.2, delay, ease: 'expo.out', onUpdate: () => { el.textContent = fmt(obj.v, dec); }, onComplete: () => { el.textContent = fmt(target, dec); } });
+        }
+        document.querySelectorAll('.numbers-grid').forEach(grid => {
+            const cards = grid.querySelectorAll('.number');
+            grid.classList.add('is-counting');
+            cards.forEach(c => c.querySelectorAll('[data-count]').forEach(el => { el.dataset.counting = '1'; el.textContent = '0'; }));
             ScrollTrigger.create({
-                trigger: el, start: 'top 85%', once: true,
-                onEnter: () => gsap.to(obj, { v: target, duration: 1.8, ease: 'power3.out', onUpdate: () => { el.firstChild.nodeValue = obj.v.toLocaleString('en-MY', { maximumFractionDigits: dec, minimumFractionDigits: dec }); } })
+                trigger: grid, start: 'top 82%', once: true,
+                onEnter: () => cards.forEach((c, i) => {
+                    const d = i * 0.16;
+                    setTimeout(() => c.classList.add('is-in'), d * 1000);
+                    c.querySelectorAll('[data-count]').forEach(el => run(el, d));
+                })
             });
+        });
+        // stray counters outside a numbers grid
+        document.querySelectorAll('[data-count]').forEach(el => {
+            if (el.closest('.numbers-grid')) return;
+            ScrollTrigger.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => run(el, 0) });
         });
     }
 

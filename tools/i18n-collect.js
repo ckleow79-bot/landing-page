@@ -3,7 +3,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 (async () => {
-  const pages = ['index', 'advisory', 'academy', 'programmes', 'insights', 'about', 'contact'];
+  const pages = ["index", "advisory", "academy", "programmes", "insights", "about", "contact", "faq"];
   const b = await chromium.launch();
   const all = { text: {}, html: {} };
   for (const pg of pages) {

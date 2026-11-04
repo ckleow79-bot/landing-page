@@ -116,6 +116,9 @@ function initContactForm() {
         const company = form.querySelector('#contact-company').value.trim();
         const phone = form.querySelector('#contact-phone').value.trim();
         const industry = form.querySelector('#contact-industry').value;
+        const locEl = document.getElementById('contact-location');
+        const urgEl = document.getElementById('contact-urgency');
+        const extra = [locEl && locEl.value ? 'Location: ' + locEl.value : '', urgEl && urgEl.value ? 'Urgency: ' + urgEl.options[urgEl.selectedIndex].text : ''].filter(Boolean).join(' | ');
         const message = form.querySelector('#contact-message').value.trim();
         
         // Validate form
@@ -160,7 +163,7 @@ function initContactForm() {
             company: company || null,
             phone: phone || null,
             industry: industry || null,
-            message: message,
+            message: extra ? '[' + extra + '] ' + message : message,
             type: 'general',
             created_at: new Date().toISOString()
         };

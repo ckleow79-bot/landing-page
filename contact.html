@@ -52,7 +52,7 @@
         <section class="page-hero-cine" data-theme-dark>
             <div class="container">
                 <p class="hero-kicker">Contact</p>
-                <h1 class="reveal-up">Talk to a licensed tax agent.</h1>
+                <h1 class="reveal-up">Request a quote from a licensed tax agent.</h1>
                 <p class="reveal-up">Initial consultations are confidential. Please do not upload or paste sensitive documents here; we will arrange a secure channel.</p>
             </div>
         </section>
@@ -67,7 +67,7 @@
                         <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div class="contact-details"><h3>Email</h3><p><a href="mailto:keith@bkcorporate.com">keith@bkcorporate.com</a></p></div></div>
                         <div class="contact-item"><div class="contact-icon"><i class="far fa-clock"></i></div><div class="contact-details"><h3>Hours</h3><p>Mon to Fri, 9:00 to 18:00 (MYT)</p></div></div>
                     </div>
-                    <div class="contact-form-container reveal-up">
+                    <div class="contact-form-container reveal-up" id="quote">
                         <form class="contact-form" id="contact-form">
                             <div class="form-row">
                                 <div class="form-group"><label for="contact-name">Full Name *</label><input type="text" id="contact-name" name="name" required></div>
@@ -78,7 +78,7 @@
                                 <div class="form-group"><label for="contact-phone">Phone</label><input type="tel" id="contact-phone" name="phone"></div>
                             </div>
                             <div class="form-group">
-                                <label for="contact-industry">Topic</label>
+                                <label for="contact-industry">What do you need help with?</label>
                                 <select id="contact-industry" name="industry">
                                     <option value="">Select a topic</option>
                                     <option value="audit">Tax audit / investigation</option>
@@ -92,11 +92,51 @@
                                     <option value="other">Other</option>
                                 </select>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group"><label for="contact-location">Where is the business based?</label>
+                                    <select id="contact-location" name="location">
+                                        <option value="">Select a state</option>
+                                        <option>Kuala Lumpur</option><option>Selangor</option><option>Putrajaya</option><option>Johor</option><option>Penang</option><option>Perak</option><option>Negeri Sembilan</option><option>Melaka</option><option>Pahang</option><option>Kedah</option><option>Kelantan</option><option>Terengganu</option><option>Perlis</option><option>Sabah</option><option>Sarawak</option><option>Labuan</option><option>Outside Malaysia</option>
+                                    </select></div>
+                                <div class="form-group"><label for="contact-urgency">How urgent is it?</label>
+                                    <select id="contact-urgency" name="urgency">
+                                        <option value="">Select</option>
+                                        <option value="urgent">Deadline within 14 days (e.g. an LHDN letter)</option>
+                                        <option value="soon">Within the next 3 months</option>
+                                        <option value="planning">Planning ahead</option>
+                                    </select></div>
+                            </div>
                             <div class="form-group"><label for="contact-message">Message *</label><textarea id="contact-message" name="message" rows="5" required placeholder="Briefly describe the matter and any deadlines. No confidential documents, please."></textarea></div>
                             <label class="prog-check"><input type="checkbox" required> I consent to B &amp; K Group processing my personal data to respond to this enquiry, per the <a href="privacy-policy.html" target="_blank">Privacy Notice</a> (PDPA 2010). *</label>
-                            <button type="submit" class="btn btn-primary btn-full">Send message</button>
+                            <button type="submit" class="btn btn-primary btn-full">Request a quote</button>
                             <div class="form-message" id="contact-message-status"></div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="service-area" aria-labelledby="sa-title">
+            <div class="container">
+                <div class="sa-grid">
+                    <div class="sa-copy">
+                        <p class="hero-kicker">Where we work</p>
+                        <h2 id="sa-title">Office in Kuala Lumpur. Clients across Malaysia.</h2>
+                        <ul class="sa-list">
+                            <li><strong>Advisory</strong> Meetings at our Segambut office, at your premises in the Klang Valley, or online for clients in other states.</li>
+                            <li><strong>Public seminars</strong> Held in Kuala Lumpur and Selangor, Johor Bahru and Kuching, plus live webinars. See <a href="programmes.html">upcoming dates</a>.</li>
+                            <li><strong>In-house training</strong> Delivered at your office anywhere in Malaysia, in English or Mandarin.</li>
+                        </ul>
+                    </div>
+                    <div class="sa-map" data-map-src="https://www.google.com/maps?q=Residensi+Berpadu,+Jalan+Lang+Emas,+51200+Segambut,+Kuala+Lumpur&amp;output=embed">
+                        <div class="sa-map-ph">
+                            <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+                            <p>B-23-01, Residensi Berpadu, No. 10, Jalan Lang Emas,<br>51200 Segambut, Kuala Lumpur</p>
+                            <div class="sa-map-btns">
+                                <button type="button" class="btn btn-outline btn-sm" data-load-map>Show map</button>
+                                <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&amp;query=Residensi+Berpadu+Jalan+Lang+Emas+Segambut+Kuala+Lumpur" target="_blank" rel="noopener">Directions</a>
+                            </div>
+                            <small>The map loads from Google only when you click.</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,6 +147,14 @@
             var t = new URLSearchParams(location.search).get('topic');
             var s = document.getElementById('contact-industry');
             if (t && s && [...s.options].some(o => o.value === t)) s.value = t;
+            var m = document.querySelector('.sa-map');
+            var b = m && m.querySelector('[data-load-map]');
+            if (b) b.addEventListener('click', function () {
+                var f = document.createElement('iframe');
+                f.src = m.getAttribute('data-map-src'); f.title = 'Map: B & K Group office, Segambut, Kuala Lumpur';
+                f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade';
+                m.innerHTML = ''; m.appendChild(f);
+            });
         });
         </script>
     </main>
