@@ -57,6 +57,8 @@ landing-page/
 1. **Preferred**: insert/edit rows in the Supabase `programmes` table (apply `migrations/002_programmes.sql` first). `published = true` rows show on the site immediately.
 2. **Fallback**: edit `data/programmes.json` and deploy. Used automatically when Supabase is unreachable or the table is empty.
 Registrations land in `programme_registrations` (anon insert requires `consent_pdpa = true`).
+3. **Where the real list comes from**: the Drive sheet "KEITH'S TRAINING SCHEDULE" (2026/2027 tabs) and the Pipeline sheet. Only confirmed sessions go on the site. Use `provider: external` plus `organiser` for guest-speaking slots run by third parties (CPA Australia, Symphony Digest, eData Systems); fees and registration then stay with the organiser.
+4. **Never claim** CPD hours or HRD Corp claimability for a programme unless confirmed in writing.
 
 ## Key Features
 
@@ -95,22 +97,22 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 
 ## CSS Variables (Main Colors)
 ```css
---primary-color: #1a365d;      /* Navy blue */
---primary-light: #2c5282;
---primary-dark: #0f2942;
---secondary-color: #c9a227;    /* Gold */
---secondary-light: #e2c158;
---secondary-dark: #9a7b17;
---accent-color: #0f766e;       /* Teal */
+--primary-color: #13305A;      /* Navy */
+--primary-light: #1f4478;
+--primary-dark: #0B1F3A;       /* Deep navy */
+--secondary-color: #F2A33A;    /* Saffron */
+--secondary-light: #f7bd6b;
+--secondary-dark: #c67d14;
+--accent-color: #E8664A;       /* Coral */
 ```
 
 ## Important Files to Update
 
 ### Before Launch:
 1. **js/supabase.js**: confirm Supabase URL/anon key; apply `migrations/001` and `002`
-2. **components/footer.html, contact.html, about.html**: replace `[Office Address]`, `+60 XX-XXXX XXXX`, `wa.me/60XXXXXXXXXX`, LLP and HRD Corp registration numbers, leadership `[Name]`
-3. **Domain**: `bkgroup.my` is a placeholder in canonical/OG tags, sitemap.xml, robots.txt, structured-data/
-4. **Brand colours**: palette assumed navy `#1a365d` + gold `#c9a227`; adjust `:root` in css/main.css if brand guide differs
+2. **Remaining placeholders**: B & K Academy PLT LLP number (about.html), HRD Corp training-provider number once approved, Kuching venue for 23 Nov 2026 (data/programmes.json)
+3. **Domain**: `bkcorporate.com` is a placeholder in canonical/OG tags, sitemap.xml, robots.txt, structured-data/
+4. **Brand colours**: Style A "Boardroom Editorial" from the 29 Oct 2026 website outline: deep navy `#0B1F3A`, navy `#13305A`, saffron `#F2A33A`, coral `#E8664A`, cream `#F7F3EA`. Display type Fraunces (serif), body Inter.
 
 5. **assets/images/**: replace placeholder `logo.png`; add `og-image.jpg` (1200x630), `favicon.ico`, leadership photo
 6. **GA4**: replace `GA_MEASUREMENT_ID` in every page head

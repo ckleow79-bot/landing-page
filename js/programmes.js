@@ -16,7 +16,7 @@
 
     const PROVIDERS = {
         'bk-training': { name: 'B & K Training Services PLT', short: 'B & K Training' },
-        'high-impact': { name: 'High Impact Training Services PLT', short: 'High Impact' },
+        'high-impact': { name: 'High Impact Training Services', short: 'High Impact' },
         'bk-academy': { name: 'B & K Academy PLT', short: 'B & K Academy' }
     };
 
@@ -77,7 +77,9 @@
     }
 
     function feeLine(p) {
-        if (p.fee_myr == null) return '<span class="prog-fee prog-fee-na">Fee on enquiry</span>';
+        if (p.fee_myr == null) return p.provider === 'external'
+            ? `<span class="prog-fee prog-fee-na">Fee and registration via ${escapeHtml(p.organiser || 'organiser')}</span>`
+            : '<span class="prog-fee prog-fee-na">Fee on enquiry</span>';
         const eb = p.early_bird_fee_myr && p.early_bird_until && new Date(p.early_bird_until + 'T23:59:59+08:00').getTime() > Date.now();
         if (eb) {
             return `<span class="prog-fee"><s>${fmtMYR.format(p.fee_myr)}</s> <strong>${fmtMYR.format(p.early_bird_fee_myr)}</strong><small>early bird until ${fmtDate.format(new Date(p.early_bird_until))}</small></span>`;
@@ -92,13 +94,15 @@
 
     function card(p, compact) {
         const s = new Date(p.start_date);
-        const prov = PROVIDERS[p.provider] || { short: p.provider, name: p.provider };
+        const prov = p.provider === 'external'
+            ? { short: p.organiser || 'External organiser', name: p.organiser || 'External organiser' }
+            : (PROVIDERS[p.provider] || { short: p.provider, name: p.provider });
         const highlights = (Array.isArray(p.highlights) ? p.highlights : []).slice(0, compact ? 0 : 4)
             .map(h => `<li>${escapeHtml(h)}</li>`).join('');
         const canRegister = p.status === 'upcoming';
         const regBtn = p.register_url
             ? `<a class="btn btn-primary btn-sm" href="${escapeHtml(p.register_url)}" target="_blank" rel="noopener">Register</a>`
-            : `<button class="btn btn-primary btn-sm" data-register="${escapeHtml(p.slug)}" ${canRegister ? '' : 'disabled'}>${canRegister ? 'Register' : 'Closed'}</button>`;
+            : `<button class="btn btn-primary btn-sm" data-register="${escapeHtml(p.slug)}" ${canRegister ? '' : 'disabled'}>${canRegister ? (p.provider === 'external' ? 'Enquire' : 'Register') : 'Closed'}</button>`;
         return `
         <article class="prog-card reveal" data-provider="${escapeHtml(p.provider)}" data-category="${escapeHtml(p.category)}" data-status="${p.status}" data-slug="${escapeHtml(p.slug)}">
             <div class="prog-date">
@@ -156,6 +160,7 @@
             <div class="prog-filter-group" role="group" aria-label="Provider">
                 <button class="category-btn ${state.provider === 'all' ? 'active' : ''}" data-f="provider" data-v="all">All providers</button>
                 ${Object.entries(PROVIDERS).map(([k, v]) => `<button class="category-btn ${state.provider === k ? 'active' : ''}" data-f="provider" data-v="${k}">${v.short}</button>`).join('')}
+                <button class="category-btn ${state.provider === 'external' ? 'active' : ''}" data-f="provider" data-v="external">Guest speaking</button>
             </div>
             <div class="prog-filter-group" role="group" aria-label="Topic">
                 <button class="category-btn ${state.category === 'all' ? 'active' : ''}" data-f="category" data-v="all">All topics</button>
@@ -284,7 +289,7 @@
         } catch (err) {
             const subject = encodeURIComponent(`Registration: ${data.programme_title}`);
             const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || ''}\nCompany: ${data.company || ''}\nPax: ${data.pax}\nHRD Corp: ${data.hrdc_claim ? 'Yes' : 'No'}\n\n${data.message || ''}`);
-            msg.innerHTML = `We could not reach the registration service. <a href="mailto:training@bkgroup.my?subject=${subject}&body=${body}">Click here to email your registration instead</a>.`;
+            msg.innerHTML = `We could not reach the registration service. <a href="mailto:keith@bkcorporate.com?subject=${subject}&body=${body}">Click here to email your registration instead</a>.`;
             msg.className = 'form-message error';
             btn.disabled = false; btn.textContent = 'Submit registration';
         }
@@ -296,7 +301,7 @@
         const prov = PROVIDERS[p.provider] || { name: p.provider };
         const ics = [
             'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//B & K Group//Programmes//EN', 'BEGIN:VEVENT',
-            `UID:${p.slug}@bkgroup.my`, `DTSTAMP:${toIcs(Date.now())}`,
+            `UID:${p.slug}@bkcorporate.com`, `DTSTAMP:${toIcs(Date.now())}`,
             `DTSTART:${toIcs(p.start_date)}`, `DTEND:${toIcs(p.end_date || p.start_date)}`,
             `SUMMARY:${p.title}`, `DESCRIPTION:${(p.subtitle || '')} (${prov.name})`,
             `LOCATION:${p.venue || p.mode || ''}`, 'END:VEVENT', 'END:VCALENDAR'

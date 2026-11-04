@@ -7,7 +7,8 @@ create table if not exists programmes (
   slug text not null unique,
   title text not null,
   subtitle text,
-  provider text not null check (provider in ('bk-training','high-impact','bk-academy')),
+  provider text not null check (provider in ('bk-training','high-impact','bk-academy','external')),
+  organiser text,                    -- shown when provider = 'external'
   category text not null,
   format text,                       -- Seminar | Workshop | Webinar | Course
   mode text,                         -- In-person | Online | Hybrid

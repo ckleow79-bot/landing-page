@@ -5,10 +5,11 @@
    ============================================ */
 
 :root {
-    --ink: #0b1220;
-    --ink-2: #111a2e;
+    --ink: #0B1F3A;
+    --ink-2: #0E1621;
+    --cream: #F7F3EA;
     --gold: var(--secondary-color);
-    --gold-soft: rgba(201, 162, 39, 0.18);
+    --gold-soft: rgba(242, 163, 58, 0.18);
     --teal: var(--accent-color);
     --glass: rgba(255, 255, 255, 0.06);
     --glass-border: rgba(255, 255, 255, 0.12);
@@ -27,7 +28,7 @@ html.lenis, html.lenis body { height: auto; }
 .header.scrolled .logo-mark, .footer .logo-mark { color: var(--white); }
 .nav-link-highlight { position: relative; }
 .nav-link-highlight::after { content: ''; position: absolute; right: -0.65rem; top: 0.15rem; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 0 var(--gold-soft); animation: ping 2s infinite; }
-@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(201,162,39,.6);} 100% { box-shadow: 0 0 0 10px rgba(201,162,39,0);} }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(242,163,58,.6);} 100% { box-shadow: 0 0 0 10px rgba(242,163,58,0);} }
 
 /* Film grain + cursor glow */
 .grain { pointer-events: none; position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 9998; opacity: 0.05; mix-blend-mode: overlay;
@@ -35,7 +36,7 @@ html.lenis, html.lenis body { height: auto; }
     animation: grain 1.2s steps(4) infinite; }
 @keyframes grain { 0% { transform: translate(0,0);} 25% { transform: translate(-3%,2%);} 50% { transform: translate(2%,-3%);} 75% { transform: translate(-1%,1%);} 100% { transform: translate(0,0);} }
 .cursor-glow { pointer-events: none; position: fixed; left: 0; top: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; border-radius: 50%; z-index: 1;
-    background: radial-gradient(circle, rgba(201,162,39,0.14) 0%, rgba(201,162,39,0) 60%); opacity: 0; transition: opacity .4s; will-change: transform; }
+    background: radial-gradient(circle, rgba(242,163,58,0.14) 0%, rgba(242,163,58,0) 60%); opacity: 0; transition: opacity .4s; will-change: transform; }
 body.has-pointer .cursor-glow { opacity: 1; }
 
 /* Cinematic hero */
@@ -43,14 +44,14 @@ body.has-pointer .cursor-glow { opacity: 1; }
 .hero-cine .hero-layer { position: absolute; inset: 0; z-index: -1; will-change: transform; }
 .hero-cine .layer-gradient { background:
     radial-gradient(1200px 600px at 80% 10%, rgba(44,82,130,0.55), transparent 60%),
-    radial-gradient(900px 500px at 10% 90%, rgba(201,162,39,0.22), transparent 60%),
-    linear-gradient(180deg, #0b1220 0%, #0f1a30 60%, #0b1220 100%); }
+    radial-gradient(900px 500px at 10% 90%, rgba(242,163,58,0.22), transparent 60%),
+    linear-gradient(180deg, #0B1F3A 0%, #13305A 60%, #0B1F3A 100%); }
 .hero-cine .layer-grid { background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
     background-size: 64px 64px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); }
 .hero-cine .layer-orb { width: 46vmax; height: 46vmax; border-radius: 50%; left: 55%; top: -10%; inset: auto;
-    background: radial-gradient(circle at 30% 30%, rgba(226,193,88,0.35), rgba(201,162,39,0.08) 45%, transparent 70%); filter: blur(10px); }
+    background: radial-gradient(circle at 30% 30%, rgba(247,189,107,0.38), rgba(242,163,58,0.08) 45%, transparent 70%); filter: blur(10px); }
 .hero-cine .layer-orb-2 { width: 32vmax; height: 32vmax; border-radius: 50%; left: -10%; top: 55%; inset: auto;
-    background: radial-gradient(circle at 60% 40%, rgba(20,184,166,0.28), transparent 65%); filter: blur(14px); }
+    background: radial-gradient(circle at 60% 40%, rgba(232,102,74,0.26), transparent 65%); filter: blur(14px); }
 .hero-cine .container { position: relative; z-index: 2; }
 .hero-cine-content { max-width: 920px; padding: 7rem 0 5rem; }
 .hero-kicker { display: inline-flex; align-items: center; gap: .6rem; font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
@@ -80,8 +81,8 @@ body.has-pointer .cursor-glow { opacity: 1; }
 .pillar { flex: 0 0 min(560px, 82vw); border-radius: 24px; padding: 2.5rem; color: var(--white); position: relative; overflow: hidden; min-height: 460px; display: flex; flex-direction: column; justify-content: flex-end; box-shadow: 0 30px 60px -30px rgba(11,18,32,.45); }
 .pillar::before { content: ''; position: absolute; inset: 0; background: radial-gradient(600px 300px at 100% 0%, rgba(255,255,255,.18), transparent 60%); }
 .pillar-advisory { background: linear-gradient(145deg, #1a365d, #0f2942); }
-.pillar-academy { background: linear-gradient(145deg, #0f766e, #0b4f4a); }
-.pillar-training { background: linear-gradient(145deg, #9a7b17, #5c470c); }
+.pillar-academy { background: linear-gradient(145deg, #E8664A, #9c3b26); }
+.pillar-training { background: linear-gradient(145deg, #c67d14, #7a4a08); }
 .pillar-high-impact { background: linear-gradient(145deg, #3b2f6b, #1e1838); }
 .pillar .pillar-index { position: absolute; top: 2rem; left: 2.5rem; font-size: .8rem; letter-spacing: .25em; opacity: .7; }
 .pillar .pillar-icon { position: absolute; top: 1.6rem; right: 2rem; font-size: 3rem; opacity: .25; }
@@ -105,7 +106,7 @@ body.has-pointer .cursor-glow { opacity: 1; }
 .number .label { margin-top: .6rem; color: rgba(255,255,255,.65); font-size: .9rem; }
 
 /* Approach / sticky story */
-.story { padding: 6rem 0; background: var(--bg-secondary); }
+.story { padding: 6rem 0; background: var(--cream); }
 .story-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
 .story-sticky { position: sticky; top: 7rem; }
 .story-sticky h2 { font-size: clamp(2rem, 3.6vw, 3rem); letter-spacing: -.02em; line-height: 1.1; }
@@ -239,3 +240,12 @@ html.has-gsap .reveal, html.has-gsap .reveal-up, html.has-gsap .reveal-stagger >
 .hero-cine h1 em .word { color: var(--gold); }
 .btn-ghost { background: var(--glass); border: 1px solid var(--glass-border); color: var(--white); backdrop-filter: blur(8px); }
 .btn-ghost:hover { background: rgba(255,255,255,0.14); color: var(--white); }
+
+/* ---- Style A "Boardroom Editorial": serif display type ---- */
+.hero-cine h1, .page-hero-cine h1, .section-title, .story-sticky h2, .programmes-head h2, .cta-cine h2, .pillar h3, .prog-modal-title { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.015em; }
+.hero-cine h1 { font-weight: 500; }
+.hero-cine h1 em { font-style: italic; font-weight: 500; }
+.prog-title { font-family: var(--font-display); font-weight: 600; }
+.pillars { background: var(--cream); }
+.programmes-section { background: var(--white); }
+.prog-hrdc { color: var(--secondary-dark); }

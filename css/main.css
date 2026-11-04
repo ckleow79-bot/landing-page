@@ -6,18 +6,18 @@
 /* CSS Variables */
 :root {
     /* Primary Colors */
-    --primary-color: #1a365d;
-    --primary-light: #2c5282;
-    --primary-dark: #0f2942;
+    --primary-color: #13305A;
+    --primary-light: #1f4478;
+    --primary-dark: #0B1F3A;
     
     /* Secondary Colors */
-    --secondary-color: #c9a227;
-    --secondary-light: #e2c158;
-    --secondary-dark: #9a7b17;
+    --secondary-color: #F2A33A;
+    --secondary-light: #f7bd6b;
+    --secondary-dark: #c67d14;
     
     /* Accent Colors */
-    --accent-color: #0f766e;
-    --accent-light: #14b8a6;
+    --accent-color: #E8664A;
+    --accent-light: #f0876f;
     
     /* Neutral Colors */
     --white: #ffffff;
@@ -48,6 +48,7 @@
     
     /* Typography */
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;

@@ -22,7 +22,7 @@ const chatFlow = {
         ]
     },
     programmes: {
-        message: "We run HRD Corp claimable seminars and workshops on Malaysian tax, e-Invoice, SST, post-Budget analysis, M&A and AI in Finance. Where would you like to go?",
+        message: "We run public seminars and webinars on Malaysian tax, e-Invoice, SST, post-Budget analysis and AI in Finance, many HRD Corp claimable. Where would you like to go?",
         options: [
             { text: "View All Programmes", url: 'programmes.html' },
             { text: "Register Interest", next: 'programme_email' },
