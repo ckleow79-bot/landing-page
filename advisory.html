@@ -653,20 +653,43 @@
             </div>
         </section>
 
-        <section class="story" id="engagement">
+        <section class="flow" id="engagement" aria-labelledby="flow-title">
             <div class="container">
-                <div class="story-grid">
-                    <div class="story-sticky">
-                        <p class="hero-kicker" style="color:var(--secondary-dark)">Engagement model</p>
-                        <h2>Clear scope, fixed fees where possible, senior attention throughout.</h2>
-                    </div>
-                    <div class="story-steps">
-                        <div class="story-step"><span class="n bk-coin">1</span><div><h3>Confidential intake</h3><p>A 30-minute call to understand the facts, deadlines and documents. Engagement letters follow MIA and CTIM requirements.</p></div></div>
-                        <div class="story-step"><span class="n bk-coin">2</span><div><h3>Scope and fee</h3><p>Fixed fees for compliance and secretarial work. Audit and investigation matters are scoped in phases with capped estimates.</p></div></div>
-                        <div class="story-step"><span class="n bk-coin">3</span><div><h3>Delivery</h3><p>Deliverables are reviewed by a licensed tax agent before release. You receive position papers, not just numbers.</p></div></div>
-                        <div class="story-step"><span class="n bk-coin">4</span><div><h3>Ongoing monitoring</h3><p>Deadline calendar, LHDN correspondence tracking and quarterly check-ins for retained clients.</p></div></div>
-                    </div>
+                <div class="flow-head">
+                    <p class="hero-kicker">Engagement model</p>
+                    <h2 id="flow-title">Clear scope, fixed fees where possible, senior attention throughout.</h2>
                 </div>
+                <div class="flow-track" aria-hidden="true"><span class="flow-fill"></span><span class="flow-token"></span></div>
+                <ol class="flow-steps">
+                    <li class="tl-step" style="--i:0">
+                        <span class="tl-ic"><i class="fas fa-user-shield" aria-hidden="true"></i></span>
+                        <span class="tl-n">Step 1</span>
+                        <h3>Confidential intake</h3>
+                        <p>A 30-minute call to understand the facts, deadlines and documents. Engagement letters follow MIA and CTIM requirements.</p>
+                        <span class="st-chip st-info"><i></i>Confidential</span>
+                    </li>
+                    <li class="tl-step" style="--i:1">
+                        <span class="tl-ic"><i class="fas fa-file-signature" aria-hidden="true"></i></span>
+                        <span class="tl-n">Step 2</span>
+                        <h3>Scope and fee</h3>
+                        <p>Fixed fees for compliance and secretarial work. Audit and investigation matters are scoped in phases with capped estimates.</p>
+                        <span class="st-chip st-wait"><i></i>Your go-ahead</span>
+                    </li>
+                    <li class="tl-step" style="--i:2">
+                        <span class="tl-ic"><i class="fas fa-check-double" aria-hidden="true"></i></span>
+                        <span class="tl-n">Step 3</span>
+                        <h3>Delivery</h3>
+                        <p>Deliverables are reviewed by a licensed tax agent before release. You receive position papers, not just numbers.</p>
+                        <span class="st-chip st-ready"><i></i>Agent-reviewed</span>
+                    </li>
+                    <li class="tl-step" style="--i:3">
+                        <span class="tl-ic"><i class="fas fa-calendar-check" aria-hidden="true"></i></span>
+                        <span class="tl-n">Step 4</span>
+                        <h3>Ongoing monitoring</h3>
+                        <p>Deadline calendar, LHDN correspondence tracking and quarterly check-ins for retained clients.</p>
+                        <span class="st-chip st-ready"><i></i>Retained clients</span>
+                    </li>
+                </ol>
             </div>
         </section>
 
@@ -697,6 +720,7 @@
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
     <script src="js/cinematic.js"></script>
+    <script src="js/interactive.js"></script>
     <script src="js/audit-story.js"></script>
     <script src="js/programmes.js"></script>
     <script src="js/next-ribbon.js"></script>
