@@ -1,0 +1,4 @@
+# Python 3.11+
+pyodbc==5.2.0          # SQL Server via ODBC Driver 18 (install msodbcsql18 on the host)
+psycopg[binary]==3.2.3 # Supabase Postgres (warehouse)
+python-dotenv==1.0.1   # loads dashboard/.env when present
