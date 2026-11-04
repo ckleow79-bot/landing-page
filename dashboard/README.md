@@ -173,8 +173,15 @@ Mechanics (details in `002_rls_policies.sql`):
 
 ## TO VERIFY (AutoCount specifics that could not be confirmed from public sources)
 
-AutoCount's resource wiki was not reachable from this environment except via
-search snippets, and AutoCount Cloud Accounting has no public API docs found.
+AutoCount Cloud Accounting does have an official integration API: the
+"Getting Started with Cloud Accounting Integration API" guide at
+https://accounting-api.autocountcloud.com/documentation/ . Search snippets
+indicate keys are created in the web app under Settings > API Keys (Key ID +
+API Key sent as request headers) and that permissions are set per API method.
+The host was not reachable from this build environment, so endpoint paths and
+response shapes are still unconfirmed. Separately, the AOTG REST API
+(https://aotgapi.autocountcloud.com/swagger) serves the desktop product and
+needs a client service on the AutoCount machine.
 Before switching the ingestion from demo to live, confirm:
 
 1. **AutoCount Cloud Accounting API**: whether your subscription tier includes

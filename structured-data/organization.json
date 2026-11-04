@@ -6,7 +6,10 @@
   "logo": "https://bkgroup.my/assets/images/logo.png",
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "Kuala Lumpur",
+    "streetAddress": "B-23-01, Residensi Berpadu, No. 10, Jalan Lang Emas",
+    "addressLocality": "Segambut, Kuala Lumpur",
+    "addressRegion": "Wilayah Persekutuan",
+    "postalCode": "51200",
     "addressCountry": "MY"
   },
   "subOrganization": [
@@ -26,5 +29,6 @@
       "@type": "EducationalOrganization",
       "name": "High Impact Training Services PLT"
     }
-  ]
+  ],
+  "telephone": "+60-11-3063-6198"
 }
