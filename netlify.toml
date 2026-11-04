@@ -1,0 +1,82 @@
+# Netlify configuration for bkcorporate.com (static site, no build step)
+[build]
+  publish = "."
+  command = ""
+
+# Clean URLs: /programmes -> /programmes.html
+[[redirects]]
+  from = "/programmes"
+  to = "/programmes.html"
+  status = 200
+[[redirects]]
+  from = "/advisory"
+  to = "/advisory.html"
+  status = 200
+[[redirects]]
+  from = "/academy"
+  to = "/academy.html"
+  status = 200
+[[redirects]]
+  from = "/insights"
+  to = "/insights.html"
+  status = 200
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+# Old template URLs
+[[redirects]]
+  from = "/products.html"
+  to = "/advisory.html"
+  status = 301
+[[redirects]]
+  from = "/projects.html"
+  to = "/programmes.html"
+  status = 301
+[[redirects]]
+  from = "/blog.html"
+  to = "/insights.html"
+  status = 301
+[[redirects]]
+  from = "/investors.html"
+  to = "/about.html"
+  status = 301
+# Keep the finance dashboard scaffold and migrations off the public site
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/404.html"
+  status = 404
+[[redirects]]
+  from = "/migrations/*"
+  to = "/404.html"
+  status = 404
+[[redirects]]
+  from = "/*.md"
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
+
+[[headers]]
+  for = "/js/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+[[headers]]
+  for = "/data/programmes.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300"

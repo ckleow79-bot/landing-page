@@ -1,0 +1,63 @@
+:root {
+  /* ===== Brand core ===== */
+  --bk-ink:        #15213B; /* deep navy — headings, text on light */
+  --bk-blue:       #3457E5; /* primary action / brand blue */
+  --bk-blue-700:   #2742B8;
+  --bk-blue-100:   #E5EAFD;
+
+  /* ===== Playful data-viz palette ===== */
+  --bk-coral:      #FF6B5E;
+  --bk-amber:      #FFB23E; /* fills/accents only — for amber TEXT on light use --bk-warning (AA contrast) */
+  --bk-teal:       #15B5A6;
+  --bk-violet:     #8B5CF6;
+  --bk-lime:       #7CCF4D;
+  --bk-pink:       #F46BB0;
+
+  /* tints for chart fills / soft backgrounds */
+  --bk-coral-100:  #FFE6E3;
+  --bk-amber-100:  #FFF0D6;
+  --bk-teal-100:   #D6F4F0;
+  --bk-violet-100: #ECE5FD;
+  --bk-lime-100:   #E8F6DC;
+
+  /* ===== Neutrals (warm paper) ===== */
+  --bk-paper:      #FCFBF8; /* page background */
+  --bk-white:      #FFFFFF;
+  --bk-n-50:       #F4F3EF;
+  --bk-n-100:      #E9E7E0;
+  --bk-n-200:      #D6D3C9;
+  --bk-n-300:      #B7B3A6;
+  --bk-n-400:      #908C7E;
+  --bk-n-500:      #6B675B;
+  --bk-n-700:      #403D34;
+  --bk-n-900:      #1E1C16;
+
+  /* ===== Semantic ===== */
+  --bk-success:    #1E9E6A;
+  --bk-success-100:#DCF3E9;
+  --bk-warning:    #E08A00;
+  --bk-warning-100:#FBEBCC;
+  --bk-danger:     #DB3B3B;
+  --bk-danger-100: #FBE0E0;
+  --bk-info:       var(--bk-blue);
+
+  /* ===== Semantic aliases ===== */
+  --surface-page:   var(--bk-paper);
+  --surface-card:   var(--bk-white);
+  --surface-sunken: var(--bk-n-50);
+  --surface-ink:    var(--bk-ink);
+
+  --text-strong:  var(--bk-ink);
+  --text-body:    var(--bk-n-700);
+  --text-muted:   var(--bk-n-500);
+  --text-on-dark: var(--bk-paper);
+  --text-link:    var(--bk-blue);
+
+  --border-soft:  var(--bk-n-100);
+  --border-base:  var(--bk-n-200);
+  --border-strong:var(--bk-n-300);
+
+  --accent:       var(--bk-blue);
+  --accent-quiz:  var(--bk-violet);
+  --focus-ring:   color-mix(in srgb, var(--bk-blue) 45%, transparent);
+}

@@ -1,0 +1,6 @@
+# AutoCount Excel/CSV export importer (Python 3.11+)
+openpyxl>=3.1,<4
+pandas>=2.0          # optional: not imported by the importer itself; handy for inspecting the out/*.csv files
+psycopg[binary]>=3.1,<4
+python-dotenv>=1.0   # optional: loads dashboard/.env
+pytest>=7            # tests only

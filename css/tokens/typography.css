@@ -1,0 +1,38 @@
+:root {
+  /* Families */
+  --font-display: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif;
+  --font-body:    'Public Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  /* CJK (Chinese) — pairs with the Latin families; use for 中文 content */
+  --font-cjk:     'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', var(--font-body);
+  /* Bahasa Malaysia uses the Latin families as-is (--font-display / --font-body) */
+
+  /* Weights */
+  --fw-regular: 400; /* @kind font */
+  --fw-medium:  500; /* @kind font */
+  --fw-semibold:600; /* @kind font */
+  --fw-bold:    700; /* @kind font */
+  --fw-extra:   800; /* @kind font */
+
+  /* Type scale (fluid-ish, rem) */
+  --fs-display: 4.5rem;   /* 72 — slide hero */
+  --fs-h1:      3rem;     /* 48 */
+  --fs-h2:      2.25rem;  /* 36 */
+  --fs-h3:      1.5rem;   /* 24 */
+  --fs-h4:      1.25rem;  /* 20 */
+  --fs-lead:    1.25rem;  /* 20 intro body */
+  --fs-body:    1rem;     /* 16 */
+  --fs-sm:      0.875rem; /* 14 */
+  --fs-xs:      0.75rem;  /* 12 labels/eyebrows */
+
+  /* Line heights */
+  --lh-tight:  1.05; /* @kind font */
+  --lh-snug:   1.2; /* @kind font */
+  --lh-normal: 1.5; /* @kind font */
+  --lh-relaxed:1.65; /* @kind font */
+
+  /* Letter spacing */
+  --ls-tight:  -0.02em; /* @kind font */
+  --ls-normal: 0; /* @kind font */
+  --ls-eyebrow: 0.12em; /* @kind font */
+}

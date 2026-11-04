@@ -1,6 +1,6 @@
 /**
  * Chatbot JavaScript File
- * End-of-Line Packaging Automation Company Landing Page
+ * B & K Group Website
  */
 
 // Chatbot state
@@ -13,72 +13,73 @@ let visitorName = null;
 // Chat flow configuration
 const chatFlow = {
     welcome: {
-        message: "Hello! Welcome to [Your Company Name]. How can I help you today?",
+        message: "Hello, welcome to B & K Group. How can I help you today?",
         options: [
-            { text: "Get a Quote", next: 'quote' },
-            { text: "View Products", next: 'products' },
-            { text: "Technical Support", next: 'support' },
-            { text: "Schedule a Call", next: 'schedule' }
+            { text: "Upcoming Programmes", next: 'programmes' },
+            { text: "Tax & Advisory Enquiry", next: 'advisory' },
+            { text: "CFO / Finance Services", next: 'cfo' },
+            { text: "In-house Training", next: 'inhouse' }
         ]
     },
-    quote: {
-        message: "I'd be happy to help you get a quote! What type of packaging automation are you interested in?",
+    programmes: {
+        message: "We run public seminars and webinars on Malaysian tax, e-Invoice, SST, post-Budget analysis and AI in Finance, many HRD Corp claimable. Where would you like to go?",
         options: [
-            { text: "Case Packers", next: 'quote_details' },
-            { text: "Palletizers", next: 'quote_details' },
-            { text: "Wrapping Machines", next: 'quote_details' },
-            { text: "Complete Line", next: 'quote_details' },
-            { text: "Custom Solution", next: 'quote_details' }
+            { text: "View All Programmes", url: 'programmes.html' },
+            { text: "Register Interest", next: 'programme_email' },
+            { text: "Back", next: 'welcome' }
         ]
     },
-    quote_details: {
-        message: "Great choice! To provide you with an accurate quote, could you please share your email address? Our team will contact you within 24 hours.",
+    programme_email: {
+        message: "Leave your email and we will send you the programme calendar and early-bird notices.",
         input: 'email',
-        next: 'quote_thanks'
+        next: 'programme_thanks'
     },
-    quote_thanks: {
-        message: "Thank you! We've received your request. Our sales team will reach out to you shortly at {email}. Is there anything else I can help you with?",
+    programme_thanks: {
+        message: "Thank you. The programme calendar will be sent to {email}. Anything else?",
         options: [
             { text: "Ask Another Question", next: 'welcome' },
             { text: "No, thanks", next: 'goodbye' }
         ]
     },
-    products: {
-        message: "We offer a wide range of packaging automation solutions. Which category would you like to explore?",
+    advisory: {
+        message: "Which area is your enquiry about?",
         options: [
-            { text: "Case Packers", url: 'products.html#case-packers' },
-            { text: "Palletizers", url: 'products.html#palletizers' },
-            { text: "Wrapping Machines", url: 'products.html#wrapping' },
-            { text: "Conveying Systems", url: 'products.html#conveying' },
-            { text: "Custom Solutions", url: 'products.html#custom' }
+            { text: "Tax Audit / Investigation", next: 'advisory_details' },
+            { text: "Corporate Tax Planning", next: 'advisory_details' },
+            { text: "SST / e-Invoice", next: 'advisory_details' },
+            { text: "Company Secretarial", next: 'advisory_details' },
+            { text: "M&A / Restructuring", next: 'advisory_details' }
         ]
     },
-    support: {
-        message: "I can help connect you with our technical support team. Please describe the issue you're experiencing with your equipment.",
-        input: 'text',
-        next: 'support_thanks'
+    advisory_details: {
+        message: "Noted. Please share your email and a licensed tax agent from our team will contact you within one business day. Do not share confidential documents in this chat.",
+        input: 'email',
+        next: 'advisory_thanks'
     },
-    support_thanks: {
-        message: "Thank you for providing those details. Our technical support team will review your issue and contact you within 4 hours during business hours (Mon-Fri, 8AM-6PM). For urgent issues, please call us at +60 XX-XXXX XXXX.",
-        options: [
-            { text: "Back to Main Menu", next: 'welcome' },
-            { text: "Close Chat", next: 'goodbye' }
-        ]
-    },
-    schedule: {
-        message: "I'd be happy to schedule a call for you! Please provide your email address and preferred date/time, and we'll confirm the appointment.",
-        input: 'text',
-        next: 'schedule_thanks'
-    },
-    schedule_thanks: {
-        message: "Perfect! We've received your scheduling request. Our team will send you a calendar invite within 24 hours. Looking forward to speaking with you!",
+    advisory_thanks: {
+        message: "Thank you. We will reach out at {email}. For urgent LHDN deadlines, please call us directly.",
         options: [
             { text: "Back to Main Menu", next: 'welcome' },
             { text: "Close Chat", next: 'goodbye' }
         ]
+    },
+    cfo: {
+        message: "Our fractional CFO service covers monthly management accounts review, board reporting, cash-flow forecasting and forensic financial review. Tell us briefly about your company and reporting needs.",
+        input: 'text',
+        next: 'cfo_thanks'
+    },
+    cfo_thanks: {
+        message: "Thank you. We will review and propose a scope within two business days. May I have your email?",
+        input: 'email',
+        next: 'advisory_thanks'
+    },
+    inhouse: {
+        message: "We deliver customised in-house CPD/CPE programmes in English and Mandarin. Share your topic, headcount and preferred month.",
+        input: 'text',
+        next: 'cfo_thanks'
     },
     goodbye: {
-        message: "Thank you for chatting with us! If you have any more questions, feel free to reach out. Have a great day!",
+        message: "Thank you for chatting with B & K Group. Have a productive day.",
         options: [
             { text: "Start Over", next: 'welcome' }
         ]

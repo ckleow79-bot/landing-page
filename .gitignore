@@ -21,3 +21,7 @@ build/
 .ftpconfig
 .ftpquota
 wp-config.php
+# Python
+__pycache__/
+*.pyc
+dashboard/ingestion/autocount-excel/out/

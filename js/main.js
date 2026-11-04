@@ -1,6 +1,6 @@
 /**
  * Main JavaScript File
- * End-of-Line Packaging Automation Company Landing Page
+ * B & K Group Website
  */
 
 document.addEventListener('DOMContentLoaded', function() {

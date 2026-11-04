@@ -1,0 +1,751 @@
+{
+  "name": "AutoCount Cloud -> Finance Warehouse (nightly 02:00 MYT)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 2 * * *"
+            }
+          ]
+        }
+      },
+      "id": "763bcdc2-720b-4d33-9f58-b053a87c6705",
+      "name": "Daily 02:00 MYT",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "notes": "Runs in the workflow timezone (Settings > Timezone = Asia/Kuala_Lumpur).",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// One item per entity x month to (re)load.\n// Reads n8n env vars (requires N8N_BLOCK_ENV_ACCESS_IN_NODE=false, see README).\nconst entities = JSON.parse($env.AUTOCOUNT_CLOUD_ENTITIES || '[]');\nif (!entities.length) throw new Error('AUTOCOUNT_CLOUD_ENTITIES is empty');\nconst lookback = parseInt($env.AUTOCOUNT_CLOUD_LOOKBACK_MONTHS || '2', 10);\n\n// \"today\" in Kuala Lumpur regardless of the host timezone\nconst kl = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kuala_Lumpur' }));\nconst pad = (n) => String(n).padStart(2, '0');\nconst iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;\nconst yesterday = new Date(kl); yesterday.setDate(kl.getDate() - 1);\n\nconst out = [];\nfor (const e of entities) {\n  if (!e.entity_code || !e.company_ref) throw new Error('each entity needs entity_code and company_ref');\n  for (let n = lookback; n >= 0; n--) {          // oldest first; open months get restated nightly\n    const start = new Date(kl.getFullYear(), kl.getMonth() - n, 1);\n    const end = new Date(kl.getFullYear(), kl.getMonth() - n + 1, 0);\n    out.push({ json: {\n      entity_code: e.entity_code,\n      company_ref: e.company_ref,               // AutoCount Cloud company / account book id\n      period_start: iso(start),\n      period_end: iso(end),\n      is_latest_month: n === 0,                 // aging is only pulled once per entity (latest month item)\n      as_of_date: iso(yesterday),\n    }});\n  }\n}\nreturn out;"
+      },
+      "id": "cce3a8ad-780f-478e-85eb-f15ef6cdbc85",
+      "name": "Load entity config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into public.ingestion_runs (source, entity_id, dataset, triggered_by, metadata)\nvalues ('autocount_cloud', (select id from public.entities where code = $1), $2, 'schedule', $3::jsonb)\nreturning id;",
+        "options": {
+          "queryReplacement": "={{ [ $json.entity_code, ($json.is_latest_month ? 'tb+aging' : 'tb'), JSON.stringify({ period_start: $json.period_start, period_end: $json.period_end, company_ref: $json.company_ref, workflow: $workflow.name, execution_id: $execution.id }) ] }}"
+        }
+      },
+      "id": "28e4e3d5-8818-494d-aa3f-330fca9b6df9",
+      "name": "Start ingestion run",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        480,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput",
+      "notes": "Audit row per entity x month. No secrets in metadata.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.AUTOCOUNT_CLOUD_BASE_URL }}{{ $env.AUTOCOUNT_CLOUD_TB_ENDPOINT }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "companyId",
+              "value": "={{ $('Load entity config').item.json.company_ref }}"
+            },
+            {
+              "name": "dateFrom",
+              "value": "={{ $('Load entity config').item.json.period_start }}"
+            },
+            {
+              "name": "dateTo",
+              "value": "={{ $('Load entity config').item.json.period_end }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "ce34a9be-5eed-4094-b7b5-a227d27158b9",
+      "name": "Fetch trial balance",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_AUTOCOUNT_CREDENTIAL_ID",
+          "name": "AutoCount Cloud API (header auth)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000,
+      "onError": "continueErrorOutput",
+      "notes": "TODO-VERIFY: endpoint path, query parameter names (companyId/dateFrom/dateTo are placeholders) and auth header. Credential 'AutoCount Cloud API' = HTTP Header Auth (e.g. Authorization: Bearer <token> or X-API-Key); switch to OAuth2 credential if the vendor uses it.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "200a0d53-c744-40a5-9354-f11b6812e3ad",
+              "leftValue": "={{ $('Load entity config').item.json.is_latest_month }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fe139c06-c0e8-4314-826b-c6d2a1b2a45b",
+      "name": "Latest month?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        960,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.AUTOCOUNT_CLOUD_BASE_URL }}{{ $env.AUTOCOUNT_CLOUD_AR_AGING_ENDPOINT }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "companyId",
+              "value": "={{ $('Load entity config').item.json.company_ref }}"
+            },
+            {
+              "name": "asOfDate",
+              "value": "={{ $('Load entity config').item.json.as_of_date }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "07d98b8c-e700-4d5d-8b46-f97229bf3805",
+      "name": "Fetch debtor aging",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        160
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_AUTOCOUNT_CREDENTIAL_ID",
+          "name": "AutoCount Cloud API (header auth)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000,
+      "onError": "continueErrorOutput",
+      "notes": "TODO-VERIFY endpoint + params. Pulled once per entity (latest-month item only).",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.AUTOCOUNT_CLOUD_BASE_URL }}{{ $env.AUTOCOUNT_CLOUD_AP_AGING_ENDPOINT }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "companyId",
+              "value": "={{ $('Load entity config').item.json.company_ref }}"
+            },
+            {
+              "name": "asOfDate",
+              "value": "={{ $('Load entity config').item.json.as_of_date }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "82bdafc5-d5a2-4fc9-86a3-e5d21eb70cab",
+      "name": "Fetch creditor aging",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        160
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_AUTOCOUNT_CREDENTIAL_ID",
+          "name": "AutoCount Cloud API (header auth)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000,
+      "onError": "continueErrorOutput",
+      "notes": "TODO-VERIFY endpoint + params.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Maps AutoCount Cloud API responses to warehouse rows.\n// ============================================================================\n// TODO-VERIFY: every property name in F below is a PLACEHOLDER. No public\n// AutoCount Cloud Accounting API documentation was found; set these from the\n// vendor's docs / a sample response before enabling the workflow.\n// ============================================================================\nconst cfg = $('Load entity config').item.json;\nconst runId = $('Start ingestion run').item.json.id;\nconst tbResp = $('Fetch trial balance').item.json;\nlet arResp = null, apResp = null;\nif (cfg.is_latest_month) {\n  try { arResp = $('Fetch debtor aging').item.json; apResp = $('Fetch creditor aging').item.json; }\n  catch (e) { /* aging branch did not run for this item */ }\n}\n\nconst F = {\n  rows: 'data',                                   // TODO-VERIFY: property holding the array ('' if the body itself is the array)\n  tb: {                                           // TODO-VERIFY: trial balance / GL balance row fields\n    accountCode: 'accountCode', accountName: 'accountName', accountType: 'accountType',\n    parent: 'parentAccountCode', debit: 'debit', credit: 'credit', closing: 'closingBalance',\n    // closingBalance is expected debit-positive and, for P&L accounts, fiscal-year-to-date.\n    // If the API returns separate closingDebit/closingCredit, compute closing = closingDebit - closingCredit here.\n  },\n  aging: {                                        // TODO-VERIFY: debtor/creditor aging row fields\n    debtorCode: 'debtorCode', creditorCode: 'creditorCode', name: 'companyName', currency: 'currency',\n    current: 'current', b30: 'days1to30', b60: 'days31to60', b90: 'days61to90', b120: 'days91plus',\n  },\n};\n\nconst rowsOf = (resp) => {\n  if (!resp) return [];\n  const r = F.rows ? resp[F.rows] : resp;\n  if (!Array.isArray(r)) throw new Error(`unexpected response shape: expected an array at '${F.rows}'. Keys: ${Object.keys(resp).join(',')}`);\n  return r;\n};\nconst num = (v) => {\n  const n = Number(String(v ?? 0).replace(/,/g, ''));\n  if (Number.isNaN(n)) throw new Error(`not a number: ${v}`);\n  return Math.round(n * 100) / 100;\n};\n\n// AutoCount account type -> dashboard classification. Keep in sync with\n// ACCTYPE_MAP in ../autocount-onprem/extract.py. TODO-VERIFY the labels.\n// [account_type, account_subtype, cashflow_bucket, is_current]\nconst ACCTYPE_MAP = {\n  'bank': ['asset', 'cash', 'cash', true], 'cash': ['asset', 'cash', 'cash', true],\n  'debtor control': ['asset', 'trade_receivable', 'operating', true],\n  'current asset': ['asset', null, 'operating', true], 'stock': ['asset', 'inventory', 'operating', true],\n  'deposit': ['asset', 'other_receivable', 'operating', true],\n  'fixed asset': ['asset', 'fixed_asset', 'investing', false], 'accumulated depreciation': ['asset', 'fixed_asset', 'investing', false],\n  'investment': ['asset', null, 'investing', false], 'other asset': ['asset', null, 'investing', false],\n  'creditor control': ['liability', 'trade_payable', 'operating', true],\n  'current liability': ['liability', null, 'operating', true],\n  'long term liability': ['liability', 'borrowing', 'financing', false],\n  'capital': ['equity', 'share_capital', 'financing', null], 'reserves': ['equity', 'retained_earnings', 'financing', null],\n  'retained earning': ['equity', 'retained_earnings', 'financing', null],\n  'sales': ['revenue', null, 'operating', null], 'sales adjustment': ['revenue', null, 'operating', null],\n  'cost of goods sold': ['cogs', null, 'operating', null], 'expenses': ['opex', null, 'operating', null],\n  'other income': ['other', null, 'operating', null], 'taxation': ['other', 'tax', 'operating', null],\n  'extraordinary income/expense': ['other', null, 'operating', null],\n};\nconst classify = (raw, name) => {\n  let [account_type, account_subtype, cashflow_bucket, is_current] =\n    ACCTYPE_MAP[String(raw ?? '').trim().toLowerCase()] ?? ['other', null, 'operating', null];\n  const n = name.toLowerCase();\n  if (account_type === 'opex') {\n    if (n.includes('depreciation')) { account_subtype = 'depreciation'; cashflow_bucket = 'non_cash'; }\n    else if (n.includes('amortis') || n.includes('amortiz')) { account_subtype = 'amortisation'; cashflow_bucket = 'non_cash'; }\n  } else if (account_type === 'other') {\n    if (n.includes('interest')) { account_subtype = 'interest'; cashflow_bucket = 'financing'; }\n    else if (n.includes('tax') && !n.includes('deferred')) account_subtype = 'tax';\n  } else if (account_type === 'liability' && !account_subtype) {\n    if (n.includes('accrual')) account_subtype = 'accrual';\n    else if (n.includes('tax') || n.includes('sst') || n.includes('cp204')) account_subtype = 'tax_payable';\n    else if (n.includes('loan') || n.includes('hire purchase') || n.includes('financing')) account_subtype = 'borrowing';\n  }\n  return { account_type, account_subtype, cashflow_bucket, is_current };\n};\n\nconst coa = [], gl = [];\nfor (const r of rowsOf(tbResp)) {\n  const code = String(r[F.tb.accountCode] ?? '').trim();\n  if (!code) continue;\n  const name = String(r[F.tb.accountName] ?? code);\n  coa.push({\n    entity_code: cfg.entity_code, account_code: code, name, ...classify(r[F.tb.accountType], name),\n    parent_account_code: r[F.tb.parent] ? String(r[F.tb.parent]) : null,\n    source_account_type: r[F.tb.accountType] ?? null, is_active: true,\n  });\n  gl.push({\n    entity_code: cfg.entity_code, period_start: cfg.period_start, account_code: code,\n    debit: num(r[F.tb.debit]), credit: num(r[F.tb.credit]), closing_balance: num(r[F.tb.closing]),\n  });\n}\nconst aging = (resp, codeField) => rowsOf(resp).map((r) => ({\n  entity_code: cfg.entity_code, as_of_date: cfg.as_of_date,\n  counterparty_code: String(r[codeField] ?? '').trim(),\n  counterparty_name: String(r[F.aging.name] ?? r[codeField]),   // business name only (no contact persons)\n  currency: r[F.aging.currency] ?? 'MYR',\n  bucket_current: num(r[F.aging.current]), bucket_30: num(r[F.aging.b30]), bucket_60: num(r[F.aging.b60]),\n  bucket_90: num(r[F.aging.b90]), bucket_120_plus: num(r[F.aging.b120]),\n})).filter((x) => x.counterparty_code);\n\nconst ar = aging(arResp, F.aging.debtorCode);\nconst ap = aging(apResp, F.aging.creditorCode);\nconst tbNet = Math.round(gl.reduce((s, x) => s + x.debit - x.credit, 0) * 100) / 100;  // must be 0.00\n\nreturn { json: {\n  entity_code: cfg.entity_code, run_id: runId,\n  periods: [{ entity_code: cfg.entity_code, period_start: cfg.period_start, period_end: cfg.period_end }],\n  coa, gl, ar, ap,\n  tb_net: tbNet,\n  rows_extracted: gl.length + ar.length + ap.length,\n} };"
+      },
+      "id": "64f009af-eaa8-4298-8275-78c3a396f5d0",
+      "name": "Map to warehouse schema",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        300
+      ],
+      "onError": "continueErrorOutput",
+      "notes": "Field map F is a placeholder (TODO-VERIFY). Account classification set on insert only.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "with ins as (\n  insert into public.chart_of_accounts\n    (entity_id, account_code, name, account_type, account_subtype, cashflow_bucket, is_current,\n     parent_account_code, source_account_type, is_active, source_loaded_at)\n  select e.id, r.account_code, r.name, r.account_type::public.account_type, r.account_subtype,\n         r.cashflow_bucket::public.cashflow_bucket, r.is_current, r.parent_account_code,\n         r.source_account_type, coalesce(r.is_active, true), now()\n  from jsonb_to_recordset($1::jsonb) as r(\n         entity_code text, account_code text, name text, account_type text, account_subtype text,\n         cashflow_bucket text, is_current boolean, parent_account_code text, source_account_type text, is_active boolean)\n  join public.entities e on e.code = r.entity_code\n  on conflict (entity_id, account_code) do update\n    set name = excluded.name, parent_account_code = excluded.parent_account_code,\n        source_account_type = excluded.source_account_type, is_active = excluded.is_active, source_loaded_at = now()\n  returning 1)\nselect count(*)::int as upserted from ins;",
+        "options": {
+          "queryReplacement": "={{ [ JSON.stringify($json.coa) ] }}"
+        }
+      },
+      "id": "00240eed-042e-40ee-a853-06df76b0b933",
+      "name": "Upsert chart_of_accounts",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1920,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput",
+      "notes": "Classification columns only set on INSERT so finance overrides persist.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "with ins as (\n  insert into public.fiscal_periods (entity_id, fiscal_year, period_no, period_start, period_end, label)\n  select e.id,\n         case when extract(month from r.period_start) > e.fiscal_year_end_month\n              then extract(year from r.period_start)::int + 1 else extract(year from r.period_start)::int end,\n         ((extract(month from r.period_start)::int - e.fiscal_year_end_month - 1 + 12) % 12) + 1,\n         r.period_start, r.period_end, to_char(r.period_start, 'Mon YYYY')\n  from jsonb_to_recordset($1::jsonb) as r(entity_code text, period_start date, period_end date)\n  join public.entities e on e.code = r.entity_code\n  on conflict (entity_id, period_start) do nothing\n  returning 1)\nselect count(*)::int as upserted from ins;",
+        "options": {
+          "queryReplacement": "={{ [ JSON.stringify($('Map to warehouse schema').item.json.periods) ] }}"
+        }
+      },
+      "id": "bc7cf939-511f-4d87-a62a-fad23da48618",
+      "name": "Upsert fiscal_periods",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2160,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput",
+      "notes": "FY / period number derived from entities.fiscal_year_end_month (differs per entity).",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "with ins as (\n  insert into public.gl_balances\n    (entity_id, period_id, account_id, debit, credit, closing_balance, source_loaded_at, ingestion_run_id)\n  select e.id, p.id, c.id, r.debit, r.credit, r.closing_balance, now(), $2::uuid\n  from jsonb_to_recordset($1::jsonb) as r(\n         entity_code text, period_start date, account_code text, debit numeric, credit numeric, closing_balance numeric)\n  join public.entities e on e.code = r.entity_code\n  join public.fiscal_periods p on p.entity_id = e.id and p.period_start = r.period_start\n  join public.chart_of_accounts c on c.entity_id = e.id and c.account_code = r.account_code\n  on conflict (entity_id, period_id, account_id) do update\n    set debit = excluded.debit, credit = excluded.credit, closing_balance = excluded.closing_balance,\n        source_loaded_at = now(), ingestion_run_id = excluded.ingestion_run_id\n  returning 1)\nselect count(*)::int as upserted from ins;",
+        "options": {
+          "queryReplacement": "={{ [ JSON.stringify($('Map to warehouse schema').item.json.gl), $('Map to warehouse schema').item.json.run_id ] }}"
+        }
+      },
+      "id": "5ef1d44d-f84a-4f3a-bb87-9514d6cf5f14",
+      "name": "Upsert gl_balances",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2400,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "with ins as (\n  insert into public.ar_aging\n    (entity_id, as_of_date, counterparty_code, counterparty_name, currency,\n     bucket_current, bucket_30, bucket_60, bucket_90, bucket_120_plus, source_loaded_at, ingestion_run_id)\n  select e.id, r.as_of_date, r.counterparty_code, r.counterparty_name, coalesce(r.currency, 'MYR'),\n         r.bucket_current, r.bucket_30, r.bucket_60, r.bucket_90, r.bucket_120_plus, now(), $2::uuid\n  from jsonb_to_recordset($1::jsonb) as r(\n         entity_code text, as_of_date date, counterparty_code text, counterparty_name text, currency text,\n         bucket_current numeric, bucket_30 numeric, bucket_60 numeric, bucket_90 numeric, bucket_120_plus numeric)\n  join public.entities e on e.code = r.entity_code\n  on conflict (entity_id, as_of_date, counterparty_code) do update\n    set counterparty_name = excluded.counterparty_name, currency = excluded.currency,\n        bucket_current = excluded.bucket_current, bucket_30 = excluded.bucket_30, bucket_60 = excluded.bucket_60,\n        bucket_90 = excluded.bucket_90, bucket_120_plus = excluded.bucket_120_plus,\n        source_loaded_at = now(), ingestion_run_id = excluded.ingestion_run_id\n  returning 1)\nselect count(*)::int as upserted from ins;",
+        "options": {
+          "queryReplacement": "={{ [ JSON.stringify($('Map to warehouse schema').item.json.ar), $('Map to warehouse schema').item.json.run_id ] }}"
+        }
+      },
+      "id": "b4c74f56-2103-4a8e-903e-3b5577371ce7",
+      "name": "Upsert ar_aging",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2640,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput",
+      "notes": "Empty array on non-latest-month items -> 0 rows, no error.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "with ins as (\n  insert into public.ap_aging\n    (entity_id, as_of_date, counterparty_code, counterparty_name, currency,\n     bucket_current, bucket_30, bucket_60, bucket_90, bucket_120_plus, source_loaded_at, ingestion_run_id)\n  select e.id, r.as_of_date, r.counterparty_code, r.counterparty_name, coalesce(r.currency, 'MYR'),\n         r.bucket_current, r.bucket_30, r.bucket_60, r.bucket_90, r.bucket_120_plus, now(), $2::uuid\n  from jsonb_to_recordset($1::jsonb) as r(\n         entity_code text, as_of_date date, counterparty_code text, counterparty_name text, currency text,\n         bucket_current numeric, bucket_30 numeric, bucket_60 numeric, bucket_90 numeric, bucket_120_plus numeric)\n  join public.entities e on e.code = r.entity_code\n  on conflict (entity_id, as_of_date, counterparty_code) do update\n    set counterparty_name = excluded.counterparty_name, currency = excluded.currency,\n        bucket_current = excluded.bucket_current, bucket_30 = excluded.bucket_30, bucket_60 = excluded.bucket_60,\n        bucket_90 = excluded.bucket_90, bucket_120_plus = excluded.bucket_120_plus,\n        source_loaded_at = now(), ingestion_run_id = excluded.ingestion_run_id\n  returning 1)\nselect count(*)::int as upserted from ins;",
+        "options": {
+          "queryReplacement": "={{ [ JSON.stringify($('Map to warehouse schema').item.json.ap), $('Map to warehouse schema').item.json.run_id ] }}"
+        }
+      },
+      "id": "ec219426-9786-4677-9037-7fe5e784baa0",
+      "name": "Upsert ap_aging",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2880,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "update public.ingestion_runs\n   set finished_at = now(),\n       status = case when $2::numeric = 0 then 'success' else 'partial' end::public.ingestion_status,\n       rows_extracted = $3::int,\n       rows_upserted = $4::int,\n       error_message = case when $2::numeric = 0 then null else 'trial balance movements do not net to zero: ' || $2 end\n where id = $1::uuid\n returning id, status;",
+        "options": {
+          "queryReplacement": "={{ [ $('Map to warehouse schema').item.json.run_id, $('Map to warehouse schema').item.json.tb_net, $('Map to warehouse schema').item.json.rows_extracted, ($('Upsert chart_of_accounts').item.json.upserted + $('Upsert gl_balances').item.json.upserted + $('Upsert ar_aging').item.json.upserted + $('Upsert ap_aging').item.json.upserted) ] }}"
+        }
+      },
+      "id": "70e3998c-2bd2-400d-9f60-19743271de1b",
+      "name": "Finish run",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3120,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput",
+      "notes": "status = partial when the TB does not balance (pull incomplete).",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "update public.ingestion_runs\n   set finished_at = now(), status = 'failed',\n       error_message = left($2, 4000)\n where id = $1::uuid\n returning id;",
+        "options": {
+          "queryReplacement": "={{ [ $('Start ingestion run').item.json.id, (typeof $json.error === 'string' ? $json.error : JSON.stringify($json.error ?? $json)) ] }}"
+        }
+      },
+      "id": "3206418a-325b-4455-b436-3caddf86ef68",
+      "name": "Mark run failed",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2160,
+        620
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_WAREHOUSE_CREDENTIAL_ID",
+          "name": "Supabase Finance Warehouse (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "notes": "Error branch: every HTTP / Code / Postgres node's error output lands here. The error text (no payload) is stored on the run row. Pair with an n8n Error Workflow for Slack/email alerts.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Daily 02:00 MYT": {
+      "main": [
+        [
+          {
+            "node": "Load entity config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load entity config": {
+      "main": [
+        [
+          {
+            "node": "Start ingestion run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start ingestion run": {
+      "main": [
+        [
+          {
+            "node": "Fetch trial balance",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch trial balance": {
+      "main": [
+        [
+          {
+            "node": "Latest month?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Latest month?": {
+      "main": [
+        [
+          {
+            "node": "Fetch debtor aging",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Map to warehouse schema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch debtor aging": {
+      "main": [
+        [
+          {
+            "node": "Fetch creditor aging",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch creditor aging": {
+      "main": [
+        [
+          {
+            "node": "Map to warehouse schema",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map to warehouse schema": {
+      "main": [
+        [
+          {
+            "node": "Upsert chart_of_accounts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert chart_of_accounts": {
+      "main": [
+        [
+          {
+            "node": "Upsert fiscal_periods",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert fiscal_periods": {
+      "main": [
+        [
+          {
+            "node": "Upsert gl_balances",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert gl_balances": {
+      "main": [
+        [
+          {
+            "node": "Upsert ar_aging",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert ar_aging": {
+      "main": [
+        [
+          {
+            "node": "Upsert ap_aging",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert ap_aging": {
+      "main": [
+        [
+          {
+            "node": "Finish run",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finish run": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Mark run failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "timezone": "Asia/Kuala_Lumpur",
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "executionTimeout": 1800,
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "pinData": {},
+  "active": false,
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "REPLACE_ON_IMPORT"
+  },
+  "tags": [
+    {
+      "name": "finance-dashboard"
+    }
+  ]
+}

@@ -1,27 +1,28 @@
 {
-  "name": "packaging-automation-landing-page",
+  "name": "bk-group-website",
   "version": "1.0.0",
-  "description": "End-of-Line Packaging Automation Company Landing Page",
+  "description": "B & K Group website: advisory, academy and programme calendar",
   "main": "index.html",
   "scripts": {
     "start": "npx live-server --port=5500",
     "build": "npm run minify:css && npm run minify:js",
-    "minify:css": "cleancss -o css/main.min.css css/main.css css/pages.css css/responsive.css css/animations.css css/chatbot.css",
-    "minify:js": "terser js/main.js js/animations.js js/supabase.js js/chatbot.js -o js/bundle.min.js",
+    "minify:css": "cleancss -o css/main.min.css css/main.css css/pages.css css/responsive.css css/animations.css css/chatbot.css css/cinematic.css",
+    "minify:js": "terser js/supabase.js js/animations.js js/chatbot.js js/main.js js/cinematic.js js/programmes.js -o js/bundle.min.js",
     "lint:html": "htmlhint *.html",
     "optimize:images": "imagemin assets/images/* --out-dir=assets/images/optimized",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
-    "packaging",
-    "automation",
-    "manufacturing",
-    "landing-page",
+    "tax",
     "malaysia",
-    "medical-devices",
-    "pharmaceutical"
+    "advisory",
+    "training",
+    "hrd-corp",
+    "cpd",
+    "e-invoice",
+    "sst"
   ],
-  "author": "Your Company Name",
+  "author": "B & K Group",
   "license": "MIT",
   "devDependencies": {
     "clean-css-cli": "^5.6.2",
@@ -32,10 +33,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/packaging-automation-landing-page.git"
+    "url": "https://github.com/ckleow79-bot/landing-page.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/packaging-automation-landing-page/issues"
+    "url": "https://github.com/ckleow79-bot/landing-page/issues"
   },
-  "homepage": "https://yourcompany.com"
+  "homepage": "https://bkcorporate.com"
 }

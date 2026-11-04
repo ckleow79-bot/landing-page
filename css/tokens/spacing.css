@@ -1,0 +1,44 @@
+:root {
+  /* Spacing scale — 4px base */
+  --sp-0:  0; /* @kind spacing */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* Radii — friendly, rounded but not bubbly */
+  --r-xs:  6px;
+  --r-sm:  10px;
+  --r-md:  14px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+  --r-pill: 999px;
+
+  /* Borders */
+  --bw-hair: 1px;
+  --bw-base: 1.5px;
+  --bw-bold: 2.5px;
+
+  /* Shadows — soft, warm-tinted, low spread */
+  --shadow-xs: 0 1px 2px rgba(21,33,59,0.06);
+  --shadow-sm: 0 2px 6px rgba(21,33,59,0.08);
+  --shadow-md: 0 6px 18px rgba(21,33,59,0.10);
+  --shadow-lg: 0 16px 40px rgba(21,33,59,0.14);
+  /* Playful "lifted" offset shadow for cards/stickers */
+  --shadow-pop: 4px 4px 0 var(--bk-ink);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+  --dur-fast: 120ms; /* @kind other */
+  --dur-base: 200ms; /* @kind other */
+  --dur-slow: 360ms; /* @kind other */
+}

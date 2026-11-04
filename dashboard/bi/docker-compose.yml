@@ -1,0 +1,81 @@
+# Metabase (Finance Dept view) with its OWN application database in a local
+# Postgres container. The Supabase warehouse is added inside Metabase as a
+# data source (Admin > Databases) using the read-only role from README.md;
+# it is never used as Metabase's application DB.
+#
+#   cp ../.env.example ../.env   # fill METABASE_* and MB_SITE_URL
+#   docker compose --env-file ../.env up -d
+#   open http://localhost:3000
+#
+# Put a TLS-terminating reverse proxy (Caddy/nginx) in front before exposing
+# this beyond the office network / VPN.
+
+name: bk-finance-bi
+
+services:
+  metabase-db:
+    image: postgres:16-alpine
+    container_name: bk-metabase-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${METABASE_APPDB_USER:-metabase}
+      POSTGRES_PASSWORD: ${METABASE_APPDB_PASSWORD:?set METABASE_APPDB_PASSWORD in .env}
+      POSTGRES_DB: ${METABASE_APPDB_NAME:-metabase_app}
+      TZ: ${TZ:-Asia/Kuala_Lumpur}
+    volumes:
+      - metabase-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${METABASE_APPDB_USER:-metabase} -d ${METABASE_APPDB_NAME:-metabase_app}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [bi]
+
+  metabase:
+    image: metabase/metabase:${METABASE_VERSION:-v0.52.8}
+    container_name: bk-metabase
+    restart: unless-stopped
+    depends_on:
+      metabase-db:
+        condition: service_healthy
+    ports:
+      - "${METABASE_PORT:-3000}:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_HOST: metabase-db
+      MB_DB_PORT: "5432"
+      MB_DB_DBNAME: ${METABASE_APPDB_NAME:-metabase_app}
+      MB_DB_USER: ${METABASE_APPDB_USER:-metabase}
+      MB_DB_PASS: ${METABASE_APPDB_PASSWORD:?set METABASE_APPDB_PASSWORD in .env}
+      MB_SITE_URL: ${MB_SITE_URL:-http://localhost:3000}
+      JAVA_TIMEZONE: ${JAVA_TIMEZONE:-Asia/Kuala_Lumpur}
+      TZ: ${TZ:-Asia/Kuala_Lumpur}
+      # PDPA / data minimisation: keep Metabase from phoning home or embedding third parties
+      MB_ANON_TRACKING_ENABLED: "false"
+      MB_CHECK_FOR_UPDATES: "false"
+      MB_ENABLE_PUBLIC_SHARING: "false"
+      MB_ENABLE_EMBEDDING: "false"
+      MB_SESSION_TIMEOUT: '{"amount":8,"unit":"hours"}'
+      MB_PASSWORD_COMPLEXITY: strong
+      MB_PASSWORD_LENGTH: "12"
+      MB_JETTY_HOST: 0.0.0.0
+      # Dashboards cache for 5 minutes; nightly ingestion means fresher is pointless
+      MB_ENABLE_QUERY_CACHING: "true"
+      MB_QUERY_CACHING_MIN_TTL: "300"
+    volumes:
+      - metabase-plugins:/plugins
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    networks: [bi]
+
+volumes:
+  metabase-db-data:
+  metabase-plugins:
+
+networks:
+  bi:
+    driver: bridge
