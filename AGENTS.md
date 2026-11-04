@@ -66,12 +66,11 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 - Hamburger menu on mobile
 - Touch-friendly tap targets (min 44px)
 
-### 2. Animations (Anime.js)
-- Hero text character animation
-- Scroll-triggered section reveals
-- Stagger animations for grids
-- Micro-interactions on hover
-- Performance optimized with will-change
+### 2. Motion (GSAP + ScrollTrigger + Lenis, js/cinematic.js)
+- Hero word reveal, parallax layers, pointer-reactive orbs
+- Pinned horizontal 'pillars' track (desktop), stacked on mobile
+- Counters, sticky story steps, staggered reveals, magnetic CTAs, film grain
+- Disabled under prefers-reduced-motion; content fully visible without JS
 
 ### 3. Supabase Integration
 - Contact form submissions
@@ -99,10 +98,10 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 --primary-color: #1a365d;      /* Navy blue */
 --primary-light: #2c5282;
 --primary-dark: #0f2942;
---secondary-color: #ed8936;    /* Orange */
---secondary-light: #f6ad55;
---secondary-dark: #c05621;
---accent-color: #38a169;       /* Green */
+--secondary-color: #c9a227;    /* Gold */
+--secondary-light: #e2c158;
+--secondary-dark: #9a7b17;
+--accent-color: #0f766e;       /* Teal */
 ```
 
 ## Important Files to Update
@@ -113,16 +112,8 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 3. **Domain**: `bkgroup.my` is a placeholder in canonical/OG tags, sitemap.xml, robots.txt, structured-data/
 4. **Brand colours**: palette assumed navy `#1a365d` + gold `#c9a227`; adjust `:root` in css/main.css if brand guide differs
 
-3. **assets/images/**: Add actual images:
-   - hero-bg.jpg
-   - facility.jpg
-   - project-*.jpg (multiple)
-   - team-*.jpg (multiple)
-   - product-*.jpg (multiple)
-   - favicon.ico
-
-4. **sitemap.xml**: Update URLs to your domain
-5. **robots.txt**: Update sitemap URL
+5. **assets/images/**: replace placeholder `logo.png`; add `og-image.jpg` (1200x630), `favicon.ico`, leadership photo
+6. **GA4**: replace `GA_MEASUREMENT_ID` in every page head
 
 ### SEO Configuration:
 - Update Open Graph image URLs
@@ -194,7 +185,7 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 - Check browser console for errors
 
 **Animations not working:**
-- Ensure Anime.js library loaded
+- Ensure js/vendor/gsap.min.js, ScrollTrigger.min.js and lenis.min.js load (check Network tab)
 - Check for JavaScript errors in console
 - Verify CSS animations file is linked
 
