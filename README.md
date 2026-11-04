@@ -9,8 +9,11 @@ npm start          # http://localhost:5500
 npm run build      # minified CSS/JS bundles
 ```
 
+## Brand
+The site implements the **B&K Academy Design System** (`ckleow79-bot/bk-academy-design-system`). Tokens, signature moves and self-hosted fonts are vendored under `css/tokens/` and `assets/fonts/`; the Ascend logo set is in `assets/brand/`. `css/brand.css` maps the components onto the system. Change the brand in the design-system repo, then re-copy the token files.
+
 ## Stack
-- HTML/CSS/vanilla JS. Motion: GSAP 3 + ScrollTrigger + Lenis, self-hosted in `js/vendor/`. Degrades to static content when JS is unavailable or `prefers-reduced-motion` is set.
+- HTML/CSS/vanilla JS. Type: Bricolage Grotesque, Public Sans, JetBrains Mono (self-hosted). Motion: GSAP 3 + ScrollTrigger + Lenis, self-hosted in `js/vendor/`. Degrades to static content when JS is unavailable or `prefers-reduced-motion` is set.
 - Supabase: contact form, newsletter, chatbot transcripts, **programmes** and **programme_registrations** (see `migrations/`).
 - Programme calendar reads Supabase first and falls back to `data/programmes.json`.
 

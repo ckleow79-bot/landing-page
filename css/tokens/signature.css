@@ -1,0 +1,162 @@
+/* ============================================================
+   B&K SIGNATURE MOVES — the ownable gestures that make material
+   unmistakably B&K. Use at least one per artifact; max two per view.
+   1. Pop elevation   — hard offset shadow (emphasis & interaction)
+   2. Marker highlight— highlighter swipe behind THE word/number
+   3. Ascend chevron  — the logo glyph recurs as bullet/delta/pager
+   4. Hero number     — oversized display digits + mono unit
+   5. Module coin     — stamped circular chip for module/step numbers
+   ============================================================ */
+
+:root {
+  /* pop scale (base --shadow-pop lives in tokens/spacing.css) */
+  --shadow-pop-sm: 2px 2px 0 var(--bk-ink);
+  --shadow-pop-lg: 8px 8px 0 var(--bk-ink);
+  /* the ascend glyph as a maskable asset (tint with background-color) */
+  --bk-chev-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5 12 5.5l7 7' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 19.5l7-7 7 7' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); /* @kind other */
+}
+[data-theme="dark"] {
+  --shadow-pop-sm: 2px 2px 0 #060A12;
+  --shadow-pop-lg: 8px 8px 0 #060A12;
+}
+[data-theme="dark"] .bk-pop,
+[data-theme="dark"] .bk-pop-sm,
+[data-theme="dark"] .bk-pop-lg,
+[data-theme="dark"] .bk-coin { border-color: #060A12; }
+
+/* 1 · POP — put it on the ONE element that must jump off the page */
+.bk-pop    { border: var(--bw-bold) solid var(--bk-ink); box-shadow: var(--shadow-pop);    border-radius: var(--r-md); background: var(--surface-card); }
+.bk-pop-sm { border: 2px solid var(--bk-ink);            box-shadow: var(--shadow-pop-sm); border-radius: var(--r-sm); background: var(--surface-card); }
+.bk-pop-lg { border: 3px solid var(--bk-ink);            box-shadow: var(--shadow-pop-lg); border-radius: var(--r-lg); background: var(--surface-card); }
+
+/* 2 · MARKER — inline highlighter swipe. Amber by default. */
+.bk-marker {
+  background-image: linear-gradient(100deg,
+    transparent 1.5%,
+    color-mix(in srgb, var(--bk-amber) 90%, #fff) 3%,
+    var(--bk-amber) 55%,
+    color-mix(in srgb, var(--bk-amber) 78%, #fff) 97%,
+    transparent 98.5%);
+  background-repeat: no-repeat;
+  background-size: 100% 46%;
+  background-position: 0 74%;
+  padding: 0 0.14em;
+  margin: 0 -0.05em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.bk-marker--teal  { background-image: linear-gradient(100deg, transparent 1.5%, color-mix(in srgb, var(--bk-teal) 55%, #fff) 3%, color-mix(in srgb, var(--bk-teal) 45%, #fff) 55%, color-mix(in srgb, var(--bk-teal) 38%, #fff) 97%, transparent 98.5%); }
+.bk-marker--lime  { background-image: linear-gradient(100deg, transparent 1.5%, color-mix(in srgb, var(--bk-lime) 62%, #fff) 3%, color-mix(in srgb, var(--bk-lime) 52%, #fff) 55%, color-mix(in srgb, var(--bk-lime) 44%, #fff) 97%, transparent 98.5%); }
+.bk-marker--full  { background-size: 100% 88%; background-position: 0 55%; } /* block-out version */
+
+/* 3 · CHEVRON — inline glyph + list bullets + delta */
+.bk-chev {
+  display: inline-block; width: 0.85em; height: 0.85em; flex: none;
+  background-color: var(--accent);
+  -webkit-mask: var(--bk-chev-mask) center / contain no-repeat;
+          mask: var(--bk-chev-mask) center / contain no-repeat;
+}
+.bk-list { list-style: none; margin: 0; padding: 0; }
+.bk-list > li { position: relative; padding-left: 1.7em; }
+.bk-list > li + li { margin-top: 0.55em; }
+.bk-list > li::before {
+  content: ""; position: absolute; left: 0; top: 0.28em;
+  width: 1em; height: 1em; background-color: var(--accent);
+  -webkit-mask: var(--bk-chev-mask) center / contain no-repeat;
+          mask: var(--bk-chev-mask) center / contain no-repeat;
+}
+.bk-delta-up   { color: var(--bk-success); }
+.bk-delta-down { color: var(--bk-danger); }
+.bk-delta-up .bk-chev   { background-color: var(--bk-success); }
+.bk-delta-down .bk-chev { background-color: var(--bk-danger); transform: scaleY(-1); }
+
+/* 4 · HERO NUMBER — the one stat the room should remember */
+.bk-hero-num {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extra);
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: var(--ls-tight);
+  line-height: 0.95;
+  color: var(--text-strong);
+}
+.bk-hero-num .bk-unit {
+  font-family: var(--font-mono);
+  font-size: 0.3em;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0;
+  margin-left: 0.18em;
+  color: var(--text-muted);
+}
+
+/* 5 · COIN — stamped module/step number */
+.bk-coin {
+  display: inline-grid; place-items: center;
+  min-width: 2.3em; height: 2.3em; padding: 0 0.4em;
+  border-radius: var(--r-pill);
+  border: 2px solid var(--bk-ink);
+  background: var(--bk-amber);
+  box-shadow: var(--shadow-pop-sm);
+  font-family: var(--font-display); font-weight: var(--fw-extra);
+  color: var(--bk-ink); line-height: 1;
+}
+.bk-coin--blue  { background: var(--bk-blue);  color: #fff; }
+.bk-coin--paper { background: var(--surface-card); }
+
+/* EYEBROW — standardized kicker (was re-implemented per artifact) */
+.bk-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6em;
+  font-family: var(--font-body); font-weight: var(--fw-bold);
+  font-size: var(--fs-xs); text-transform: uppercase;
+  letter-spacing: var(--ls-eyebrow); color: var(--accent);
+}
+.bk-eyebrow .bk-chev { width: 1em; height: 1em; }
+
+/* CHOICE CHIP — single-select pill group (surveys, quizzes, filters).
+   Selection is attribute-driven so DC templates stay hole-free:
+   <div class="bk-chips" data-accent="teal"><button class="bk-chip" data-on="true">…</button></div> */
+.bk-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.bk-chips[data-accent="teal"]   { --accent: var(--bk-teal); }
+.bk-chips[data-accent="violet"] { --accent: var(--bk-violet); }
+.bk-chip {
+  border: 2px solid var(--border-base);
+  background: var(--surface-card);
+  color: var(--text-body);
+  font-family: var(--font-body); font-weight: var(--fw-semibold); font-size: 15px;
+  padding: 10px 18px; border-radius: var(--r-pill); cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.bk-chip:hover { border-color: var(--border-strong); }
+.bk-chip[data-on="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-card));
+}
+
+/* ============================================================
+   MOTION — systemized (see the "Motion" Brand card).
+   Two registers, Carbon-style:
+   · PRODUCTIVE — --ease-out, 120–200ms. Hover, press, reveals. Subtle, out of the way.
+   · EXPRESSIVE — --ease-bounce, 300–360ms. Pop stickers, toasts, correct answers, hero stats.
+   Rules: always gate on prefers-reduced-motion; never infinite loops on content;
+   entrance animations start FROM hidden so print/exports show the end state.
+   ============================================================ */
+@keyframes bk-rise   { from { opacity: 0; transform: translateY(16px) } }
+@keyframes bk-pop-in { 0% { opacity: 0; transform: scale(.9) rotate(-2deg) } 100% { opacity: 1 } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bk-anim-rise { animation: bk-rise var(--dur-slow) var(--ease-out) both; }
+  .bk-anim-pop  { animation: bk-pop-in var(--dur-slow) var(--ease-bounce) both; }
+  /* stagger children ~70ms apart */
+  .bk-anim-stagger > * { animation: bk-rise var(--dur-slow) var(--ease-out) both; }
+  .bk-anim-stagger > :nth-child(2) { animation-delay: 70ms; }
+  .bk-anim-stagger > :nth-child(3) { animation-delay: 140ms; }
+  .bk-anim-stagger > :nth-child(4) { animation-delay: 210ms; }
+  .bk-anim-stagger > :nth-child(5) { animation-delay: 280ms; }
+  .bk-anim-stagger > :nth-child(n+6) { animation-delay: 350ms; }
+
+  /* DEPTH ("3D") — B&K depth is layered paper, not WebGL: pop elevation plus
+     this micro-tilt on interactive popped elements. Keep angles ≤ 3°. */
+  .bk-tilt { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); will-change: transform; }
+  .bk-tilt:hover { transform: perspective(700px) rotateX(2.5deg) rotateY(-2deg) translateY(-2px); }
+  .bk-tilt:active { transform: perspective(700px) rotateX(0deg) rotateY(0deg) translateY(0); }
+}

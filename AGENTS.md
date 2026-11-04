@@ -101,13 +101,12 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 
 ## CSS Variables (Main Colors)
 ```css
---primary-color: #13305A;      /* Navy */
---primary-light: #1f4478;
---primary-dark: #0B1F3A;       /* Deep navy */
---secondary-color: #F2A33A;    /* Saffron */
---secondary-light: #f7bd6b;
---secondary-dark: #c67d14;
---accent-color: #E8664A;       /* Coral */
+/* aliases in css/main.css -> design-system tokens in css/tokens/colors.css */
+--primary-color: var(--bk-blue);     /* #3457E5 brand blue */
+--primary-dark:  var(--bk-ink);      /* #15213B deep navy ink */
+--secondary-color: var(--bk-amber);  /* #FFB23E fills only */
+--accent-color:  var(--bk-teal);     /* #15B5A6 */
+--bg-primary:    var(--surface-page);/* #FCFBF8 warm paper */
 ```
 
 ## Important Files to Update
@@ -116,7 +115,7 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 1. **js/supabase.js**: confirm Supabase URL/anon key; apply `migrations/001` and `002`
 2. **Remaining placeholders**: Kuching venue for 23 Nov 2026 (data/programmes.json). HRD Corp TP registration for B & K Training Services PLT: serial LLP0046779LGN, approved 29 Oct 2026, expires 28 Oct 2027 (renewal reminder).
 3. **Domain**: `bkcorporate.com` is a placeholder in canonical/OG tags, sitemap.xml, robots.txt, structured-data/
-4. **Brand colours**: Style A "Boardroom Editorial" from the 29 Oct 2026 website outline: deep navy `#0B1F3A`, navy `#13305A`, saffron `#F2A33A`, coral `#E8664A`, cream `#F7F3EA`. Display type Fraunces (serif), body Inter.
+4. **Brand**: the B&K Academy Design System (repo `ckleow79-bot/bk-academy-design-system`) is the source of truth. Tokens are vendored in `css/tokens/` (colors, typography, spacing, fonts, theme-dark, signature); fonts self-hosted in `assets/fonts/`; Ascend logo set in `assets/brand/`. Site variables in `css/main.css` are aliases onto those tokens. Rules: paper `#FCFBF8` not white, ink `#15213B` for text, brand blue `#3457E5` as the only action colour, amber is fill-only (amber text uses `--bk-warning`), max 2 signature moves per view, sentence case for headings and buttons, no heavy gradients.
 
 5. **assets/images/**: replace placeholder `logo.png`; add `og-image.jpg` (1200x630), `favicon.ico`, leadership photo
 6. **GA4**: replace `GA_MEASUREMENT_ID` in every page head

@@ -4,51 +4,49 @@
    ============================================ */
 
 /* CSS Variables */
+/* Variables are aliases onto the B&K Academy Design System tokens (css/tokens/*).
+   Edit the tokens, not these aliases. */
 :root {
-    /* Primary Colors */
-    --primary-color: #13305A;
-    --primary-light: #1f4478;
-    --primary-dark: #0B1F3A;
-    
-    /* Secondary Colors */
-    --secondary-color: #F2A33A;
-    --secondary-light: #f7bd6b;
-    --secondary-dark: #c67d14;
-    
-    /* Accent Colors */
-    --accent-color: #E8664A;
-    --accent-light: #f0876f;
-    
-    /* Neutral Colors */
-    --white: #ffffff;
-    --gray-50: #f7fafc;
-    --gray-100: #edf2f7;
-    --gray-200: #e2e8f0;
-    --gray-300: #cbd5e0;
-    --gray-400: #a0aec0;
-    --gray-500: #718096;
-    --gray-600: #4a5568;
-    --gray-700: #2d3748;
-    --gray-800: #1a202c;
-    --gray-900: #171923;
-    
-    /* Text Colors */
-    --text-primary: var(--gray-900);
-    --text-secondary: var(--gray-600);
-    --text-light: var(--gray-400);
-    
-    /* Background Colors */
-    --bg-primary: var(--white);
-    --bg-secondary: var(--gray-50);
-    --bg-dark: var(--primary-color);
-    
-    /* Border Colors */
-    --border-color: var(--gray-200);
-    --border-light: var(--gray-100);
-    
-    /* Typography */
-    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+    /* Primary = brand blue (single action colour); dark = ink */
+    --primary-color: var(--bk-blue);
+    --primary-light: #5B7CF0;
+    --primary-dark: var(--bk-ink);
+
+    /* Secondary = amber (fills/accents only; amber TEXT on light uses --bk-warning) */
+    --secondary-color: var(--bk-amber);
+    --secondary-light: #FFC66B;
+    --secondary-dark: var(--bk-warning);
+
+    /* Accent = teal */
+    --accent-color: var(--bk-teal);
+    --accent-light: #5CD3C7;
+
+    /* Neutrals (warm paper scale) */
+    --white: var(--bk-white);
+    --gray-50: var(--bk-paper);
+    --gray-100: var(--bk-n-50);
+    --gray-200: var(--bk-n-100);
+    --gray-300: var(--bk-n-200);
+    --gray-400: var(--bk-n-300);
+    --gray-500: var(--bk-n-500);
+    --gray-600: var(--bk-n-700);
+    --gray-700: var(--bk-n-700);
+    --gray-800: var(--bk-n-900);
+    --gray-900: var(--bk-ink);
+
+    --text-primary: var(--text-strong);
+    --text-secondary: var(--text-body);
+    --text-light: var(--text-muted);
+
+    --bg-primary: var(--surface-page);
+    --bg-secondary: var(--surface-sunken);
+    --bg-dark: var(--bk-ink);
+
+    --border-color: var(--border-base);
+    --border-light: var(--border-soft);
+
+    /* Typography (families from tokens/typography.css) */
+    --font-primary: var(--font-body);
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
@@ -90,17 +88,17 @@
     --spacing-24: 6rem;
     
     /* Border Radius */
-    --radius-sm: 0.125rem;
-    --radius-md: 0.375rem;
-    --radius-lg: 0.5rem;
-    --radius-xl: 0.75rem;
+    --radius-sm: var(--r-xs);
+    --radius-md: var(--r-sm);
+    --radius-lg: var(--r-md);
+    --radius-xl: var(--r-lg);
     --radius-2xl: 1rem;
-    --radius-full: 9999px;
+    --radius-full: var(--r-pill);
     
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 2px 6px rgba(21,33,59,0.08);
+    --shadow-md: 0 6px 18px rgba(21,33,59,0.10);
+    --shadow-lg: 0 16px 40px rgba(21,33,59,0.14);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     
@@ -236,14 +234,16 @@ p {
     text-decoration: none;
 }
 
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: var(--ls-tight); }
+
 .btn-primary {
-    background-color: var(--secondary-color);
+    background-color: var(--bk-blue);
     color: var(--white);
     box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
-    background-color: var(--secondary-dark);
+    background-color: var(--bk-blue-700);
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
