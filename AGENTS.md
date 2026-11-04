@@ -87,7 +87,11 @@ Registrations land in `programme_registrations` (anon insert requires `consent_p
 - Email capture for offline mode
 - Local storage + Supabase sync
 
-### 5. SEO
+### 5. Deployment config
+- `netlify.toml`: clean URLs, 301s from the old template pages, 404 for `/dashboard/*`, `/migrations/*` and `*.md`, security headers incl. CSP (allows Supabase, GA4, Google Fonts, cdnjs Font Awesome), long cache for `js/vendor/*`.
+- Pages added from the 29 Oct outline: visitor paths on Home (`.paths`), "My Story" scroll timeline on About (`#story`).
+
+### 6. SEO
 - Semantic HTML5
 - Meta tags on all pages
 - Open Graph tags

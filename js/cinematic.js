@@ -147,6 +147,17 @@
         if (steps[0]) steps[0].classList.add('is-active');
     }
 
+    /* ---------- Timeline ---------- */
+    function initTimeline() {
+        const tl = document.querySelector('.tl');
+        if (!tl) return;
+        const bar = tl.querySelector('.tl-line i');
+        if (bar) gsap.to(bar, { height: '100%', ease: 'none', scrollTrigger: { trigger: tl, start: 'top 60%', end: 'bottom 60%', scrub: 0.4 } });
+        tl.querySelectorAll('.tl-item').forEach(item => {
+            ScrollTrigger.create({ trigger: item, start: 'top 62%', end: 'bottom 30%', onToggle: self => item.classList.toggle('is-active', self.isActive) });
+        });
+    }
+
     /* ---------- Generic reveals ---------- */
     function initReveals() {
         document.querySelectorAll('.reveal:not([data-revealed]), .reveal-up:not([data-revealed])').forEach(el => {
@@ -192,7 +203,7 @@
     };
 
     function boot() {
-        initHero(); initMarquee(); initPillars(); initCounters(); initStory(); initReveals(); initMagnetic();
+        initHero(); initMarquee(); initPillars(); initCounters(); initStory(); initTimeline(); initReveals(); initMagnetic();
         // components (header/footer) are injected async; re-scan when they land
         const obs = new MutationObserver(() => { initMagnetic(); });
         obs.observe(document.body, { childList: true, subtree: true });

@@ -1,0 +1,5 @@
+# Netlify also reads netlify.toml; this file is a fallback for drag-and-drop deploys
+/products.html   /advisory.html    301
+/projects.html   /programmes.html  301
+/blog.html       /insights.html    301
+/investors.html  /about.html       301
