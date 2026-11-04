@@ -20,7 +20,7 @@ html[data-lang="zh"] { --cjk: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB",
 html[data-lang="zh"] body { font-family: var(--font-body), var(--cjk); }
 html[data-lang="zh"] h1, html[data-lang="zh"] h2, html[data-lang="zh"] h3, html[data-lang="zh"] h4,
 html[data-lang="zh"] .as-title, html[data-lang="zh"] .section-title { font-family: var(--font-display), var(--cjk); letter-spacing: 0; }
-html[data-lang="zh"] .hero-cine h1 { line-height: 1.18; }
+html[data-lang="zh"] .hero-cine h1 { line-height: 1.18; font-size: clamp(2.1rem, 5vw, 4.5rem); }
 html[data-lang="zh"] p, html[data-lang="zh"] li { line-height: 1.75; }
 html[data-lang="zh"] .hero-kicker, html[data-lang="zh"] .marquee span { letter-spacing: .08em; }
 
