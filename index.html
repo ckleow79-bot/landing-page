@@ -2,6 +2,7 @@
 <html lang="en" class="has-gsap">
 <head>
     <meta charset="UTF-8">
+    <script>document.documentElement.classList.add('js')</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B &amp; K Group | Tax Advisory, Fractional CFO &amp; Professional Training, Kuala Lumpur</title>
     <meta name="description" content="Licensed tax agents (s.153 ITA 1967), fractional CFO services and HRD Corp claimable CPD programmes. B &amp; K Advisory PLT, B &amp; K Academy PLT, B &amp; K Training Services PLT, High Impact Training Services PLT.">
@@ -19,6 +20,7 @@
     <link rel="stylesheet" href="css/cinematic.css">
     <link rel="stylesheet" href="css/brand.css">
     <link rel="stylesheet" href="css/audit-story.css">
+    <link rel="stylesheet" href="css/features.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <meta property="og:title" content="B &amp; K Group | Tax Advisory, Fractional CFO &amp; Professional Training, Kuala Lumpur">
@@ -83,10 +85,10 @@
     <main>
         <!-- Cinematic Hero -->
         <section class="hero-cine" id="hero" data-theme-dark>
-            <div class="hero-layer layer-gradient"></div>
+            <div class="hero-layer layer-photo"><picture><source media="(max-width: 767px)" srcset="assets/images/training/hall-packed-800.webp"><img src="assets/images/training/hall-packed.webp" alt="" width="1600" height="900" fetchpriority="high"></picture></div>
+            <div class="hero-layer layer-shade"></div>
             <div class="hero-layer layer-grid"></div>
             <div class="hero-layer layer-orb"></div>
-            <div class="hero-layer layer-orb-2"></div>
             <div class="container">
                 <div class="hero-cine-content">
                     <p class="hero-kicker">B &amp; K Group · Kuala Lumpur</p>
@@ -103,6 +105,10 @@
                 </div>
             </div>
             <div class="hero-scroll-cue"><span></span>Scroll</div>
+            <div class="book" aria-hidden="true">
+                <div class="book-cover book-l"><div class="book-label"><img class="bl-mark" src="assets/brand/mark-white.svg" alt=""><span class="bl-name">B&amp;K Ledger</span><span class="bl-sub">Tax · Finance · Training</span></div><span class="book-clasp"></span></div>
+                <div class="book-cover book-r"><div class="book-label"><img class="bl-mark" src="assets/brand/mark-white.svg" alt=""><span class="bl-name">B&amp;K Ledger</span><span class="bl-sub">Tax · Finance · Training</span></div><span class="book-clasp"></span></div>
+            </div>
         </section>
 
         <!-- Trust strip -->
@@ -166,7 +172,8 @@
                             <a href="advisory.html#audit-story" class="btn btn-primary">Watch the audit story</a>
                             <a href="advisory.html#einvoice-review" class="btn btn-outline">e-Invoice review story</a>
                         </div>
-                        <a href="advisory.html#audit-check" class="at-link">Or take the 1-minute audit check &rarr;</a>
+                        <a href="advisory.html#audit-check" class="at-link">Take the 1-minute audit check &rarr;</a>
+                        <a href="advisory.html#einvoice-check" class="at-link">Take the 1-minute e-Invoice check &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -325,6 +332,7 @@
 
     <div id="footer-container"></div>
     <div id="chatbot-container"></div>
+    <script src="js/i18n.js"></script>
 
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>
@@ -338,5 +346,6 @@
     <script src="js/cinematic.js"></script>
     <script src="js/audit-story.js"></script>
     <script src="js/programmes.js"></script>
+    <script src="js/next-ribbon.js"></script>
 </body>
 </html>

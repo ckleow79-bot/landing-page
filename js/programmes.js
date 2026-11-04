@@ -20,10 +20,11 @@
         'bk-academy': { name: 'B & K Academy PLT', short: 'B & K Academy' }
     };
 
-    const fmtDate = new Intl.DateTimeFormat('en-MY', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' });
-    const fmtDay = new Intl.DateTimeFormat('en-MY', { day: '2-digit', timeZone: 'Asia/Kuala_Lumpur' });
-    const fmtMon = new Intl.DateTimeFormat('en-MY', { month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
-    const fmtTime = new Intl.DateTimeFormat('en-MY', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' });
+    const LOC = (window.BKi18n && window.BKi18n.lang === 'zh') ? 'zh-CN' : 'en-MY';
+    const fmtDate = new Intl.DateTimeFormat(LOC, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' });
+    const fmtDay = new Intl.DateTimeFormat(LOC, { day: '2-digit', timeZone: 'Asia/Kuala_Lumpur' });
+    const fmtMon = new Intl.DateTimeFormat(LOC, { month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
+    const fmtTime = new Intl.DateTimeFormat(LOC, { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' });
     const fmtMYR = new Intl.NumberFormat('en-MY', { style: 'currency', currency: 'MYR', maximumFractionDigits: 0 });
 
     let cache = null;
@@ -117,15 +118,15 @@
                     ${p.hrdc_claimable ? '<span class="prog-dot"></span><span class="prog-hrdc">HRD Corp claimable</span>' : ''}
                     ${badge(p)}
                 </div>
-                <h3 class="prog-title">${escapeHtml(p.title)}</h3>
-                ${p.subtitle ? `<p class="prog-subtitle">${escapeHtml(p.subtitle)}</p>` : ''}
+                <h3 class="prog-title" data-i18n-skip>${escapeHtml(p.title)}</h3>
+                ${p.subtitle ? `<p class="prog-subtitle" data-i18n-skip>${escapeHtml(p.subtitle)}</p>` : ''}
                 <ul class="prog-facts">
                     <li><i class="far fa-calendar"></i> ${dateRange(p)}, ${fmtTime.format(s)}</li>
                     <li><i class="fas fa-map-marker-alt"></i> ${escapeHtml(p.mode || '')}${p.venue ? ' · ' + escapeHtml(p.venue) : ''}</li>
                     ${p.cpd_hours ? `<li><i class="fas fa-certificate"></i> ${p.cpd_hours} CPD hours</li>` : ''}
                     ${p.language ? `<li><i class="fas fa-language"></i> ${escapeHtml(p.language)}</li>` : ''}
                 </ul>
-                ${highlights ? `<ul class="prog-highlights">${highlights}</ul>` : ''}
+                ${highlights ? `<ul class="prog-highlights" data-i18n-skip>${highlights}</ul>` : ''}
             </div>
             <div class="prog-aside">
                 ${feeLine(p)}
@@ -331,6 +332,16 @@
             if (i) { const p = data.list.find(x => x.slug === i.dataset.ics); if (p) downloadIcs(p); }
         });
         if (window.BKMotion && window.BKMotion.refresh) window.BKMotion.refresh();
+        // ?open=<slug> (from the next-programme ribbon): bring that card into view
+        const open = new URLSearchParams(location.search).get('open');
+        const card = open && document.querySelector(`.prog-card[data-slug="${CSS.escape(open)}"]`);
+        if (card) {
+            card.classList.add('is-target');
+            setTimeout(() => {
+                const y = card.getBoundingClientRect().top + window.scrollY - 170;
+                if (window.BKMotion && window.BKMotion.lenis) window.BKMotion.lenis.scrollTo(y); else window.scrollTo({ top: y, behavior: 'smooth' });
+            }, 350);
+        }
     }
 
     // supabase.js initialises the client on DOMContentLoaded; run after it.

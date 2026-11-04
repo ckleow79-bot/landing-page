@@ -206,18 +206,30 @@
     /* ------------------------------------------------------------------ */
     /* Readiness check                                                     */
     /* ------------------------------------------------------------------ */
+    const BANDS = {
+        audit: [
+            { min: 6, title: 'Audit-ready. Nicely done.', body: 'Your records look like they could answer an officer\'s questions on the spot. A periodic review keeps it that way as rules and your business change.' },
+            { min: 4, title: 'Mostly there. A few loose receipts.', body: 'The foundations are in place, but the gaps you marked "No" are exactly where audit questions tend to start. They are usually quick to close with the right schedules and documents.' },
+            { min: 0, title: 'The shoebox is showing.', body: 'Several areas would be hard to explain if an audit letter arrived tomorrow. The good news: records can be rebuilt and reconciled before anyone asks. Better now than under a deadline.' }
+        ],
+        einvoice: [
+            { min: 6, title: 'Your e-Invoices and your books agree.', body: 'Sales, credit notes and self-billed cases all appear to flow through MyInvois and match the ledger. A periodic sample check keeps it that way as LHDN updates its guidelines.' },
+            { min: 4, title: 'Close, with a few mismatches waiting.', body: 'The basics are running, but each "No" is a place where your accounts and MyInvois can drift apart. Those gaps are usually fixed with a monthly reconciliation and a short written policy.' },
+            { min: 0, title: 'final_v3_REAL is not a control.', body: 'Several areas would be hard to explain in an e-Invoice compliance review. The fix is a reconciliation between your sales ledger and MyInvois, then clear rules for consolidated, self-billed and adjustment notes.' }
+        ]
+    };
+
     function initCheck() {
-        const root = document.getElementById('audit-check');
-        if (!root) return;
+        document.querySelectorAll('.audit-check').forEach(initOneCheck);
+    }
+
+    function initOneCheck(root) {
+        const kind = root.dataset.check || 'audit';
         const qs = Array.from(root.querySelectorAll('.ac-q'));
         const result = root.querySelector('.ac-result');
         const answers = {};
 
-        const bands = [
-            { min: 6, title: 'Audit-ready. Nicely done.', body: 'Your records look like they could answer an officer\'s questions on the spot. A periodic review keeps it that way as rules and your business change.' },
-            { min: 4, title: 'Mostly there. A few loose receipts.', body: 'The foundations are in place, but the gaps you marked "No" are exactly where audit questions tend to start. They are usually quick to close with the right schedules and documents.' },
-            { min: 0, title: 'The shoebox is showing.', body: 'Several areas would be hard to explain if an audit letter arrived tomorrow. The good news: records can be rebuilt and reconciled before anyone asks. Better now than under a deadline.' }
-        ];
+        const bands = BANDS[kind] || BANDS.audit;
 
         function render() {
             const done = qs.length === Object.keys(answers).length;
@@ -231,7 +243,7 @@
             result.hidden = false;
             if (wasHidden) {
                 if (hasGsap && !reduce) gsap.from(result, { opacity: 0, y: 16, scale: 0.98, duration: 0.45, ease: 'back.out(1.6)' });
-                if (typeof gtag === 'function') gtag('event', 'audit_check_complete', { score: score });
+                if (typeof gtag === 'function') gtag('event', kind + '_check_complete', { score: score });
             }
         }
 

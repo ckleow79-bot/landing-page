@@ -64,12 +64,24 @@
             });
         }
         const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-        tl.from(hero.querySelectorAll('.hero-layer'), { opacity: 0, scale: 1.08, duration: 1.6, stagger: 0.1 }, 0)
-          .from(hero.querySelector('.hero-kicker'), { y: 20, opacity: 0, duration: 0.8 }, 0.3)
-          .from(hero.querySelectorAll('h1 .word'), { yPercent: 110, opacity: 0, duration: 1.1, stagger: 0.045 }, 0.45)
-          .from(hero.querySelector('p.lead'), { y: 24, opacity: 0, duration: 0.9 }, 1.0)
-          .from(hero.querySelectorAll('.hero-ctas .btn'), { y: 18, opacity: 0, duration: 0.7, stagger: 0.1 }, 1.15)
-          .from(hero.querySelector('.hero-scroll-cue'), { opacity: 0, duration: 0.8 }, 1.6);
+        // "Open the books": two ledger covers swing open to reveal the room
+        const book = hero.querySelector('.book');
+        const o = book ? 1.15 : 0;
+        if (book) {
+            const L = book.querySelector('.book-l'), R = book.querySelector('.book-r');
+            tl.from(book.querySelectorAll('.book-label'), { opacity: 0, y: 14, duration: 0.6, ease: 'power2.out' }, 0)
+              .to(book.querySelectorAll('.book-clasp'), { scaleY: 0.2, opacity: 0, duration: 0.35, ease: 'back.in(2)' }, 0.45)
+              .to(L, { rotateY: -100, xPercent: -6, duration: 1.5, ease: 'power3.inOut' }, 0.7)
+              .to(R, { rotateY: 100, xPercent: 6, duration: 1.5, ease: 'power3.inOut' }, 0.7)
+              .to(book.querySelectorAll('.book-cover'), { opacity: 0, duration: 0.45, ease: 'none' }, 1.75)
+              .add(() => hero.classList.add('is-open'));
+        }
+        tl.from(hero.querySelectorAll('.hero-layer'), { opacity: 0, scale: 1.08, duration: 1.6, stagger: 0.1 }, o * 0.6)
+          .from(hero.querySelector('.hero-kicker'), { y: 20, opacity: 0, duration: 0.8 }, 0.3 + o)
+          .from(hero.querySelectorAll('h1 .word'), { yPercent: 110, opacity: 0, duration: 1.1, stagger: 0.045 }, 0.45 + o)
+          .from(hero.querySelector('p.lead'), { y: 24, opacity: 0, duration: 0.9 }, 1.0 + o)
+          .fromTo(hero.querySelectorAll('.hero-ctas .btn'), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.1 }, 1.15 + o)
+          .from(hero.querySelector('.hero-scroll-cue'), { opacity: 0, duration: 0.8 }, 1.6 + o);
 
         // Parallax layers on scroll
         hero.querySelectorAll('.hero-layer').forEach((layer, i) => {

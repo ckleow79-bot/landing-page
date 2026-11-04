@@ -1,0 +1,98 @@
+/* ============================================================
+   FEATURES: language switch, next-programme ribbon,
+   "Open the books" hero, e-Invoice check variant.
+   B&K Academy Design System tokens.
+   ============================================================ */
+
+/* ---------- Language switch ---------- */
+.lang-toggle { display: inline-flex; align-items: center; gap: .4rem; padding: 6px 12px; border-radius: var(--r-pill, 999px); border: 1.5px solid rgba(255,255,255,.45); background: transparent; color: var(--white); font-family: var(--font-body); font-weight: 700; font-size: 14px; line-height: 1; cursor: pointer; transition: background var(--dur-fast, .15s) var(--ease-out), border-color var(--dur-fast, .15s), color var(--dur-fast, .15s); }
+.lang-toggle:hover { background: rgba(255,255,255,.12); }
+.lang-toggle:focus-visible { outline: 3px solid var(--focus-ring, #3457E5); outline-offset: 2px; }
+.lang-toggle .lang-label { font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", var(--font-body); }
+.header.scrolled .lang-toggle { color: var(--text-strong); border-color: var(--border-base, #D6D3C9); }
+.header.scrolled .lang-toggle:hover { background: var(--surface-sunken, #F4F3EF); }
+@media (max-width: 991px) {
+    .lang-toggle { color: var(--text-strong); border-color: var(--border-base, #D6D3C9); margin-top: var(--spacing-4, 1rem); padding: 10px 16px; font-size: 15px; }
+}
+
+/* Chinese: CJK-capable stacks, no negative tracking, a touch more line height */
+html[data-lang="zh"] { --cjk: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif; }
+html[data-lang="zh"] body { font-family: var(--font-body), var(--cjk); }
+html[data-lang="zh"] h1, html[data-lang="zh"] h2, html[data-lang="zh"] h3, html[data-lang="zh"] h4,
+html[data-lang="zh"] .as-title, html[data-lang="zh"] .section-title { font-family: var(--font-display), var(--cjk); letter-spacing: 0; }
+html[data-lang="zh"] .hero-cine h1 { line-height: 1.18; }
+html[data-lang="zh"] p, html[data-lang="zh"] li { line-height: 1.75; }
+html[data-lang="zh"] .hero-kicker, html[data-lang="zh"] .marquee span { letter-spacing: .08em; }
+
+/* ---------- Next programme ribbon ---------- */
+:root { --ribbon-h: 0px; }
+.header { top: var(--ribbon-h); }
+.next-ribbon { position: fixed; top: 0; left: 0; right: 0; height: 40px; z-index: calc(var(--z-fixed, 1000) + 1); background: var(--bk-amber, #FFB23E); color: var(--bk-ink, #15213B); border-bottom: 2px solid var(--bk-ink, #15213B); font-family: var(--font-body); font-size: 14px; transform: translateY(0); transition: transform .35s var(--ease-out); }
+.next-ribbon[hidden] { display: none; }
+.next-ribbon.is-out { transform: translateY(-100%); }
+.next-ribbon .nr-in { height: 100%; display: flex; align-items: center; justify-content: center; gap: .9rem; padding: 0 48px 0 16px; white-space: nowrap; overflow: hidden; }
+.next-ribbon .nr-tag { flex: none; font-weight: 800; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; background: var(--bk-ink, #15213B); color: #fff; padding: 4px 9px; border-radius: 999px; }
+.next-ribbon .nr-title { font-weight: 700; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.next-ribbon .nr-meta { color: rgba(21,33,59,.78); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.next-ribbon .nr-count { flex: none; font-family: var(--font-mono); font-weight: 600; font-variant-numeric: tabular-nums; background: rgba(255,255,255,.55); border: 1.5px solid var(--bk-ink, #15213B); border-radius: 8px; padding: 2px 8px; }
+.next-ribbon .nr-cta { flex: none; font-weight: 800; color: var(--bk-ink, #15213B); text-decoration: underline; text-underline-offset: 3px; }
+.next-ribbon .nr-cta:hover { text-decoration-thickness: 2px; }
+.next-ribbon .nr-x { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border: 0; border-radius: 50%; background: transparent; color: var(--bk-ink, #15213B); font-size: 18px; line-height: 1; cursor: pointer; }
+.next-ribbon .nr-x:hover { background: rgba(21,33,59,.1); }
+.next-ribbon .nr-x:focus-visible, .next-ribbon .nr-cta:focus-visible { outline: 3px solid var(--bk-ink, #15213B); outline-offset: 2px; }
+@media (max-width: 991px) { .next-ribbon .nr-meta { display: none; } }
+@media (max-width: 560px) {
+    .next-ribbon { font-size: 13px; }
+    .next-ribbon .nr-in { justify-content: flex-start; gap: .55rem; padding-left: 12px; }
+    .next-ribbon .nr-tag { display: none; }
+}
+/* the mobile drawer sits under the ribbon */
+@media (max-width: 991px) { .nav-menu { top: var(--ribbon-h) !important; height: calc(100vh - var(--ribbon-h)) !important; } }
+
+/* ---------- "Open the books" hero ---------- */
+.hero-cine .layer-photo { overflow: hidden; }
+.hero-cine .layer-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; filter: blur(2px) saturate(.85); transform: scale(1.06); }
+.hero-cine .layer-shade { background:
+    linear-gradient(90deg, rgba(21,33,59,.95) 0%, rgba(21,33,59,.84) 42%, rgba(21,33,59,.5) 100%),
+    linear-gradient(0deg, rgba(21,33,59,.85) 0%, rgba(21,33,59,0) 35%); }
+
+.book { display: none; }
+html.js .book { position: absolute; inset: 0; z-index: 5; display: flex; perspective: 2200px; pointer-events: none; }
+.book-cover { position: relative; flex: 1 1 50%; height: 100%; overflow: hidden; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform;
+    background:
+        radial-gradient(120% 90% at 50% 40%, rgba(255,255,255,.06), transparent 60%),
+        repeating-linear-gradient(115deg, rgba(255,255,255,.018) 0 2px, transparent 2px 6px),
+        #15213B; }
+.book-l { transform-origin: left center; box-shadow: inset -14px 0 30px rgba(0,0,0,.35); }
+.book-r { transform-origin: right center; box-shadow: inset 14px 0 30px rgba(0,0,0,.35); }
+/* stitched border */
+.book-cover::before { content: ''; position: absolute; inset: 22px; border: 2px dashed rgba(255,178,62,.55); border-radius: 10px; }
+.book-l::before { right: -12px; }
+.book-r::before { left: -12px; }
+/* embossed label, split across the seam */
+.book-label { position: absolute; top: 50%; width: min(520px, 76vw); transform: translateY(-50%); text-align: center; color: #FFB23E; }
+.book-l .book-label { right: 0; transform: translate(50%, -50%); }
+.book-r .book-label { left: 0; transform: translate(-50%, -50%); }
+.book-label .bl-mark { display: block; width: 76px; height: 76px; margin: 0 auto 18px; }
+.book-label .bl-name { display: block; font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3.6rem); letter-spacing: -.01em; line-height: 1; }
+.book-label .bl-sub { display: block; margin-top: 12px; font-family: var(--font-mono); font-size: 13px; letter-spacing: .32em; text-transform: uppercase; color: rgba(255,178,62,.75); }
+.book-clasp { position: absolute; top: 50%; width: 46px; height: 92px; margin-top: 120px; transform: translateY(-50%); background: #FFB23E; border: 2.5px solid #0E1621; }
+.book-l .book-clasp { right: 0; border-radius: 14px 0 0 14px; border-right: 0; }
+.book-r .book-clasp { left: 0; border-radius: 0 14px 14px 0; border-left: 0; }
+.book-r .book-clasp::after { content: ''; position: absolute; left: 8px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: #0E1621; }
+.book-hint { position: absolute; left: 50%; bottom: 2.4rem; transform: translateX(-50%); z-index: 6; font-family: var(--font-mono); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.55); pointer-events: none; }
+
+/* no motion or no JS: the book is already open */
+html:not(.has-gsap) .book, html:not(.has-gsap) .book-hint { display: none; }
+.hero-cine.is-open .book, .hero-cine.is-open .book-hint { display: none; }
+@media (prefers-reduced-motion: reduce) { .book, .book-hint { display: none; } }
+
+/* ---------- Second self-check (e-Invoice) ---------- */
+.audit-check.ac-alt { background: var(--surface-page); padding-top: 0; }
+.audit-check.ac-alt .ac-card { border: 2.5px solid var(--bk-ink); box-shadow: var(--shadow-pop, 6px 6px 0 var(--bk-ink)); }
+.ac-switch { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.1rem; }
+
+/* programme card opened from the ribbon */
+.prog-card.is-target { outline: 3px solid var(--bk-amber, #FFB23E); outline-offset: 4px; border-radius: var(--r-lg, 16px); }
+.at-link + .at-link { margin-left: 1.4rem; }
+.at-link + .at-link { margin-left: 1.4rem; }

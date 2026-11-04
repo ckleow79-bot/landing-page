@@ -25,6 +25,16 @@ Real programme data comes from the Drive sheet "KEITH'S TRAINING SCHEDULE". Thir
 
 Insert a row in the Supabase `programmes` table (or add an object to `data/programmes.json`). Required: `slug`, `title`, `provider` (`bk-training` | `high-impact` | `bk-academy`), `category`, `start_date`. Optional fee, early-bird, CPD hours, HRD Corp flag, highlights, brochure and external register URL.
 
+The next upcoming B & K / High Impact programme also appears in the amber ribbon above the header on every page (`js/next-ribbon.js`); guest-speaking slots are left out. It updates itself from the same data.
+
+## English / 中文
+Every page has an EN / 中文 switch in the header (`js/i18n.js`). English in the HTML is the source; `data/i18n/zh.json` maps each English string to Simplified Chinese. A string with no translation simply stays in English. Programme titles, subtitles and highlights stay in English on purpose (the sessions are delivered in English).
+
+After changing page text:
+1. `npm start`, then `node tools/i18n-collect.js new-keys.json` lists every string on the main pages.
+2. Add the new or changed strings to `data/i18n/zh.json` (`text` for plain strings, `html` for sentences that contain a link or highlight; keep the tags).
+3. Have the Chinese reviewed before publishing.
+
 ## Finance dashboard
 See `dashboard/README.md` for the Supabase warehouse schema, role-based RLS (owner / board / finance), AutoCount Cloud and on-premise ingestion, and Metabase setup.
 

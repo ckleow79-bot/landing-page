@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/cinematic.css">
     <link rel="stylesheet" href="css/brand.css">
     <link rel="stylesheet" href="css/audit-story.css">
+    <link rel="stylesheet" href="css/features.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <meta property="og:title" content="B &amp; K Advisory PLT | Tax Audit Defence, Tax Planning, SST, e-Invoice &amp; Fractional CFO">
@@ -331,7 +332,7 @@
                         </ol>
                         <div class="as-ctas">
                             <a href="contact.html?topic=sst" class="btn btn-primary">Talk to a tax agent</a>
-                            <a href="contact.html?topic=sst" class="btn btn-outline">Ask about an e-Invoice health check</a>
+                            <a href="#einvoice-check" class="btn btn-outline">Take the 1-minute e-Invoice check</a>
                         </div>
                     </div>
 
@@ -521,7 +522,7 @@
         </section>
 
         <!-- ===== Audit readiness check ===== -->
-        <section class="audit-check" id="audit-check" aria-labelledby="ac-title">
+        <section class="audit-check" id="audit-check" data-check="audit" aria-labelledby="ac-title">
             <div class="container">
                 <div class="ac-card">
                     <div class="ac-head">
@@ -549,6 +550,38 @@
                         </div>
                     </div>
                     <p class="ac-fine">A general self-check, not tax advice. Record-keeping duties are set out in s.82 of the Income Tax Act 1967; your position depends on your facts.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="audit-check ac-alt" id="einvoice-check" data-check="einvoice" aria-labelledby="eic-title">
+            <div class="container">
+                <div class="ac-card">
+                    <div class="ac-head">
+                        <p class="hero-kicker">One-minute e-Invoice check</p>
+                        <h2 id="eic-title">Do your e-Invoices match your books?</h2>
+                        <p class="ac-lead">Six quick questions. Your answers stay in your browser and are not sent anywhere.</p>
+                    </div>
+                    <ol class="ac-list">
+                        <li class="ac-q" data-q="1"><span>Does every sale in your accounts have a validated e-Invoice, or sit inside a consolidated e-Invoice you can trace?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="2"><span>When a customer asks for an e-Invoice, do they get their own, not a line in the monthly consolidated one?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="3"><span>Do you issue self-billed e-Invoices where required, for example payments to foreign suppliers or to agents and dealers?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="4"><span>Are credit notes, debit notes and refunds issued as e-Invoices that refer back to the original?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="5"><span>Do you reconcile MyInvois totals to your sales ledger every month?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="6"><span>Do you keep customers' TIN and registration details on file and up to date?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                    </ol>
+                    <div class="ac-result" aria-live="polite" hidden>
+                        <div class="ac-score"><span class="bk-hero-num"><span class="ac-n">0</span><span class="bk-unit">/ 6</span></span></div>
+                        <div class="ac-msg">
+                            <h3 class="ac-msg-title"></h3>
+                            <p class="ac-msg-body"></p>
+                            <div class="ac-actions">
+                                <a href="contact.html?topic=sst" class="btn btn-primary">Book an e-Invoice review</a>
+                                <button type="button" class="btn btn-outline ac-reset">Start again</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="ac-fine">A general self-check, not tax advice. Requirements are set out in LHDN's e-Invoice Guideline and e-Invoice Specific Guideline, and depend on your facts and implementation date.</p>
                 </div>
             </div>
         </section>
@@ -652,6 +685,7 @@
 
     <div id="footer-container"></div>
     <div id="chatbot-container"></div>
+    <script src="js/i18n.js"></script>
 
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>
@@ -665,5 +699,6 @@
     <script src="js/cinematic.js"></script>
     <script src="js/audit-story.js"></script>
     <script src="js/programmes.js"></script>
+    <script src="js/next-ribbon.js"></script>
 </body>
 </html>
