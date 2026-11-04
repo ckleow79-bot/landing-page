@@ -1,6 +1,6 @@
 /* ============================================
    MAIN CSS - Global Styles & Variables
-   End-of-Line Packaging Automation Company
+   B & K Group
    ============================================ */
 
 /* CSS Variables */
@@ -11,13 +11,13 @@
     --primary-dark: #0f2942;
     
     /* Secondary Colors */
-    --secondary-color: #ed8936;
-    --secondary-light: #f6ad55;
-    --secondary-dark: #c05621;
+    --secondary-color: #c9a227;
+    --secondary-light: #e2c158;
+    --secondary-dark: #9a7b17;
     
     /* Accent Colors */
-    --accent-color: #38a169;
-    --accent-light: #48bb78;
+    --accent-color: #0f766e;
+    --accent-light: #14b8a6;
     
     /* Neutral Colors */
     --white: #ffffff;

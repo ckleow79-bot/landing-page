@@ -1,9 +1,9 @@
 # AGENTS.md
 
 ## Project Information
-- **Project Name**: End-of-Line Packaging Automation Company Landing Page
-- **Type**: Static HTML/CSS/JS Website with Supabase Backend
-- **Framework**: Vanilla JavaScript with Anime.js animations
+- **Project Name**: B & K Group Website (Advisory, Academy, Programme Calendar) + Finance Dashboard data layer
+- **Type**: Static HTML/CSS/JS Website with Supabase Backend; `dashboard/` holds the separate finance-dashboard scaffold
+- **Framework**: Vanilla JavaScript. Motion: GSAP 3 + ScrollTrigger + Lenis (vendored in `js/vendor/`), Anime.js for legacy micro-interactions
 - **Backend**: Supabase (PostgreSQL + Auth + Realtime)
 
 ## Development Commands
@@ -29,25 +29,34 @@ npm run optimize:images
 
 ## Project Structure
 ```
-Landing Page/
-├── *.html              # 6 main pages
-├── css/               # 5 CSS files
-│   ├── main.css      # Global styles, variables
-│   ├── pages.css     # Page-specific layouts
-│   ├── responsive.css # Mobile breakpoints
-│   ├── animations.css # Keyframes & effects
-│   └── chatbot.css   # Chatbot styles
-├── js/               # 4 JS files
-│   ├── main.js       # Core functionality
-│   ├── animations.js # Anime.js animations
-│   ├── supabase.js   # Database integration
-│   └── chatbot.js    # Chatbot logic
-├── components/       # Reusable components
-│   ├── header.html
-│   ├── footer.html
-│   └── chatbot.html
-└── assets/          # Images & documents
+landing-page/
+├── index.html          # Group home (cinematic hero, pinned pillars, programmes strip)
+├── advisory.html       # B & K Advisory PLT services
+├── academy.html        # B & K Academy PLT curriculum
+├── programmes.html     # Seminar / programme calendar + registration (data-driven)
+├── insights.html       # Articles
+├── about.html, contact.html, legal pages, 404/500
+├── css/
+│   ├── main.css        # Variables (navy / gold / teal), base, header, footer
+│   ├── pages.css, responsive.css, animations.css, chatbot.css
+│   └── cinematic.css   # Hero, pillars, numbers, story, programme cards, modal
+├── js/
+│   ├── cinematic.js    # GSAP/ScrollTrigger/Lenis layer; respects prefers-reduced-motion
+│   ├── programmes.js   # Loads programmes (Supabase -> data/programmes.json fallback), modal, ICS
+│   ├── supabase.js     # Client init, contact + newsletter forms
+│   ├── chatbot.js, animations.js, main.js
+│   └── vendor/         # gsap, ScrollTrigger, lenis, anime, supabase (self-hosted)
+├── data/programmes.json   # Seed / fallback programme list (edit to publish without Supabase)
+├── migrations/            # Supabase SQL: 001 contact, 002 programmes + registrations
+├── components/            # header.html, footer.html, chatbot.html
+├── dashboard/             # Finance dashboard: Supabase schema, RLS, views, ingestion, Metabase
+└── structured-data/, sitemap.xml, robots.txt
 ```
+
+## Updating the programme calendar
+1. **Preferred**: insert/edit rows in the Supabase `programmes` table (apply `migrations/002_programmes.sql` first). `published = true` rows show on the site immediately.
+2. **Fallback**: edit `data/programmes.json` and deploy. Used automatically when Supabase is unreachable or the table is empty.
+Registrations land in `programme_registrations` (anon insert requires `consent_pdpa = true`).
 
 ## Key Features
 
@@ -99,13 +108,10 @@ Landing Page/
 ## Important Files to Update
 
 ### Before Launch:
-1. **js/supabase.js**: Add your Supabase URL and API key
-2. **All HTML files**: Replace placeholder content:
-   - `[Your Company Name]` → Actual company name
-   - `[Company Address]` → Real address
-   - `+60 XX-XXXX XXXX` → Real phone numbers
-   - `info@yourcompany.com` → Real email
-   - `https://yourcompany.com` → Real domain
+1. **js/supabase.js**: confirm Supabase URL/anon key; apply `migrations/001` and `002`
+2. **components/footer.html, contact.html, about.html**: replace `[Office Address]`, `+60 XX-XXXX XXXX`, `wa.me/60XXXXXXXXXX`, LLP and HRD Corp registration numbers, leadership `[Name]`
+3. **Domain**: `bkgroup.my` is a placeholder in canonical/OG tags, sitemap.xml, robots.txt, structured-data/
+4. **Brand colours**: palette assumed navy `#1a365d` + gold `#c9a227`; adjust `:root` in css/main.css if brand guide differs
 
 3. **assets/images/**: Add actual images:
    - hero-bg.jpg

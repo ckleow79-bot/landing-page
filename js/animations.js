@@ -1,6 +1,6 @@
 /**
  * Animations JavaScript File
- * End-of-Line Packaging Automation Company Landing Page
+ * B & K Group Website
  * Uses Anime.js for advanced animations
  */
 

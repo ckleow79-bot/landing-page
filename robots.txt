@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://yourcompany.com/sitemap.xml
+Sitemap: https://bkgroup.my/sitemap.xml
 
 # Disallow admin and private areas
 Disallow: /admin/

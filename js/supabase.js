@@ -1,6 +1,6 @@
 /**
  * Supabase Integration JavaScript File
- * End-of-Line Packaging Automation Company Landing Page
+ * B & K Group Website
  */
 
 // Supabase configuration - Loaded from environment variables via window.ENV or inline config
@@ -81,6 +81,7 @@ function clearAllFieldErrors() {
 function initSupabase() {
     if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'https://your-supabase-project.supabase.co') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        window.supabaseClient = supabaseClient; // exposed for programmes.js
         console.log('Supabase initialized successfully');
         
         // Initialize forms after Supabase is ready

@@ -1,406 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-gsap">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>End-to-End Packaging Automation Solutions | Your Company Name</title>
-    <meta name="description" content="Leading provider of end-of-line packaging automation solutions for Medical Devices, Pharmaceutical, Gloves, and FMCG industries in Malaysia and Southeast Asia.">
+    <title>B &amp; K Group | Tax Advisory, Fractional CFO &amp; Professional Training, Kuala Lumpur</title>
+    <meta name="description" content="Licensed tax agents (s.153 ITA 1967), fractional CFO services and HRD Corp claimable CPD programmes. B &amp; K Advisory PLT, B &amp; K Academy PLT, B &amp; K Training Services PLT, High Impact Training Services PLT.">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/pages.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/cinematic.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="End-to-End Packaging Automation Solutions | Your Company Name">
-    <meta property="og:description" content="Leading provider of end-of-line packaging automation solutions for Medical Devices, Pharmaceutical, Gloves, and FMCG industries in Malaysia and Southeast Asia.">
+
+    <meta property="og:title" content="B &amp; K Group | Tax Advisory, Fractional CFO &amp; Professional Training, Kuala Lumpur">
+    <meta property="og:description" content="Licensed tax agents (s.153 ITA 1967), fractional CFO services and HRD Corp claimable CPD programmes. B &amp; K Advisory PLT, B &amp; K Academy PLT, B &amp; K Training Services PLT, High Impact Training Services PLT.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourcompany.com">
-    <meta property="og:image" content="https://yourcompany.com/assets/images/og-image.jpg">
-    
-    <!-- Twitter Card -->
+    <meta property="og:url" content="https://bkgroup.my/">
+    <meta property="og:image" content="https://bkgroup.my/assets/images/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="End-to-End Packaging Automation Solutions | Your Company Name">
-    <meta name="twitter:description" content="Leading provider of end-of-line packaging automation solutions in Malaysia and Southeast Asia.">
-    <meta name="twitter:image" content="https://yourcompany.com/assets/images/og-image.jpg">
-    
-    <!-- Favicon -->
+    <meta name="twitter:title" content="B &amp; K Group | Tax Advisory, Fractional CFO &amp; Professional Training, Kuala Lumpur">
+    <meta name="twitter:description" content="Licensed tax agents (s.153 ITA 1967), fractional CFO services and HRD Corp claimable CPD programmes. B &amp; K Advisory PLT, B &amp; K Academy PLT, B &amp; K Training Services PLT, High Impact Training Services PLT.">
+    <meta name="twitter:image" content="https://bkgroup.my/assets/images/og-image.jpg">
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://yourcompany.com">
-    
-    <!-- Google Analytics 4 - Replace GA_MEASUREMENT_ID with your actual ID -->
+    <link rel="canonical" href="https://bkgroup.my/">
+
+    <!-- Google Analytics 4 - replace GA_MEASUREMENT_ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    
-    <!-- Schema.org Structured Data -->
+    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'GA_MEASUREMENT_ID');</script>
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "B & K Group",
+  "url": "https://bkgroup.my",
+  "logo": "https://bkgroup.my/assets/images/logo.png",
+  "description": "Tax, corporate advisory and professional education group in Kuala Lumpur: B & K Advisory PLT, B & K Academy PLT, B & K Training Services PLT and High Impact Training Services PLT.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Kuala Lumpur",
+    "addressCountry": "MY"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+60-XX-XXXX-XXXX",
+    "contactType": "customer service",
+    "areaServed": "MY",
+    "availableLanguage": [
+      "English",
+      "Malay",
+      "Chinese"
+    ]
+  },
+  "subOrganization": [
     {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "[Your Company Name]",
-      "alternateName": "[Short Company Name]",
-      "url": "https://yourcompany.com",
-      "logo": "https://yourcompany.com/assets/images/logo.png",
-      "description": "Leading provider of end-of-line packaging automation solutions for Medical Devices, Pharmaceutical, Gloves, and FMCG industries in Malaysia and Southeast Asia.",
-      "foundingDate": "[YYYY]",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "[Street Address]",
-        "addressLocality": "[City]",
-        "addressRegion": "[State]",
-        "postalCode": "[Postal Code]",
-        "addressCountry": "MY"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+60-XX-XXXX-XXXX",
-        "contactType": "sales",
-        "areaServed": "MY",
-        "availableLanguage": ["English", "Malay"]
-      },
-      "sameAs": [
-        "https://www.linkedin.com/company/yourcompany",
-        "https://www.facebook.com/yourcompany"
-      ]
+      "@type": "AccountingService",
+      "name": "B & K Advisory PLT"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "B & K Academy PLT"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "B & K Training Services PLT"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "High Impact Training Services PLT"
     }
+  ]
+}
     </script>
 </head>
 <body>
     <div id="header-container"></div>
-
     <main>
-        <!-- Hero Section -->
-        <section class="hero" id="hero">
-            <div class="hero-background">
-                <div class="hero-overlay"></div>
-            </div>
+        <!-- Cinematic Hero -->
+        <section class="hero-cine" id="hero" data-theme-dark>
+            <div class="hero-layer layer-gradient"></div>
+            <div class="hero-layer layer-grid"></div>
+            <div class="hero-layer layer-orb"></div>
+            <div class="hero-layer layer-orb-2"></div>
             <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        <span class="company-name" id="animated-company-name">Your Company Name</span>
-                        <span class="hero-headline">End-to-End Packaging Automation Solutions</span>
+                <div class="hero-cine-content">
+                    <p class="hero-kicker">B &amp; K Group · Kuala Lumpur</p>
+                    <h1>
+                        <span class="line">Tax clarity.</span>
+                        <span class="line">Financial <em>control.</em></span>
+                        <span class="line">Professionals who teach it.</span>
                     </h1>
-                    <p class="hero-subheadline">Transforming manufacturing operations with innovative end-of-line packaging systems for Medical Devices, Pharmaceutical, Gloves, and FMCG industries across Malaysia and Southeast Asia.</p>
+                    <p class="lead">Licensed tax agents, practising accountants and HRD Corp trainers under one group. We defend you at LHDN, run your finance function as fractional CFO, and train the professionals who do the same.</p>
                     <div class="hero-ctas">
-                        <a href="products.html" class="btn btn-primary">Explore Solutions</a>
-                        <a href="projects.html" class="btn btn-secondary">View Projects</a>
+                        <a href="programmes.html" class="btn btn-primary btn-large btn-magnetic">Upcoming Programmes</a>
+                        <a href="advisory.html" class="btn btn-ghost btn-large btn-magnetic">Advisory Services</a>
                     </div>
                 </div>
             </div>
+            <div class="hero-scroll-cue"><span></span>Scroll</div>
         </section>
 
-        <!-- Industries We Serve Section -->
-        <section class="industries" id="industries">
+        <!-- Trust strip -->
+        <div class="trust-strip" data-theme-dark>
+            <div class="marquee">
+                <span><i class="fas fa-circle"></i>Licensed Tax Agent s.153 ITA 1967</span>
+                <span><i class="fas fa-circle"></i>MIA · CTIM · MACS · MFPC</span>
+                <span><i class="fas fa-circle"></i>HRD Corp Registered Training Provider</span>
+                <span><i class="fas fa-circle"></i>18+ Years in Tax Practice</span>
+                <span><i class="fas fa-circle"></i>English &amp; Mandarin Delivery</span>
+                <span><i class="fas fa-circle"></i>IPA Australia · IFA UK · ASEAN CPA</span>
+            </div>
+        </div>
+
+        <!-- Pillars -->
+        <section class="pillars" id="group">
+            <div class="container pillars-intro">
+                <div class="section-header" style="text-align:left;margin-bottom:0">
+                    <p class="hero-kicker" style="color:var(--secondary-dark)">One group, four entities</p>
+                    <h2 class="section-title reveal-up">Advice, execution and education in one place.</h2>
+                </div>
+            </div>
+            <div class="pillars-pin">
+                <div class="container">
+                    <div class="pillars-track">
+                        <article class="pillar pillar-advisory">
+                            <span class="pillar-index">01</span>
+                            <i class="fas fa-scale-balanced pillar-icon"></i>
+                            <p class="pillar-entity">B &amp; K Advisory PLT</p>
+                            <h3>Tax &amp; Corporate Advisory</h3>
+                            <p>Compliance, planning, audit defence and corporate secretarial work for Malaysian SMEs, groups and investment holding companies.</p>
+                            <ul>
+                                <li>Tax audit &amp; investigation (SCIT, DRP, Jabatan Siasatan)</li>
+                                <li>Corporate &amp; individual tax planning, s.60F IHCs</li>
+                                <li>SST, e-Invoice, M&amp;A tax structuring</li>
+                            </ul>
+                            <a href="advisory.html" class="btn btn-secondary">Explore Advisory</a>
+                        </article>
+                        <article class="pillar pillar-academy">
+                            <span class="pillar-index">02</span>
+                            <i class="fas fa-graduation-cap pillar-icon"></i>
+                            <p class="pillar-entity">B &amp; K Academy PLT</p>
+                            <h3>Professional Education</h3>
+                            <p>CPD/CPE programmes for accountants, tax practitioners, CFOs and financial planners, including the MFPC RFP Capstone Tax Module.</p>
+                            <ul>
+                                <li>Chartered Accountant (Malaysia) pathway topics</li>
+                                <li>AI Accountant &amp; AI in Finance curriculum</li>
+                                <li>In-house customised training</li>
+                            </ul>
+                            <a href="academy.html" class="btn btn-secondary">Explore Academy</a>
+                        </article>
+                        <article class="pillar pillar-training">
+                            <span class="pillar-index">03</span>
+                            <i class="fas fa-chalkboard-user pillar-icon"></i>
+                            <p class="pillar-entity">B &amp; K Training Services PLT</p>
+                            <h3>Public Seminars</h3>
+                            <p>HRD Corp claimable seminars and webinars on the year's tax developments: post-Budget analysis, e-Invoice, SST and LHDN practice.</p>
+                            <ul>
+                                <li>Post-Budget tax seminar series</li>
+                                <li>e-Invoice &amp; SST compliance updates</li>
+                                <li>Half-day practitioner webinars</li>
+                            </ul>
+                            <a href="programmes.html?provider=bk-training" class="btn btn-secondary">View Seminars</a>
+                        </article>
+                        <article class="pillar pillar-high-impact">
+                            <span class="pillar-index">04</span>
+                            <i class="fas fa-bolt pillar-icon"></i>
+                            <p class="pillar-entity">High Impact Training Services PLT</p>
+                            <h3>Masterclasses &amp; Workshops</h3>
+                            <p>Deep-dive, small-group masterclasses for senior finance professionals: tax audit defence, M&amp;A and agentic AI for finance teams.</p>
+                            <ul>
+                                <li>Two-day Tax Audit &amp; Investigation Masterclass</li>
+                                <li>AI Accountant hands-on workshop</li>
+                                <li>M&amp;A tax due diligence lab</li>
+                            </ul>
+                            <a href="programmes.html?provider=high-impact" class="btn btn-secondary">View Masterclasses</a>
+                        </article>
+                    </div>
+                </div>
+                <div class="pillars-progress"><i></i></div>
+            </div>
+        </section>
+
+        <!-- Numbers -->
+        <section class="numbers" data-theme-dark>
             <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Industries We Serve</h2>
-                    <p class="section-subtitle">Specialized packaging automation solutions tailored to your industry's unique requirements</p>
-                </div>
-                <div class="industries-grid">
-                    <div class="industry-card" data-industry="medical">
-                        <div class="industry-icon">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
-                        <h3>Medical Devices</h3>
-                        <p>Precision packaging solutions for sterile medical equipment, diagnostic devices, and surgical instruments with compliance to international standards.</p>
-                        <a href="projects.html?industry=medical" class="industry-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="industry-card" data-industry="pharmaceutical">
-                        <div class="industry-icon">
-                            <i class="fas fa-pills"></i>
-                        </div>
-                        <h3>Pharmaceutical</h3>
-                        <p>GMP-compliant packaging systems for tablets, capsules, vials, and pharmaceutical products with complete traceability and validation documentation.</p>
-                        <a href="projects.html?industry=pharmaceutical" class="industry-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="industry-card" data-industry="gloves">
-                        <div class="industry-icon">
-                            <i class="fas fa-hand-sparkles"></i>
-                        </div>
-                        <h3>Gloves</h3>
-                        <p>High-speed automated packaging lines for examination and surgical gloves with counting, stacking, and case packing capabilities.</p>
-                        <a href="projects.html?industry=gloves" class="industry-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="industry-card" data-industry="fmcg">
-                        <div class="industry-icon">
-                            <i class="fas fa-shopping-basket"></i>
-                        </div>
-                        <h3>FMCG</h3>
-                        <p>Flexible packaging automation for fast-moving consumer goods with quick changeover capabilities and high throughput efficiency.</p>
-                        <a href="projects.html?industry=fmcg" class="industry-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                    </div>
+                <div class="numbers-grid reveal-stagger">
+                    <div class="number"><div class="value"><span data-count="18">0</span><sup>+</sup></div><div class="label">Years in Malaysian tax practice</div></div>
+                    <div class="number"><div class="value"><span data-count="7">0</span></div><div class="label">Professional bodies: MIA, CTIM, IPA, IFA, MACS, MFPC, ASEAN CPA</div></div>
+                    <div class="number"><div class="value"><span data-count="4">0</span></div><div class="label">Group entities serving advisory and education</div></div>
+                    <div class="number"><div class="value"><span data-count="2">0</span></div><div class="label">Delivery languages: English and Mandarin</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- One-Stop Solution Section -->
-        <section class="one-stop-solution" id="solution">
+        <!-- Sticky story -->
+        <section class="story" id="approach">
             <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">One-Stop Solution Provider</h2>
-                    <p class="section-subtitle">From concept to commissioning, we handle every aspect of your packaging automation journey</p>
-                </div>
-                <div class="solution-timeline">
-                    <div class="timeline-line"></div>
-                    <div class="timeline-steps">
-                        <div class="timeline-step" data-step="1">
-                            <div class="step-number">01</div>
-                            <div class="step-content">
-                                <h3>Conceptualization & 3D Design</h3>
-                                <p>Our engineers work with you to understand your requirements and create detailed 3D CAD models of your custom packaging solution.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-step" data-step="2">
-                            <div class="step-number">02</div>
-                            <div class="step-content">
-                                <h3>Programming & Customization</h3>
-                                <p>Advanced PLC programming and HMI development tailored to your specific products, line speeds, and integration requirements.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-step" data-step="3">
-                            <div class="step-number">03</div>
-                            <div class="step-content">
-                                <h3>In-house Manufacturing</h3>
-                                <p>Complete manufacturing capabilities at our Malaysia facility with quality control at every stage of production.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-step" data-step="4">
-                            <div class="step-number">04</div>
-                            <div class="step-content">
-                                <h3>Delivery & Installation</h3>
-                                <p>Professional installation by our experienced technicians with minimal disruption to your existing operations.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-step" data-step="5">
-                            <div class="step-number">05</div>
-                            <div class="step-content">
-                                <h3>Training & After-sales Support</h3>
-                                <p>Comprehensive operator training, maintenance programs, and 24/7 technical support for optimal uptime.</p>
-                            </div>
-                        </div>
+                <div class="story-grid">
+                    <div class="story-sticky">
+                        <p class="hero-kicker" style="color:var(--secondary-dark)">How we work</p>
+                        <h2>From exposure to control, in four moves.</h2>
+                        <p style="color:var(--text-secondary);margin-top:1rem">The same discipline runs through advisory engagements and the programmes we teach. Scroll to follow a typical engagement.</p>
+                    </div>
+                    <div class="story-steps">
+                        <div class="story-step"><span class="n">01</span><div><h3>Diagnose</h3><p>Forensic review of returns, management accounts and related-party flows. We identify the s.113, s.140 and transfer-pricing exposures before LHDN does.</p></div></div>
+                        <div class="story-step"><span class="n">02</span><div><h3>Defend or restructure</h3><p>Represent you through audit, DRP and SCIT, or restructure the group so the exposure does not recur. Capital statements, penalty mitigation, voluntary disclosure.</p></div></div>
+                        <div class="story-step"><span class="n">03</span><div><h3>Run the numbers monthly</h3><p>As fractional CFO we deliver two reports every cycle: an operational pack for the finance team and a decision-focused summary for the board.</p></div></div>
+                        <div class="story-step"><span class="n">04</span><div><h3>Build the team</h3><p>Train your finance staff through our Academy, from e-Invoice controls to AI-assisted close, so the capability stays in-house.</p></div></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Why Choose Us Section -->
-        <section class="why-choose-us" id="why-us">
+        <!-- Upcoming programmes -->
+        <section class="programmes-section" id="programmes" style="background:var(--white)">
             <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Why Choose Us</h2>
-                    <p class="section-subtitle">Delivering excellence through innovation, quality, and unwavering commitment to our clients</p>
+                <div class="programmes-head">
+                    <div>
+                        <p class="hero-kicker" style="color:var(--secondary-dark)">Seminars &amp; programmes</p>
+                        <h2>Next on the calendar</h2>
+                    </div>
+                    <a href="programmes.html" class="btn btn-outline">Full programme calendar <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="differentiators-grid">
-                    <div class="differentiator-card">
-                        <div class="differentiator-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        <h3>Tailored Solutions</h3>
-                        <p>Every system is custom-designed to meet your specific product requirements, line constraints, and production goals.</p>
-                    </div>
-                    <div class="differentiator-card">
-                        <div class="differentiator-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <h3>Industry Expertise</h3>
-                        <p>Over 20 years of experience in packaging automation with deep knowledge of regulatory requirements across industries.</p>
-                    </div>
-                    <div class="differentiator-card">
-                        <div class="differentiator-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3>End-to-End Service</h3>
-                        <p>Complete project management from initial concept through installation, training, and ongoing maintenance support.</p>
-                    </div>
-                    <div class="differentiator-card">
-                        <div class="differentiator-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Quality Assurance</h3>
-                        <p>Rigorous testing protocols, ISO-certified manufacturing processes, and comprehensive validation documentation.</p>
-                    </div>
-                    <div class="differentiator-card">
-                        <div class="differentiator-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <h3>Local Support</h3>
-                        <p>Malaysia-based manufacturing and support team providing rapid response times and personalized service.</p>
-                    </div>
+                <div class="prog-grid" data-programmes="featured" data-limit="3">
+                    <p class="prog-empty">Loading programmes…</p>
                 </div>
+                <p class="prog-source-note">Dates, venues and fees are updated by the training team.</p>
             </div>
         </section>
 
-        <!-- Testimonials Section -->
-        <section class="testimonials" id="testimonials">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">What Our Clients Say</h2>
-                    <p class="section-subtitle">Trusted by leading manufacturers across Southeast Asia</p>
-                </div>
-                <div class="testimonials-carousel">
-                    <div class="testimonials-track">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="testimonial-text">"The team delivered an exceptional packaging line that increased our throughput by 40% while maintaining the highest quality standards. Their local support has been invaluable."</p>
-                                <div class="testimonial-author">
-                                    <div class="author-info">
-                                        <h4>Production Director</h4>
-                                        <p>Leading Medical Device Manufacturer, Malaysia</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="testimonial-text">"From design to commissioning, the entire process was seamless. The equipment meets all GMP requirements and the validation documentation was comprehensive."</p>
-                                <div class="testimonial-author">
-                                    <div class="author-info">
-                                        <h4>Engineering Manager</h4>
-                                        <p>Pharmaceutical Company, Singapore</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="testimonial-text">"Their custom glove packaging solution solved our bottleneck issues. The automation reduced labor costs by 60% and improved packing consistency significantly."</p>
-                                <div class="testimonial-author">
-                                    <div class="author-info">
-                                        <h4>Operations Manager</h4>
-                                        <p>Glove Manufacturing Group, Malaysia</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="testimonial-text">"Excellent after-sales support and spare parts availability. The team responds quickly to any issues and provides proactive maintenance recommendations."</p>
-                                <div class="testimonial-author">
-                                    <div class="author-info">
-                                        <h4>Plant Manager</h4>
-                                        <p>FMCG Distributor, Thailand</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonials-controls">
-                        <button class="testimonial-prev" aria-label="Previous testimonial">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div class="testimonials-dots"></div>
-                        <button class="testimonial-next" aria-label="Next testimonial">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Projects Preview -->
-        <section class="featured-projects" id="projects">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Featured Projects</h2>
-                    <p class="section-subtitle">See how we've helped manufacturers transform their packaging operations</p>
-                </div>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="assets/images/project-1.jpg" alt="Medical Device Packaging Line" loading="lazy">
-                            <div class="project-overlay">
-                                <span class="project-category">Medical Devices</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>Complete End-of-Line System for Medical Device Manufacturer</h3>
-                            <p>Integrated case packing and palletizing solution for sterile medical packaging with full traceability.</p>
-                            <a href="projects.html#project-1" class="project-link">View Case Study <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="assets/images/project-2.jpg" alt="Pharmaceutical Packaging Automation" loading="lazy">
-                            <div class="project-overlay">
-                                <span class="project-category">Pharmaceutical</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>High-Speed Cartoning & Case Packing for Pharma</h3>
-                            <p>GMP-compliant packaging line handling 300 cartons per minute with serialization and aggregation.</p>
-                            <a href="projects.html#project-2" class="project-link">View Case Study <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="assets/images/project-3.jpg" alt="Glove Packaging Automation" loading="lazy">
-                            <div class="project-overlay">
-                                <span class="project-category">Gloves</span>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <h3>Automated Glove Counting & Case Packing System</h3>
-                            <p>Vision-based counting system with automatic case packing for examination and surgical gloves.</p>
-                            <a href="projects.html#project-3" class="project-link">View Case Study <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="projects-cta">
-                    <a href="projects.html" class="btn btn-primary">View All Projects</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter CTA Section -->
+        <!-- Newsletter -->
         <section class="newsletter" id="newsletter">
             <div class="container">
                 <div class="newsletter-content">
                     <div class="newsletter-text">
-                        <h2>Stay Updated</h2>
-                        <p>Subscribe to our newsletter for the latest industry insights, product updates, and automation trends.</p>
+                        <h2>Tax updates, before the deadline</h2>
+                        <p>Budget analysis, LHDN public ruling summaries and programme announcements. One email a month, no noise.</p>
                     </div>
                     <form class="newsletter-form" id="newsletter-form">
                         <div class="form-group">
-                            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email address" required>
+                            <input type="email" id="newsletter-email" name="email" placeholder="Work email address" required>
                             <button type="submit" class="btn btn-primary">Subscribe</button>
                         </div>
                         <div class="form-message" id="newsletter-message"></div>
@@ -409,96 +250,16 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section class="contact" id="contact">
+        <!-- CTA -->
+        <section class="cta-cine" data-theme-dark>
             <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Get In Touch</h2>
-                    <p class="section-subtitle">Ready to automate your packaging operations? Let's discuss your requirements</p>
+                <div class="reveal-up">
+                    <h2>Have an LHDN letter, a board pack due, or a team to train?</h2>
+                    <p>Talk to a licensed tax agent, not a call centre. Initial consultation is confidential and without obligation.</p>
                 </div>
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>Address</h3>
-                                <p>[Your Company Address]<br>[City, State, Postal Code]<br>Malaysia</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>Phone</h3>
-                                <p><a href="tel:+60XXXXXXXXXX">+60 XX-XXXX XXXX</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-whatsapp"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>WhatsApp</h3>
-                                <p><a href="https://wa.me/60XXXXXXXXXX" target="_blank">+60 XX-XXXX XXXX</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>Email</h3>
-                                <p><a href="mailto:info@yourcompany.com">info@yourcompany.com</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-map">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15935.177759463928!2d101.6869!3d3.1390!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDgnMjAuNCJOIDEwMcKwNDEnMTIuOCJF!5e0!3m2!1sen!2smy!4v1234567890" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
-                    </div>
-                    <div class="contact-form-container">
-                        <form class="contact-form" id="contact-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="contact-name">Full Name *</label>
-                                    <input type="text" id="contact-name" name="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contact-email">Email Address *</label>
-                                    <input type="email" id="contact-email" name="email" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="contact-company">Company Name</label>
-                                    <input type="text" id="contact-company" name="company">
-                                </div>
-                                <div class="form-group">
-                                    <label for="contact-phone">Phone Number</label>
-                                    <input type="tel" id="contact-phone" name="phone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="contact-industry">Industry</label>
-                                <select id="contact-industry" name="industry">
-                                    <option value="">Select your industry</option>
-                                    <option value="medical">Medical Devices</option>
-                                    <option value="pharmaceutical">Pharmaceutical</option>
-                                    <option value="gloves">Gloves</option>
-                                    <option value="fmcg">FMCG</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="contact-message">Message *</label>
-                                <textarea id="contact-message" name="message" rows="5" required placeholder="Tell us about your packaging automation requirements..."></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-                            <div class="form-message" id="contact-message-status"></div>
-                        </form>
-                    </div>
+                <div class="cta-actions">
+                    <a href="contact.html" class="btn btn-primary btn-large btn-magnetic">Book a consultation</a>
+                    <a href="https://wa.me/60XXXXXXXXXX" class="btn btn-ghost btn-large btn-magnetic" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                 </div>
             </div>
         </section>
@@ -507,11 +268,16 @@
     <div id="footer-container"></div>
     <div id="chatbot-container"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/vendor/gsap.min.js"></script>
+    <script src="js/vendor/ScrollTrigger.min.js"></script>
+    <script src="js/vendor/lenis.min.js"></script>
+    <script src="js/vendor/anime.min.js"></script>
+    <script src="js/vendor/supabase.min.js"></script>
     <script src="js/supabase.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/cinematic.js"></script>
+    <script src="js/programmes.js"></script>
 </body>
 </html>
