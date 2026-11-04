@@ -192,3 +192,6 @@ body { background: var(--surface-page); color: var(--text-body); font-family: va
 .prog-check { display: block; position: relative; padding-left: 1.7rem; }
 .prog-check input { position: absolute; left: 0; top: .25rem; margin: 0; }
 .prog-check a { color: var(--bk-blue); text-decoration: underline; }
+/* pop CTA on an ink surface: ink shadow would vanish, so lift with paper */
+.hero-cine .hero-ctas a.btn.btn-pop { box-shadow: 4px 4px 0 var(--bk-paper); border-color: var(--bk-paper); }
+.hero-cine .hero-ctas a.btn.btn-pop:active { box-shadow: 2px 2px 0 var(--bk-paper); }
