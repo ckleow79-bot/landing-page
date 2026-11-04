@@ -71,6 +71,15 @@ load time; nothing assumes a December year end. All amounts are
 `numeric(18,2)`; MYR unless a `currency` column says otherwise; timestamps are
 `timestamptz`, business dates are `date` in Asia/Kuala_Lumpur.
 
+## Entity register (public identifiers only; TINs stay in the Supabase `entities` table, never in git)
+
+| Code | Entity | SSM / LLP | MSIC | Source system |
+|---|---|---|---|---|
+| BKA  | B & K Advisory PLT | 201604001561 (LLP0008273-LGN) | 70201 Business management consultancy | AutoCount Cloud |
+| BKAC | B & K Academy PLT | 202504000011 (LLP0041499-LGN) | 85499 Other education n.e.c. | AutoCount Cloud |
+| BKTS | B & K Training Services PLT | LLP0046779-LGN | TBC | TBC |
+| HITS | High Impact Training Services | training partner, not a group book | n/a | n/a |
+
 ## Role model
 
 One data model, three audiences, enforced in the database (not in the BI tool):
