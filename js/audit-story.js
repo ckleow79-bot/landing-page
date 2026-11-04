@@ -12,9 +12,24 @@
     /* ------------------------------------------------------------------ */
     /* Story                                                               */
     /* ------------------------------------------------------------------ */
+    function sizeLabels(section) {
+        section.querySelectorAll('.as-lab').forEach(g => {
+            const cx = +g.dataset.cx, tx = g.querySelector('.as-lab-tx'), bg = g.querySelector('.as-lab-bg'), ic = g.querySelector('.as-lab-ic');
+            let w = 100; try { w = tx.getComputedTextLength(); } catch (e) {}
+            const total = 8 + 26 + 8 + w + 16, x = cx - total / 2, y = +bg.getAttribute('y');
+            bg.setAttribute('x', x); bg.setAttribute('width', total);
+            ic.setAttribute('transform', `translate(${x + 8 + 13} ${y + 18})`);
+            tx.setAttribute('x', x + 8 + 26 + 8);
+        });
+    }
+
     function initStory() {
         const section = document.getElementById('audit-story');
-        if (!section || !hasGsap || reduce) return;
+        if (!section) return;
+        const relabel = () => sizeLabels(section);
+        relabel();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(relabel);
+        if (!hasGsap || reduce) return;
         section.classList.add('is-animated');
         gsap.registerPlugin(ScrollTrigger);
 
@@ -44,6 +59,7 @@
         gsap.set('#as-file', { opacity: 0, y: 40 });
         gsap.set('#as-stamp', { opacity: 0, scale: 2.4, transformOrigin: '50% 50%' });
         gsap.set('#as-tp-smile', { opacity: 0 });
+        gsap.set('.as-lab', { scale: 0, opacity: 0, transformOrigin: '50% 100%' });
         gsap.set(['#as-sweat', '#as-headreceipt'], { opacity: 0 });
         gsap.set(receipts, { x: 180, y: 310, scale: 0.2, opacity: 0, rotation: 0 });
         gsap.set('#as-lid', { transformOrigin: '0% 100%' });
@@ -55,6 +71,7 @@
 
         // ---- Scene 1: the letter ----
         tl.addLabel('s1', 0)
+          .to('#as-lab-tp', { scale: 1, opacity: 1, duration: 0.18, ease: 'back.out(3)' }, 's1')
           .to('#as-env', { y: 0, duration: 0.45, ease: 'bounce.out' }, 's1')
           .to('#as-letter', { y: 0, duration: 0.3 }, 's1+=0.45')
           .to('#as-cal-p1', { scaleY: 0, duration: 0.15 }, 's1+=0.5')
@@ -65,6 +82,7 @@
         // ---- Scene 2: the shoebox ----
         tl.addLabel('s2', 1)
           .to('#as-off', { x: 0, duration: 0.4, ease: 'power3.out' }, 's2')
+          .to('#as-lab-off', { scale: 1, opacity: 1, duration: 0.18, ease: 'back.out(3)' }, 's2+=0.32')
           .to('#as-bub1', { opacity: 1, scale: 1, duration: 0.2, ease: 'back.out(2)' }, 's2+=0.35')
           .to('#as-lid', { y: -26, x: -10, rotation: -14, duration: 0.2, ease: 'back.out(2)' }, 's2+=0.45')
           .to(receipts, {
@@ -95,6 +113,7 @@
           .to(['#as-ledger', '#as-bub2'], { opacity: 0, scale: 0.9, duration: 0.15 }, 's4')
           .to('#as-off-brow', { y: 0, duration: 0.1 }, 's4')
           .to('#as-bk', { y: 0, opacity: 1, duration: 0.3, ease: 'back.out(1.4)' }, 's4+=0.1')
+          .to('#as-lab-bk', { scale: 1, opacity: 1, duration: 0.18, ease: 'back.out(3)' }, 's4+=0.35')
           .to('#as-box', { opacity: 0, scale: 0.6, transformOrigin: '50% 100%', duration: 0.15 }, 's4+=0.25')
           .to('#as-binders > g', { scaleY: 1, duration: 0.2, stagger: 0.06, ease: 'back.out(1.6)' }, 's4+=0.35')
           .to(receipts, {

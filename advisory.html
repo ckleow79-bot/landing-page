@@ -114,13 +114,13 @@
                             <!-- room -->
                             <rect width="800" height="500" fill="#F4F3EF"/>
                             <rect y="408" width="800" height="92" fill="#E9E7E0"/>
-                            <g class="as-window">
+                            <g class="as-window" transform="translate(0 -18)">
                                 <rect x="60" y="50" width="170" height="120" rx="10" fill="#E5EAFD" stroke="#15213B" stroke-width="4"/>
                                 <path d="M145 50v120M60 110h170" stroke="#15213B" stroke-width="4"/>
                                 <circle cx="198" cy="80" r="12" fill="#FFB23E"/>
                             </g>
                             <!-- calendar -->
-                            <g id="as-cal">
+                            <g transform="translate(0 -22)"><g id="as-cal">
                                 <rect x="268" y="50" width="92" height="104" rx="8" fill="#fff" stroke="#15213B" stroke-width="3"/>
                                 <rect x="268" y="50" width="92" height="26" rx="8" fill="#FF6B5E" stroke="#15213B" stroke-width="3"/>
                                 <circle cx="292" cy="50" r="4" fill="#15213B"/><circle cx="336" cy="50" r="4" fill="#15213B"/>
@@ -128,9 +128,9 @@
                                 <text x="314" y="122" text-anchor="middle" class="as-t" font-size="16" fill="#DB3B3B">DUE</text></g>
                                 <g id="as-cal-p2"><rect x="270" y="78" width="88" height="74" fill="#fff"/><path d="M284 100h60M284 116h44M284 132h52" stroke="#D6D3C9" stroke-width="4" stroke-linecap="round"/></g>
                                 <g id="as-cal-p1"><rect x="270" y="78" width="88" height="74" fill="#fff"/><path d="M284 100h52M284 116h60M284 132h36" stroke="#D6D3C9" stroke-width="4" stroke-linecap="round"/></g>
-                            </g>
+                            </g></g>
                             <!-- checklist (scene 4) -->
-                            <g id="as-check">
+                            <g transform="translate(0 -26)"><g id="as-check">
                                 <rect x="606" y="44" width="160" height="126" rx="12" fill="#fff" stroke="#15213B" stroke-width="3"/>
                                 <text x="622" y="70" class="as-t" font-size="13" fill="#15213B">Audit file</text>
                                 <path class="as-tick" d="M622 92l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -139,7 +139,7 @@
                                 <text x="648" y="124" class="as-b" font-size="12" fill="#403D34">Receipts matched</text>
                                 <path class="as-tick" d="M622 144l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                                 <text x="648" y="150" class="as-b" font-size="12" fill="#403D34">Position paper</text>
-                            </g>
+                            </g></g>
 
                             <!-- taxpayer -->
                             <g id="as-tp">
@@ -154,7 +154,7 @@
                                     <path id="as-sweat" class="as-messy" d="M286 198q7 10 0 16q-7-6 0-16z" fill="#3457E5" opacity=".75"/>
                                     <g id="as-headreceipt" class="as-messy"><rect x="226" y="172" width="36" height="24" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2" transform="rotate(-14 244 184)"/><path d="M233 180h18M233 187h12" stroke="#B7B3A6" stroke-width="2" transform="rotate(-14 244 184)"/></g>
                                 </g>
-                                <g class="as-tag"><rect x="186" y="368" width="118" height="30" rx="15" fill="#fff" stroke="#15213B" stroke-width="2.5"/><circle cx="203" cy="383" r="6" fill="#15B5A6"/><text x="216" y="388.5" class="as-t" font-size="15" fill="#15213B">Taxpayer</text></g>
+                                <g id="as-lab-tp" class="as-lab" data-cx="245"><path class="as-lab-tip" d="M238 169l7 9 7-9z" fill="#15B5A6" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="170" y="136" width="150" height="36" rx="18" fill="#15B5A6" stroke="#15213B" stroke-width="2.5"/><rect x="238" y="166" width="14" height="5" fill="#15B5A6"/><g class="as-lab-ic" transform="translate(190 154)"><circle r="13" fill="#fff"/><path d="M-7-1h14v8h-14z" fill="none" stroke="#15B5A6" stroke-width="2.2" stroke-linejoin="round"/><path d="M-9-1l2.5-6h13l2.5 6z" fill="#15B5A6"/><path d="M-2 7v-4h4v4" fill="none" stroke="#15B5A6" stroke-width="2"/></g><text class="as-lab-tx as-t" x="211" y="160" font-size="16" fill="#fff" letter-spacing=".04em">TAXPAYER</text></g>
                             </g>
 
                             <!-- consultant (scene 4) -->
@@ -167,7 +167,7 @@
                                 <path d="M367 222q0-33 33-34q32 1 33 30q-16-14-35-10q-14 4-31 14z" fill="#1E1C16"/>
                                 <circle cx="389" cy="229" r="3.4" fill="#15213B"/><circle cx="411" cy="229" r="3.4" fill="#15213B"/>
                                 <path d="M390 242q10 8 20 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
-                                <g class="as-tag"><rect x="339" y="368" width="122" height="30" rx="15" fill="#fff" stroke="#15213B" stroke-width="2.5"/><circle cx="356" cy="383" r="6" fill="#3457E5"/><text x="369" y="388.5" class="as-t" font-size="15" fill="#15213B">Tax agent</text></g>
+                                <g id="as-lab-bk" class="as-lab" data-cx="400"><path class="as-lab-tip" d="M393 175l7 9 7-9z" fill="#3457E5" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="325" y="142" width="150" height="36" rx="18" fill="#3457E5" stroke="#15213B" stroke-width="2.5"/><rect x="393" y="172" width="14" height="5" fill="#3457E5"/><g class="as-lab-ic" transform="translate(345 160)"><circle r="13" fill="#fff"/><path d="M-6 0l6-6 6 6M-6 7l6-6 6 6" fill="none" stroke="#3457E5" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></g><text class="as-lab-tx as-t" x="366" y="166" font-size="16" fill="#fff" letter-spacing=".04em">TAX AGENT</text></g>
                             </g>
 
                             <!-- officer -->
@@ -186,7 +186,7 @@
                                     <path d="M563 242h18" stroke="#15213B" stroke-width="3" stroke-linecap="round"/>
                                 </g>
                                 <g id="as-clip"><rect x="612" y="292" width="46" height="60" rx="4" fill="#B7B3A6" stroke="#15213B" stroke-width="2.5"/><rect x="618" y="302" width="34" height="44" fill="#fff"/><rect x="626" y="287" width="18" height="9" rx="2" fill="#15213B"/><path d="M623 314h24M623 324h18M623 334h22" stroke="#D6D3C9" stroke-width="3"/></g>
-                                <g class="as-tag"><rect x="504" y="368" width="136" height="30" rx="15" fill="#fff" stroke="#15213B" stroke-width="2.5"/><circle cx="521" cy="383" r="6" fill="#908C7E"/><text x="534" y="388.5" class="as-t" font-size="15" fill="#15213B">Tax officer</text></g>
+                                <g id="as-lab-off" class="as-lab" data-cx="572"><path class="as-lab-tip" d="M565 169l7 9 7-9z" fill="#403D34" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="497" y="136" width="150" height="36" rx="18" fill="#403D34" stroke="#15213B" stroke-width="2.5"/><rect x="565" y="166" width="14" height="5" fill="#403D34"/><g class="as-lab-ic" transform="translate(517 154)"><circle r="13" fill="#fff"/><circle cx="-2" cy="-2" r="5.5" fill="none" stroke="#403D34" stroke-width="2.6"/><path d="M2 2l5 5" stroke="#403D34" stroke-width="3" stroke-linecap="round"/></g><text class="as-lab-tx as-t" x="538" y="160" font-size="16" fill="#fff" letter-spacing=".04em">TAX OFFICER</text></g>
                             </g>
 
                             <!-- desk -->
@@ -272,7 +272,7 @@
                             <g id="as-stamp"><g transform="rotate(-10 392 300)"><rect x="336" y="282" width="112" height="36" rx="6" fill="#fff" fill-opacity=".85" stroke="#1E9E6A" stroke-width="4"/><text x="392" y="307" text-anchor="middle" class="as-t" font-size="17" fill="#1E9E6A">REVIEWED</text></g></g>
 
                             <!-- speech bubbles -->
-                            <g id="as-bub1" class="as-bub"><rect x="452" y="118" width="196" height="44" rx="22" fill="#fff" stroke="#15213B" stroke-width="2.5"/><path d="M560 162l10 14 4-14" fill="#fff" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><text x="550" y="146" text-anchor="middle" class="as-b" font-size="14" fill="#15213B">May I see your records?</text></g>
+                            <g id="as-bub1" class="as-bub"><rect x="404" y="70" width="196" height="44" rx="22" fill="#fff" stroke="#15213B" stroke-width="2.5"/><path d="M548 114l14 16 0-16" fill="#fff" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><text x="502" y="98" text-anchor="middle" class="as-b" font-size="14" fill="#15213B">May I see your records?</text></g>
                             <g id="as-bub2" class="as-bub"><rect x="566" y="250" width="198" height="44" rx="22" fill="#fff" stroke="#15213B" stroke-width="2.5"/><text x="665" y="278" text-anchor="middle" class="as-b" font-size="14" fill="#15213B">Could you explain these?</text></g>
                             <g id="as-bub3" class="as-bub"><rect x="626" y="186" width="166" height="58" rx="20" fill="#fff" stroke="#15213B" stroke-width="2.5"/><path d="M628 210l-16 6 16 6" fill="#fff" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><text x="709" y="210" text-anchor="middle" class="as-b" font-size="13" fill="#15213B">Thank you. That</text><text x="709" y="229" text-anchor="middle" class="as-b" font-size="13" fill="#15213B">answers my questions.</text></g>
                         </svg>
