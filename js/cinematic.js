@@ -202,6 +202,8 @@
         ScrollTrigger.refresh();
     };
 
+    document.querySelectorAll('.page-hero-cine.has-photo').forEach(h => { const img = h.querySelector('.hero-photo img'); const done = () => h.classList.add('is-loaded'); if (img && !img.complete) img.addEventListener('load', done); else done(); });
+
     function boot() {
         initHero(); initMarquee(); initPillars(); initCounters(); initStory(); initTimeline(); initReveals(); initMagnetic();
         // components (header/footer) are injected async; re-scan when they land

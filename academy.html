@@ -52,7 +52,8 @@
 <body>
     <div id="header-container"></div>
     <main>
-        <section class="page-hero-cine" data-theme-dark>
+        <section class="page-hero-cine has-photo" data-theme-dark>
+            <picture class="hero-photo" aria-hidden="true"><source srcset="assets/images/training/hall-packed-800.webp 800w, assets/images/training/hall-packed.webp 1600w" sizes="100vw" type="image/webp"><img src="assets/images/training/hall-packed.webp" alt="" fetchpriority="high"></picture>
             <div class="container">
                 <img src="assets/brand/logo-white.svg" alt="B&amp;K Academy" width="252" height="64" class="hero-logo">
                 <p class="hero-kicker">B &amp; K Academy PLT</p>
@@ -61,6 +62,26 @@
                 <div class="hero-ctas" style="margin-top:2rem">
                     <a href="programmes.html" class="btn btn-primary btn-magnetic">Programme calendar</a>
                     <a href="contact.html?topic=inhouse" class="btn btn-ghost btn-magnetic">In-house training</a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===== In the room: training photos ===== -->
+        <section class="in-room" aria-labelledby="ir-title">
+            <div class="container">
+                <div class="ir-head">
+                    <p class="hero-kicker">In the room</p>
+                    <h2 id="ir-title">Full halls. Real questions. <span class="bk-marker">Practical answers.</span></h2>
+                    <p>From packed public seminars to focused in-house workshops, delivered in English and Mandarin across Malaysia.</p>
+                </div>
+                <div class="ir-grid reveal-stagger">
+                    <figure class="ir-a"><img src="assets/images/training/keith-presenting-hall.webp" srcset="assets/images/training/keith-presenting-hall-800.webp 800w, assets/images/training/keith-presenting-hall.webp 1600w" sizes="(max-width: 767px) 100vw, 50vw" loading="lazy" alt="Keith Leow presenting to a full seminar hall"><figcaption>Public seminar</figcaption></figure>
+                    <figure class="ir-b"><img src="assets/images/training/auditorium.webp" srcset="assets/images/training/auditorium-800.webp 800w, assets/images/training/auditorium.webp 1600w" sizes="(max-width: 767px) 100vw, 25vw" loading="lazy" alt="Large auditorium audience at a tax seminar"></figure>
+                    <figure class="ir-c"><img src="assets/images/training/keith-presenting-classroom.webp" srcset="assets/images/training/keith-presenting-classroom-800.webp 800w, assets/images/training/keith-presenting-classroom.webp 1600w" sizes="(max-width: 767px) 100vw, 25vw" loading="lazy" alt="Keith Leow leading a classroom-style workshop"><figcaption>Hands-on workshop</figcaption></figure>
+                    <figure class="ir-d"><img src="assets/images/training/event-space.webp" srcset="assets/images/training/event-space-800.webp 800w, assets/images/training/event-space.webp 1600w" sizes="(max-width: 767px) 100vw, 25vw" loading="lazy" alt="Seminar audience in an event space"></figure>
+                    <figure class="ir-e"><img src="assets/images/training/full-room.webp" srcset="assets/images/training/full-room-800.webp 800w, assets/images/training/full-room.webp 1600w" sizes="(max-width: 767px) 100vw, 25vw" loading="lazy" alt="Participants at round tables during a training session"></figure>
+                    <figure class="ir-f"><img src="assets/images/training/workshop-room.webp" srcset="assets/images/training/workshop-room-800.webp 800w, assets/images/training/workshop-room.webp 1600w" sizes="(max-width: 767px) 100vw, 50vw" loading="lazy" alt="Workshop participants working through case studies"><figcaption>Case-study led</figcaption></figure>
                 </div>
             </div>
         </section>
