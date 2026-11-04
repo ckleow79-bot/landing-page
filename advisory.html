@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/chatbot.css">
     <link rel="stylesheet" href="css/cinematic.css">
     <link rel="stylesheet" href="css/brand.css">
+    <link rel="stylesheet" href="css/audit-story.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <meta property="og:title" content="B &amp; K Advisory PLT | Tax Audit Defence, Tax Planning, SST, e-Invoice &amp; Fractional CFO">
@@ -62,6 +63,492 @@
                 <div class="hero-ctas" style="margin-top:2rem">
                     <a href="contact.html" class="btn btn-primary btn-magnetic">Book a consultation</a>
                     <a href="#services" class="btn btn-ghost btn-magnetic">See services</a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===== Audit story (scroll-driven, 5 scenes) ===== -->
+        <section class="audit-story" id="audit-story" data-kind="as" aria-labelledby="as-title">
+            <div class="as-pin">
+                <div class="container as-grid">
+                    <div class="as-copy">
+                        <div class="story-tabs" role="tablist" aria-label="Choose a story">
+                            <button type="button" role="tab" class="story-tab is-on" data-story="audit-story" aria-selected="true">Tax audit</button>
+                            <button type="button" role="tab" class="story-tab" data-story="einvoice-review" aria-selected="false">e-Invoice review</button>
+                        </div>
+                        <p class="hero-kicker">An audit, in five scenes</p>
+                        <h2 class="as-title" id="as-title">What happens when the <span class="bk-marker">tax audit notice</span> arrives?</h2>
+                        <ol class="as-captions">
+                            <li class="as-cap is-active" data-step="0">
+                                <span class="as-num bk-coin">1</span>
+                                <div><h3>The letter nobody wants to open.</h3>
+                                <p>A tax audit notice lands on the taxpayer's desk. The clock starts the day it arrives, and somewhere in the office a shoebox starts to sweat.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="1">
+                                <span class="as-num bk-coin">2</span>
+                                <div><h3>The tax officer asks: "May I see your records?"</h3>
+                                <p>Out comes the shoebox. Every business has one. Receipts escape, the paper tower leans, and one invoice sticks to the taxpayer.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="2">
+                                <span class="as-num bk-coin">3</span>
+                                <div><h3>The numbers that don't explain themselves.</h3>
+                                <p>Large cash deposits, the director's current account, travel without receipts. This is usually where the tax officer's questions begin.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="3">
+                                <span class="as-num bk-coin">4</span>
+                                <div><h3>Your tax agent steps in.</h3>
+                                <p>B &amp; K rebuilds the records, reconciles the bank to the books, and prepares a position paper with the authority behind every point.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="4">
+                                <span class="as-num bk-coin">5</span>
+                                <div><h3>The file closes. You breathe again.</h3>
+                                <p>The tax officer has the answers, the taxpayer has tidy records, and the shoebox retires. Outcomes depend on the facts; preparation is the part you control.</p></div>
+                            </li>
+                        </ol>
+                        <div class="as-ctas">
+                            <a href="contact.html?topic=audit" class="btn btn-primary">Talk to a tax agent</a>
+                            <a href="#audit-check" class="btn btn-outline">Take the 1-minute check</a>
+                        </div>
+                    </div>
+
+                    <div class="as-stage-wrap">
+                        <div class="as-dots" aria-hidden="true"><i class="is-active"></i><i></i><i></i><i></i><i></i></div>
+                        <svg class="as-stage" viewBox="0 0 800 500" role="img" aria-label="Illustration: a taxpayer receives a tax audit notice, a tax officer reviews messy records, and a B and K tax agent organises the file until the review closes.">
+                            <!-- room -->
+                            <rect width="800" height="500" fill="#F4F3EF"/>
+                            <rect y="408" width="800" height="92" fill="#E9E7E0"/>
+                            <g class="as-window" transform="translate(0 -18)">
+                                <rect x="60" y="50" width="170" height="120" rx="10" fill="#E5EAFD" stroke="#15213B" stroke-width="4"/>
+                                <path d="M145 50v120M60 110h170" stroke="#15213B" stroke-width="4"/>
+                                <circle cx="198" cy="80" r="12" fill="#FFB23E"/>
+                            </g>
+                            <!-- calendar -->
+                            <g transform="translate(0 -22)"><g id="as-cal">
+                                <rect x="268" y="50" width="92" height="104" rx="8" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <rect x="268" y="50" width="92" height="26" rx="8" fill="#FF6B5E" stroke="#15213B" stroke-width="3"/>
+                                <circle cx="292" cy="50" r="4" fill="#15213B"/><circle cx="336" cy="50" r="4" fill="#15213B"/>
+                                <g id="as-cal-due"><circle cx="314" cy="116" r="24" fill="none" stroke="#DB3B3B" stroke-width="4"/>
+                                <text x="314" y="122" text-anchor="middle" class="as-t" font-size="16" fill="#DB3B3B">DUE</text></g>
+                                <g id="as-cal-p2"><rect x="270" y="78" width="88" height="74" fill="#fff"/><path d="M284 100h60M284 116h44M284 132h52" stroke="#D6D3C9" stroke-width="4" stroke-linecap="round"/></g>
+                                <g id="as-cal-p1"><rect x="270" y="78" width="88" height="74" fill="#fff"/><path d="M284 100h52M284 116h60M284 132h36" stroke="#D6D3C9" stroke-width="4" stroke-linecap="round"/></g>
+                            </g></g>
+                            <!-- checklist (scene 4) -->
+                            <g transform="translate(0 -26)"><g id="as-check">
+                                <rect x="606" y="44" width="160" height="126" rx="12" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <text x="622" y="70" class="as-t" font-size="13" fill="#15213B">Audit file</text>
+                                <path class="as-tick" d="M622 92l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="648" y="98" class="as-b" font-size="12" fill="#403D34">Bank reconciled</text>
+                                <path class="as-tick" d="M622 118l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="648" y="124" class="as-b" font-size="12" fill="#403D34">Receipts matched</text>
+                                <path class="as-tick" d="M622 144l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="648" y="150" class="as-b" font-size="12" fill="#403D34">Position paper</text>
+                            </g></g>
+
+                            <!-- taxpayer -->
+                            <g id="as-tp">
+                                <rect x="178" y="226" width="134" height="124" rx="22" fill="#D6D3C9"/>
+                                <rect x="195" y="262" width="100" height="86" rx="40" fill="#15B5A6"/>
+                                <g id="as-tp-head">
+                                    <circle cx="245" cy="222" r="36" fill="#F2C9A0"/>
+                                    <path d="M209 216q4-34 36-36q32 2 36 30q-14-12-36-12q-22 0-36 18z" fill="#1E1C16"/>
+                                    <circle cx="233" cy="227" r="3.6" fill="#15213B"/><circle cx="257" cy="227" r="3.6" fill="#15213B"/>
+                                    <path id="as-tp-worry" class="as-messy" d="M235 245q10-8 20 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <path id="as-tp-smile" d="M232 240q13 11 26 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <path id="as-sweat" class="as-messy" d="M286 198q7 10 0 16q-7-6 0-16z" fill="#3457E5" opacity=".75"/>
+                                    <g id="as-headreceipt" class="as-messy"><rect x="226" y="172" width="36" height="24" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2" transform="rotate(-14 244 184)"/><path d="M233 180h18M233 187h12" stroke="#B7B3A6" stroke-width="2" transform="rotate(-14 244 184)"/></g>
+                                </g>
+                                <g id="as-lab-tp" class="as-lab" data-cx="245"><path class="as-lab-tip" d="M238 169l7 9 7-9z" fill="#15B5A6" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="170" y="136" width="150" height="36" rx="18" fill="#15B5A6" stroke="#15213B" stroke-width="2.5"/><rect x="238" y="166" width="14" height="5" fill="#15B5A6"/><g class="as-lab-ic" transform="translate(190 154)"><circle r="13" fill="#fff"/><path d="M-7-1h14v8h-14z" fill="none" stroke="#15B5A6" stroke-width="2.2" stroke-linejoin="round"/><path d="M-9-1l2.5-6h13l2.5 6z" fill="#15B5A6"/><path d="M-2 7v-4h4v4" fill="none" stroke="#15B5A6" stroke-width="2"/></g><text class="as-lab-tx as-t" x="211" y="160" font-size="16" fill="#fff" letter-spacing=".04em">TAXPAYER</text></g>
+                            </g>
+
+                            <!-- consultant (scene 4) -->
+                            <g id="as-bk">
+                                <rect x="352" y="262" width="96" height="86" rx="40" fill="#15213B"/>
+                                <path d="M386 262l14 22 14-22z" fill="#fff"/>
+                                <path d="M396 268h8l4 24-8 9-8-9z" fill="#FFB23E"/>
+                                <path d="M426 296l6-6 6 6M426 304l6-6 6 6" stroke="#15B5A6" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="400" cy="224" r="33" fill="#E6B48C"/>
+                                <path d="M367 222q0-33 33-34q32 1 33 30q-16-14-35-10q-14 4-31 14z" fill="#1E1C16"/>
+                                <circle cx="389" cy="229" r="3.4" fill="#15213B"/><circle cx="411" cy="229" r="3.4" fill="#15213B"/>
+                                <path d="M390 242q10 8 20 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <g id="as-lab-bk" class="as-lab" data-cx="400"><path class="as-lab-tip" d="M393 175l7 9 7-9z" fill="#3457E5" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="325" y="142" width="150" height="36" rx="18" fill="#3457E5" stroke="#15213B" stroke-width="2.5"/><rect x="393" y="172" width="14" height="5" fill="#3457E5"/><g class="as-lab-ic" transform="translate(345 160)"><circle r="13" fill="#fff"/><path d="M-6 0l6-6 6 6M-6 7l6-6 6 6" fill="none" stroke="#3457E5" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></g><text class="as-lab-tx as-t" x="366" y="166" font-size="16" fill="#fff" letter-spacing=".04em">TAX AGENT</text></g>
+                            </g>
+
+                            <!-- officer -->
+                            <g id="as-off">
+                                <rect x="520" y="258" width="104" height="90" rx="40" fill="#403D34"/>
+                                <path d="M556 258l16 26 16-26z" fill="#fff"/>
+                                <path d="M556 262l16 40 16-40" stroke="#3457E5" stroke-width="2" fill="none"/>
+                                <rect x="562" y="300" width="20" height="26" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <g id="as-off-head">
+                                    <circle cx="572" cy="220" r="34" fill="#D9A57A"/>
+                                    <path d="M540 214q2-31 32-31q30 0 32 29q-8-11-32-12q-24 1-32 14z" fill="#1E1C16"/>
+                                    <circle cx="560" cy="223" r="9" fill="none" stroke="#15213B" stroke-width="2.5"/><circle cx="584" cy="223" r="9" fill="none" stroke="#15213B" stroke-width="2.5"/>
+                                    <path d="M569 223h6" stroke="#15213B" stroke-width="2.5"/>
+                                    <circle cx="560" cy="224" r="2.6" fill="#15213B"/><circle cx="584" cy="224" r="2.6" fill="#15213B"/>
+                                    <path id="as-off-brow" d="M576 205q8-5 16 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <path d="M563 242h18" stroke="#15213B" stroke-width="3" stroke-linecap="round"/>
+                                </g>
+                                <g id="as-clip"><rect x="612" y="292" width="46" height="60" rx="4" fill="#B7B3A6" stroke="#15213B" stroke-width="2.5"/><rect x="618" y="302" width="34" height="44" fill="#fff"/><rect x="626" y="287" width="18" height="9" rx="2" fill="#15213B"/><path d="M623 314h24M623 324h18M623 334h22" stroke="#D6D3C9" stroke-width="3"/></g>
+                                <g id="as-lab-off" class="as-lab" data-cx="572"><path class="as-lab-tip" d="M565 169l7 9 7-9z" fill="#403D34" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="497" y="136" width="150" height="36" rx="18" fill="#403D34" stroke="#15213B" stroke-width="2.5"/><rect x="565" y="166" width="14" height="5" fill="#403D34"/><g class="as-lab-ic" transform="translate(517 154)"><circle r="13" fill="#fff"/><circle cx="-2" cy="-2" r="5.5" fill="none" stroke="#403D34" stroke-width="2.6"/><path d="M2 2l5 5" stroke="#403D34" stroke-width="3" stroke-linecap="round"/></g><text class="as-lab-tx as-t" x="538" y="160" font-size="16" fill="#fff" letter-spacing=".04em">TAX OFFICER</text></g>
+                            </g>
+
+                            <!-- desk -->
+                            <rect x="140" y="362" width="16" height="56" fill="#15213B"/><rect x="644" y="362" width="16" height="56" fill="#15213B"/>
+                            <rect x="110" y="340" width="580" height="22" rx="8" fill="#15213B"/>
+
+                            <!-- paper tower -->
+                            <g id="as-tower" class="as-messy">
+                                <rect x="466" y="328" width="52" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="470" y="316" width="50" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="464" y="304" width="52" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="472" y="292" width="48" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="466" y="280" width="50" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="474" y="268" width="46" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <g transform="translate(482 244)"><rect width="22" height="24" rx="4" fill="#FF6B5E" stroke="#15213B" stroke-width="2"/><path d="M22 6q8 0 8 7t-8 7" stroke="#15213B" stroke-width="2" fill="none"/></g>
+                            </g>
+
+                            <!-- shoebox -->
+                            <g id="as-box" class="as-messy">
+                                <rect x="128" y="296" width="104" height="44" rx="4" fill="#D9B98A" stroke="#15213B" stroke-width="3"/>
+                                <text x="180" y="316" text-anchor="middle" class="as-t" font-size="11" fill="#15213B">ACCOUNTS</text>
+                                <text x="180" y="331" text-anchor="middle" class="as-b" font-size="9" fill="#403D34">(probably)</text>
+                                <g id="as-lid"><rect x="122" y="284" width="116" height="14" rx="3" fill="#C9A574" stroke="#15213B" stroke-width="3"/>
+                                <g transform="rotate(8 210 280)"><rect x="198" y="266" width="26" height="22" fill="#FFB23E" stroke="#15213B" stroke-width="1.5"/><text x="211" y="282" text-anchor="middle" class="as-t" font-size="11" fill="#15213B">?!</text></g></g>
+                            </g>
+
+                            <!-- binders (scene 4) -->
+                            <g id="as-binders">
+                                <g><rect x="132" y="262" width="34" height="78" rx="4" fill="#3457E5" stroke="#15213B" stroke-width="3"/><rect x="137" y="276" width="24" height="16" rx="2" fill="#fff"/><text x="149" y="287" text-anchor="middle" class="as-b" font-size="7" fill="#15213B">SALES</text></g>
+                                <g><rect x="170" y="262" width="34" height="78" rx="4" fill="#15B5A6" stroke="#15213B" stroke-width="3"/><rect x="175" y="276" width="24" height="16" rx="2" fill="#fff"/><text x="187" y="287" text-anchor="middle" class="as-b" font-size="7" fill="#15213B">EXP</text></g>
+                                <g><rect x="208" y="262" width="34" height="78" rx="4" fill="#FFB23E" stroke="#15213B" stroke-width="3"/><rect x="213" y="276" width="24" height="16" rx="2" fill="#fff"/><text x="225" y="287" text-anchor="middle" class="as-b" font-size="7" fill="#15213B">BANK</text></g>
+                            </g>
+
+                            <!-- envelope + letter (scene 1) -->
+                            <g id="as-env" class="as-messy">
+                                <g id="as-letter"><rect x="350" y="196" width="100" height="120" rx="6" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <text x="400" y="220" text-anchor="middle" class="as-t" font-size="13" fill="#DB3B3B">TAX AUDIT</text>
+                                <text x="400" y="238" text-anchor="middle" class="as-t" font-size="13" fill="#DB3B3B">NOTICE</text>
+                                <path d="M364 260h72M364 274h56M364 288h64" stroke="#D6D3C9" stroke-width="4" stroke-linecap="round"/></g>
+                                <rect x="340" y="284" width="120" height="56" rx="6" fill="#FFF0D6" stroke="#15213B" stroke-width="3"/>
+                                <path d="M340 290l60 28 60-28" stroke="#15213B" stroke-width="3" fill="none" stroke-linejoin="round"/>
+                            </g>
+
+                            <!-- receipts (positioned by JS) -->
+                            <g id="as-receipts" class="as-messy">
+                                <g class="as-r" data-x="96" data-y="232" data-r="-18"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><path d="M-8-8h16M-8 0h10M-8 8h14" stroke="#B7B3A6" stroke-width="2"/></g>
+                                <g class="as-r" data-x="150" data-y="196" data-r="12"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><path d="M-8-8h16M-8 0h10M-8 8h14" stroke="#B7B3A6" stroke-width="2"/></g>
+                                <g class="as-r" data-x="318" data-y="200" data-r="-8"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><circle cx="4" cy="6" r="7" fill="none" stroke="#C9A574" stroke-width="2.5" opacity=".8"/></g>
+                                <g class="as-r" data-x="110" data-y="380" data-r="22"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><path d="M-8-8h16M-8 0h10M-8 8h14" stroke="#B7B3A6" stroke-width="2"/></g>
+                                <g class="as-r" data-x="300" data-y="390" data-r="-30"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><path d="M-8-8h16M-8 0h10M-8 8h14" stroke="#B7B3A6" stroke-width="2"/></g>
+                                <g class="as-r" data-x="470" data-y="402" data-r="14"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><path d="M-8-8h16M-8 0h10M-8 8h14" stroke="#B7B3A6" stroke-width="2"/></g>
+                                <g class="as-r" data-x="64" data-y="300" data-r="40"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><path d="M-8-8h16M-8 0h10M-8 8h14" stroke="#B7B3A6" stroke-width="2"/></g>
+                                <g class="as-r" data-x="200" data-y="420" data-r="-6"><rect x="-14" y="-18" width="28" height="36" rx="2" fill="#fff" stroke="#908C7E" stroke-width="2"/><path d="M-8-8h16M-8 0h10M-8 8h14" stroke="#B7B3A6" stroke-width="2"/></g>
+                            </g>
+
+                            <!-- ledger (scene 3) -->
+                            <g id="as-ledger" class="as-panel">
+                                <rect x="208" y="88" width="400" height="248" rx="14" fill="#15213B"/>
+                                <rect x="200" y="80" width="400" height="248" rx="14" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <text x="224" y="114" class="as-t" font-size="18" fill="#15213B">General ledger</text>
+                                <text x="576" y="114" text-anchor="end" class="as-m" font-size="11" fill="#6B675B">RM</text>
+                                <g id="as-hl"><rect class="as-hl" x="212" y="128" width="376" height="30" rx="6" fill="#FBE0E0"/><rect class="as-hl" x="212" y="160" width="376" height="30" rx="6" fill="#FBE0E0"/><rect class="as-hl" x="212" y="192" width="376" height="30" rx="6" fill="#FBE0E0"/></g>
+                                <g class="as-b" font-size="13" fill="#403D34">
+                                    <text x="224" y="148">Cash deposit</text><text x="576" y="148" text-anchor="end" class="as-m">48,000.00</text>
+                                    <text x="224" y="180">Director's account</text><text x="576" y="180" text-anchor="end" class="as-m">120,500.00</text>
+                                    <text x="224" y="212">Travel (no receipt)</text><text x="576" y="212" text-anchor="end" class="as-m">6,240.00</text>
+                                    <text x="224" y="244">Office rental</text><text x="576" y="244" text-anchor="end" class="as-m">36,000.00</text>
+                                    <text x="224" y="276">Salaries</text><text x="576" y="276" text-anchor="end" class="as-m">84,000.00</text>
+                                    <text x="224" y="308">Utilities</text><text x="576" y="308" text-anchor="end" class="as-m">7,800.00</text>
+                                </g>
+                                <g class="as-flag" transform="translate(616 128)"><rect width="128" height="28" rx="14" fill="#FBE0E0" stroke="#DB3B3B" stroke-width="2"/><text x="64" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#DB3B3B">Source?</text></g>
+                                <g class="as-flag" transform="translate(616 160)"><rect width="128" height="28" rx="14" fill="#FBE0E0" stroke="#DB3B3B" stroke-width="2"/><text x="64" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#DB3B3B">Loan or income?</text></g>
+                                <g class="as-flag" transform="translate(616 192)"><rect width="128" height="28" rx="14" fill="#FBE0E0" stroke="#DB3B3B" stroke-width="2"/><text x="64" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#DB3B3B">Receipt?</text></g>
+                                <g id="as-mag"><circle cx="0" cy="0" r="26" fill="#E5EAFD" fill-opacity=".45" stroke="#15213B" stroke-width="5"/><path d="M18 18l22 22" stroke="#15213B" stroke-width="8" stroke-linecap="round"/></g>
+                            </g>
+
+                            <!-- closed file + stamp (scene 5) -->
+                            <g id="as-file">
+                                <path d="M318 300h44l8-10h60v50H318z" fill="#E5EAFD" stroke="#15213B" stroke-width="3" stroke-linejoin="round"/>
+                                <rect x="318" y="300" width="148" height="40" rx="3" fill="#E5EAFD" stroke="#15213B" stroke-width="3"/>
+                                                                <path d="M440 318l7-7 7 7M440 327l7-7 7 7" stroke="#15B5A6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <g id="as-stamp"><g transform="rotate(-10 392 300)"><rect x="336" y="282" width="112" height="36" rx="6" fill="#fff" fill-opacity=".85" stroke="#1E9E6A" stroke-width="4"/><text x="392" y="307" text-anchor="middle" class="as-t" font-size="17" fill="#1E9E6A">REVIEWED</text></g></g>
+
+                            <!-- speech bubbles -->
+                            <g id="as-bub1" class="as-bub"><rect x="404" y="70" width="196" height="44" rx="22" fill="#fff" stroke="#15213B" stroke-width="2.5"/><path d="M548 114l14 16 0-16" fill="#fff" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><text x="502" y="98" text-anchor="middle" class="as-b" font-size="14" fill="#15213B">May I see your records?</text></g>
+                            <g id="as-bub2" class="as-bub"><rect x="566" y="250" width="198" height="44" rx="22" fill="#fff" stroke="#15213B" stroke-width="2.5"/><text x="665" y="278" text-anchor="middle" class="as-b" font-size="14" fill="#15213B">Could you explain these?</text></g>
+                            <g id="as-bub3" class="as-bub"><rect x="626" y="186" width="166" height="58" rx="20" fill="#fff" stroke="#15213B" stroke-width="2.5"/><path d="M628 210l-16 6 16 6" fill="#fff" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><text x="709" y="210" text-anchor="middle" class="as-b" font-size="13" fill="#15213B">Thank you. That</text><text x="709" y="229" text-anchor="middle" class="as-b" font-size="13" fill="#15213B">answers my questions.</text></g>
+                        </svg>
+                        <ul class="as-legend" aria-label="Who is who">
+                            <li><i style="background:#15B5A6"></i>Taxpayer <span>the business owner</span></li>
+                            <li><i style="background:#908C7E"></i>Tax officer <span>conducting the audit</span></li>
+                            <li><i style="background:#3457E5"></i>Tax agent <span>B &amp; K, licensed under s.153</span></li>
+                        </ul>
+                        <p class="as-note">Illustration only. Characters are fictional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== e-Invoice compliance review story (scroll-driven, 5 scenes) ===== -->
+        <section class="audit-story" id="einvoice-review" data-kind="ei" aria-labelledby="ei-title" hidden>
+            <div class="as-pin">
+                <div class="container as-grid">
+                    <div class="as-copy">
+                        <div class="story-tabs" role="tablist" aria-label="Choose a story">
+                            <button type="button" role="tab" class="story-tab" data-story="audit-story" aria-selected="false">Tax audit</button>
+                            <button type="button" role="tab" class="story-tab is-on" data-story="einvoice-review" aria-selected="true">e-Invoice review</button>
+                        </div>
+                        <p class="hero-kicker">e-Invoice compliance review, in five scenes</p>
+                        <h2 class="as-title" id="ei-title">What happens in an <span class="bk-marker" style="white-space:nowrap">e-Invoice review</span>?</h2>
+                        <ol class="as-captions">
+                            <li class="as-cap is-active" data-step="0">
+                                <span class="as-num bk-coin">1</span>
+                                <div><h3>The e-mail nobody wants to open.</h3>
+                                <p>An e-Invoice compliance review lands in the taxpayer's inbox, asking for e-Invoice records. Somewhere, a spreadsheet called final_v3_REAL starts to sweat.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="1">
+                                <span class="as-num bk-coin">2</span>
+                                <div><h3>The tax officer asks: "Can we see your e-Invoices?"</h3>
+                                <p>Out come three versions of the sales listing, a pile of printouts, and one consolidated e-Invoice that seems to cover everything.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="2">
+                                <span class="as-num bk-coin">3</span>
+                                <div><h3>The numbers that don't match.</h3>
+                                <p>Sales in the accounts that never reached MyInvois, B2B sales tucked into a consolidated e-Invoice, payments that needed a self-billed e-Invoice. This is where review questions usually start.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="3">
+                                <span class="as-num bk-coin">4</span>
+                                <div><h3>Your tax agent steps in.</h3>
+                                <p>B &amp; K reconciles the accounts to MyInvois line by line, sorts out the consolidated and self-billed cases, and documents every gap with its explanation.</p></div>
+                            </li>
+                            <li class="as-cap" data-step="4">
+                                <span class="as-num bk-coin">5</span>
+                                <div><h3>The review closes. The numbers finally agree.</h3>
+                                <p>The accounts and MyInvois tell the same story, and the spreadsheets retire. Outcomes depend on the facts; a clean reconciliation is the part you control.</p></div>
+                            </li>
+                        </ol>
+                        <div class="as-ctas">
+                            <a href="contact.html?topic=sst" class="btn btn-primary">Talk to a tax agent</a>
+                            <a href="contact.html?topic=sst" class="btn btn-outline">Ask about an e-Invoice health check</a>
+                        </div>
+                    </div>
+
+                    <div class="as-stage-wrap">
+                        <div class="as-dots" aria-hidden="true"><i class="is-active"></i><i></i><i></i><i></i><i></i></div>
+                        <svg class="as-stage" viewBox="0 0 800 500" role="img" aria-label="Illustration: a taxpayer receives an e-Invoice compliance review, a tax officer compares the accounts with MyInvois and finds mismatches, and a B and K tax agent reconciles them until the review closes.">
+                            <!-- room -->
+                            <rect width="800" height="500" fill="#F4F3EF"/>
+                            <rect y="408" width="800" height="92" fill="#E9E7E0"/>
+                            <g class="as-window" transform="translate(0 -18)">
+                                <rect x="60" y="50" width="170" height="120" rx="10" fill="#E5EAFD" stroke="#15213B" stroke-width="4"/>
+                                <path d="M145 50v120M60 110h170" stroke="#15213B" stroke-width="4"/>
+                                <circle cx="198" cy="80" r="12" fill="#FFB23E"/>
+                            </g>
+                            <!-- calendar -->
+                            <g transform="translate(0 -22)"><g id="ei-cal">
+                                <rect x="268" y="50" width="92" height="104" rx="8" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <rect x="268" y="50" width="92" height="26" rx="8" fill="#FF6B5E" stroke="#15213B" stroke-width="3"/>
+                                <circle cx="292" cy="50" r="4" fill="#15213B"/><circle cx="336" cy="50" r="4" fill="#15213B"/>
+                                <g id="ei-cal-due"><circle cx="314" cy="116" r="24" fill="none" stroke="#DB3B3B" stroke-width="4"/>
+                                <text x="314" y="122" text-anchor="middle" class="as-t" font-size="16" fill="#DB3B3B">DUE</text></g>
+                                <g id="ei-cal-p2"><rect x="270" y="78" width="88" height="74" fill="#fff"/><path d="M284 100h60M284 116h44M284 132h52" stroke="#D6D3C9" stroke-width="4" stroke-linecap="round"/></g>
+                                <g id="ei-cal-p1"><rect x="270" y="78" width="88" height="74" fill="#fff"/><path d="M284 100h52M284 116h60M284 132h36" stroke="#D6D3C9" stroke-width="4" stroke-linecap="round"/></g>
+                            </g></g>
+                            <!-- checklist (scene 4) -->
+                            <g transform="translate(0 -26)"><g id="ei-check">
+                                <rect x="606" y="44" width="160" height="126" rx="12" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <text x="622" y="70" class="as-t" font-size="13" fill="#15213B">Review file</text>
+                                <path class="as-tick" d="M622 92l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="648" y="98" class="as-b" font-size="12" fill="#403D34">Sales matched</text>
+                                <path class="as-tick" d="M622 118l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="648" y="124" class="as-b" font-size="12" fill="#403D34">Self-billed sorted</text>
+                                <path class="as-tick" d="M622 144l6 6 11-12" stroke="#1E9E6A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="648" y="150" class="as-b" font-size="12" fill="#403D34">Gaps explained</text>
+                            </g></g>
+
+                            <!-- taxpayer -->
+                            <g id="ei-tp">
+                                <rect x="178" y="226" width="134" height="124" rx="22" fill="#D6D3C9"/>
+                                <rect x="195" y="262" width="100" height="86" rx="40" fill="#15B5A6"/>
+                                <g id="ei-tp-head">
+                                    <circle cx="245" cy="222" r="36" fill="#F2C9A0"/>
+                                    <path d="M209 216q4-34 36-36q32 2 36 30q-14-12-36-12q-22 0-36 18z" fill="#1E1C16"/>
+                                    <circle cx="233" cy="227" r="3.6" fill="#15213B"/><circle cx="257" cy="227" r="3.6" fill="#15213B"/>
+                                    <path id="ei-tp-worry" class="as-messy" d="M235 245q10-8 20 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <path id="ei-tp-smile" d="M232 240q13 11 26 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <path id="ei-sweat" class="as-messy" d="M286 198q7 10 0 16q-7-6 0-16z" fill="#3457E5" opacity=".75"/>
+                                    <g id="ei-headreceipt" class="as-messy"><g transform="rotate(-12 244 182)"><rect x="216" y="170" width="56" height="22" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/><rect x="216" y="170" width="12" height="22" rx="2" fill="#1E9E6A"/><text x="232" y="185" class="as-b" font-size="7.5" fill="#15213B">v3_REAL</text></g></g>
+                                </g>
+                                <g id="ei-lab-tp" class="as-lab" data-cx="245"><path class="as-lab-tip" d="M238 169l7 9 7-9z" fill="#15B5A6" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="170" y="136" width="150" height="36" rx="18" fill="#15B5A6" stroke="#15213B" stroke-width="2.5"/><rect x="238" y="166" width="14" height="5" fill="#15B5A6"/><g class="as-lab-ic" transform="translate(190 154)"><circle r="13" fill="#fff"/><path d="M-7-1h14v8h-14z" fill="none" stroke="#15B5A6" stroke-width="2.2" stroke-linejoin="round"/><path d="M-9-1l2.5-6h13l2.5 6z" fill="#15B5A6"/><path d="M-2 7v-4h4v4" fill="none" stroke="#15B5A6" stroke-width="2"/></g><text class="as-lab-tx as-t" x="211" y="160" font-size="16" fill="#fff" letter-spacing=".04em">TAXPAYER</text></g>
+                            </g>
+
+                            <!-- consultant (scene 4) -->
+                            <g id="ei-bk">
+                                <rect x="352" y="262" width="96" height="86" rx="40" fill="#15213B"/>
+                                <path d="M386 262l14 22 14-22z" fill="#fff"/>
+                                <path d="M396 268h8l4 24-8 9-8-9z" fill="#FFB23E"/>
+                                <path d="M426 296l6-6 6 6M426 304l6-6 6 6" stroke="#15B5A6" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="400" cy="224" r="33" fill="#E6B48C"/>
+                                <path d="M367 222q0-33 33-34q32 1 33 30q-16-14-35-10q-14 4-31 14z" fill="#1E1C16"/>
+                                <circle cx="389" cy="229" r="3.4" fill="#15213B"/><circle cx="411" cy="229" r="3.4" fill="#15213B"/>
+                                <path d="M390 242q10 8 20 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <g id="ei-lab-bk" class="as-lab" data-cx="400"><path class="as-lab-tip" d="M393 175l7 9 7-9z" fill="#3457E5" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="325" y="142" width="150" height="36" rx="18" fill="#3457E5" stroke="#15213B" stroke-width="2.5"/><rect x="393" y="172" width="14" height="5" fill="#3457E5"/><g class="as-lab-ic" transform="translate(345 160)"><circle r="13" fill="#fff"/><path d="M-6 0l6-6 6 6M-6 7l6-6 6 6" fill="none" stroke="#3457E5" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></g><text class="as-lab-tx as-t" x="366" y="166" font-size="16" fill="#fff" letter-spacing=".04em">TAX AGENT</text></g>
+                            </g>
+
+                            <!-- officer -->
+                            <g id="ei-off">
+                                <rect x="520" y="258" width="104" height="90" rx="40" fill="#403D34"/>
+                                <path d="M556 258l16 26 16-26z" fill="#fff"/>
+                                <path d="M556 262l16 40 16-40" stroke="#3457E5" stroke-width="2" fill="none"/>
+                                <rect x="562" y="300" width="20" height="26" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <g id="ei-off-head">
+                                    <circle cx="572" cy="220" r="34" fill="#D9A57A"/>
+                                    <path d="M540 214q2-31 32-31q30 0 32 29q-8-11-32-12q-24 1-32 14z" fill="#1E1C16"/>
+                                    <circle cx="560" cy="223" r="9" fill="none" stroke="#15213B" stroke-width="2.5"/><circle cx="584" cy="223" r="9" fill="none" stroke="#15213B" stroke-width="2.5"/>
+                                    <path d="M569 223h6" stroke="#15213B" stroke-width="2.5"/>
+                                    <circle cx="560" cy="224" r="2.6" fill="#15213B"/><circle cx="584" cy="224" r="2.6" fill="#15213B"/>
+                                    <path id="ei-off-brow" d="M576 205q8-5 16 0" stroke="#15213B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <path d="M563 242h18" stroke="#15213B" stroke-width="3" stroke-linecap="round"/>
+                                </g>
+                                <g id="ei-clip"><rect x="612" y="292" width="46" height="60" rx="4" fill="#B7B3A6" stroke="#15213B" stroke-width="2.5"/><rect x="618" y="302" width="34" height="44" fill="#fff"/><rect x="626" y="287" width="18" height="9" rx="2" fill="#15213B"/><path d="M623 314h24M623 324h18M623 334h22" stroke="#D6D3C9" stroke-width="3"/></g>
+                                <g id="ei-lab-off" class="as-lab" data-cx="572"><path class="as-lab-tip" d="M565 169l7 9 7-9z" fill="#403D34" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><rect class="as-lab-bg" x="497" y="136" width="150" height="36" rx="18" fill="#403D34" stroke="#15213B" stroke-width="2.5"/><rect x="565" y="166" width="14" height="5" fill="#403D34"/><g class="as-lab-ic" transform="translate(517 154)"><circle r="13" fill="#fff"/><circle cx="-2" cy="-2" r="5.5" fill="none" stroke="#403D34" stroke-width="2.6"/><path d="M2 2l5 5" stroke="#403D34" stroke-width="3" stroke-linecap="round"/></g><text class="as-lab-tx as-t" x="538" y="160" font-size="16" fill="#fff" letter-spacing=".04em">TAX OFFICER</text></g>
+                            </g>
+
+                            <!-- desk -->
+                            <rect x="140" y="362" width="16" height="56" fill="#15213B"/><rect x="644" y="362" width="16" height="56" fill="#15213B"/>
+                            <rect x="110" y="340" width="580" height="22" rx="8" fill="#15213B"/>
+
+                            <!-- paper tower -->
+                            <g id="ei-tower" class="as-messy">
+                                <rect x="466" y="328" width="52" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="470" y="316" width="50" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="464" y="304" width="52" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="472" y="292" width="48" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="466" y="280" width="50" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <rect x="474" y="268" width="46" height="12" rx="2" fill="#fff" stroke="#15213B" stroke-width="2"/>
+                                <g transform="translate(482 244)"><rect width="22" height="24" rx="4" fill="#FF6B5E" stroke="#15213B" stroke-width="2"/><path d="M22 6q8 0 8 7t-8 7" stroke="#15213B" stroke-width="2" fill="none"/></g>
+                            </g>
+
+                            <!-- consolidated e-Invoice stack -->
+                            <g id="ei-box" class="as-messy">
+                                <rect x="136" y="278" width="96" height="62" rx="3" fill="#fff" stroke="#15213B" stroke-width="2.5" transform="rotate(-4 184 309)"/>
+                                <rect x="132" y="282" width="96" height="58" rx="3" fill="#fff" stroke="#15213B" stroke-width="2.5" transform="rotate(3 180 311)"/>
+                                <rect x="128" y="286" width="100" height="54" rx="3" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <rect x="128" y="286" width="100" height="14" rx="3" fill="#FFB23E" stroke="#15213B" stroke-width="3"/>
+                                <text x="178" y="317" text-anchor="middle" class="as-t" font-size="10" fill="#15213B">CONSOLIDATED</text>
+                                <text x="178" y="331" text-anchor="middle" class="as-b" font-size="9" fill="#403D34">(everything?)</text>
+                                <g id="ei-lid"><g transform="rotate(8 214 272)"><rect x="200" y="258" width="26" height="22" fill="#FFB23E" stroke="#15213B" stroke-width="1.5"/><text x="213" y="274" text-anchor="middle" class="as-t" font-size="11" fill="#15213B">?!</text></g></g>
+                            </g>
+
+                            <!-- binders (scene 4) -->
+                            <g id="ei-binders">
+                                <g><rect x="132" y="262" width="34" height="78" rx="4" fill="#3457E5" stroke="#15213B" stroke-width="3"/><rect x="137" y="276" width="24" height="16" rx="2" fill="#fff"/><text x="149" y="287" text-anchor="middle" class="as-b" font-size="7" fill="#15213B">MYINV</text></g>
+                                <g><rect x="170" y="262" width="34" height="78" rx="4" fill="#15B5A6" stroke="#15213B" stroke-width="3"/><rect x="175" y="276" width="24" height="16" rx="2" fill="#fff"/><text x="187" y="287" text-anchor="middle" class="as-b" font-size="7" fill="#15213B">SALES</text></g>
+                                <g><rect x="208" y="262" width="34" height="78" rx="4" fill="#FFB23E" stroke="#15213B" stroke-width="3"/><rect x="213" y="276" width="24" height="16" rx="2" fill="#fff"/><text x="225" y="287" text-anchor="middle" class="as-b" font-size="7" fill="#15213B">RECON</text></g>
+                            </g>
+
+                            <!-- laptop + review e-mail (scene 1) -->
+                            <g id="ei-env" class="as-messy">
+                                <rect x="338" y="224" width="124" height="96" rx="8" fill="#15213B"/>
+                                <rect x="346" y="232" width="108" height="80" rx="3" fill="#fff"/>
+                                <path d="M322 320h156l-10 18H332z" fill="#B7B3A6" stroke="#15213B" stroke-width="3" stroke-linejoin="round"/>
+                                <g id="ei-letter"><rect x="351" y="237" width="98" height="70" rx="4" fill="#FBE0E0" stroke="#DB3B3B" stroke-width="2"/>
+                                <rect x="359" y="243" width="16" height="11" rx="1.5" fill="#fff" stroke="#DB3B3B" stroke-width="1.6"/><path d="M359 244l8 6 8-6" fill="none" stroke="#DB3B3B" stroke-width="1.6"/>
+                                <circle cx="446" cy="240" r="7" fill="#DB3B3B"/><text x="446" y="244" text-anchor="middle" class="as-t" font-size="9" fill="#fff">1</text>
+                                <text x="400" y="270" text-anchor="middle" class="as-t" font-size="10.5" fill="#DB3B3B">E-INVOICE</text>
+                                <text x="400" y="284" text-anchor="middle" class="as-t" font-size="10.5" fill="#DB3B3B">COMPLIANCE</text>
+                                <text x="400" y="298" text-anchor="middle" class="as-t" font-size="10.5" fill="#DB3B3B">REVIEW</text></g>
+                            </g>
+
+                            <!-- spreadsheets (positioned by JS) -->
+                            <g id="ei-receipts" class="as-messy">
+                                <g class="as-r" data-x="100" data-y="246" data-r="-12"><rect x="-48" y="-17" width="96" height="34" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/><rect x="-48" y="-17" width="18" height="34" rx="3" fill="#1E9E6A"/><text x="-39" y="5" text-anchor="middle" class="as-t" font-size="11" fill="#fff">X</text><text x="-25" y="4" class="as-b" font-size="9" fill="#15213B">sales_final</text></g>
+                                <g class="as-r" data-x="122" data-y="392" data-r="8"><rect x="-48" y="-17" width="96" height="34" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/><rect x="-48" y="-17" width="18" height="34" rx="3" fill="#1E9E6A"/><text x="-39" y="5" text-anchor="middle" class="as-t" font-size="11" fill="#fff">X</text><text x="-25" y="4" class="as-b" font-size="9" fill="#15213B">final_v2</text></g>
+                                <g class="as-r" data-x="318" data-y="190" data-r="-7"><rect x="-48" y="-17" width="96" height="34" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/><rect x="-48" y="-17" width="18" height="34" rx="3" fill="#1E9E6A"/><text x="-39" y="5" text-anchor="middle" class="as-t" font-size="11" fill="#fff">X</text><text x="-25" y="4" class="as-b" font-size="9" fill="#15213B">final_v3_REAL</text></g>
+                                <g class="as-r" data-x="300" data-y="398" data-r="-5"><rect x="-48" y="-17" width="96" height="34" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/><rect x="-48" y="-17" width="18" height="34" rx="3" fill="#1E9E6A"/><text x="-39" y="5" text-anchor="middle" class="as-t" font-size="11" fill="#fff">X</text><text x="-25" y="4" class="as-b" font-size="9" fill="#15213B">USE THIS ONE</text></g>
+                                <g class="as-r" data-x="478" data-y="404" data-r="9"><rect x="-48" y="-17" width="96" height="34" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/><rect x="-48" y="-17" width="18" height="34" rx="3" fill="#1E9E6A"/><text x="-39" y="5" text-anchor="middle" class="as-t" font-size="11" fill="#fff">X</text><text x="-25" y="4" class="as-b" font-size="9" fill="#15213B">sales (1)</text></g>
+                                <g class="as-r" data-x="660" data-y="410" data-r="-9"><rect x="-48" y="-17" width="96" height="34" rx="3" fill="#fff" stroke="#15213B" stroke-width="2"/><rect x="-48" y="-17" width="18" height="34" rx="3" fill="#1E9E6A"/><text x="-39" y="5" text-anchor="middle" class="as-t" font-size="11" fill="#fff">X</text><text x="-25" y="4" class="as-b" font-size="9" fill="#15213B">backup_old</text></g>
+                            </g>
+
+                            <!-- accounts vs MyInvois (scene 3) -->
+                            <g id="ei-ledger" class="as-panel">
+                                <rect x="208" y="88" width="400" height="248" rx="14" fill="#15213B"/>
+                                <rect x="200" y="80" width="400" height="248" rx="14" fill="#fff" stroke="#15213B" stroke-width="3"/>
+                                <text x="224" y="112" class="as-t" font-size="17" fill="#15213B">Accounts vs MyInvois</text>
+                                <text x="470" y="136" text-anchor="end" class="as-m" font-size="10" fill="#6B675B">ACCOUNTS</text>
+                                <text x="576" y="136" text-anchor="end" class="as-m" font-size="10" fill="#6B675B">MYINVOIS</text>
+                                <g id="ei-hl"><rect class="as-hl" x="212" y="176" width="376" height="30" rx="6" fill="#FBE0E0"/><rect class="as-hl" x="212" y="208" width="376" height="30" rx="6" fill="#FBE0E0"/><rect class="as-hl" x="212" y="240" width="376" height="30" rx="6" fill="#FBE0E0"/></g>
+                                <g class="as-b" font-size="12.5" fill="#403D34">
+                                    <text x="224" y="164">INV-1041</text><text x="470" y="164" text-anchor="end" class="as-m">2,400.00</text><text x="576" y="164" text-anchor="end" class="as-m">2,400.00</text>
+                                    <text x="224" y="196">INV-1042</text><text x="470" y="196" text-anchor="end" class="as-m">18,900.00</text><text x="576" y="196" text-anchor="end" class="as-m">&#8212;</text>
+                                    <text x="224" y="228">B2B cash sales</text><text x="470" y="228" text-anchor="end" class="as-m">6,350.00</text><text x="576" y="228" text-anchor="end" class="as-m">consol.</text>
+                                    <text x="224" y="260">Paid to individual</text><text x="470" y="260" text-anchor="end" class="as-m">3,000.00</text><text x="576" y="260" text-anchor="end" class="as-m">&#8212;</text>
+                                    <text x="224" y="292">CN-0007</text><text x="470" y="292" text-anchor="end" class="as-m">(800.00)</text><text x="576" y="292" text-anchor="end" class="as-m">(800.00)</text>
+                                </g>
+                                <g class="as-flag" transform="translate(616 176)"><rect width="150" height="28" rx="14" fill="#FBE0E0" stroke="#DB3B3B" stroke-width="2"/><text x="75" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#DB3B3B">Not e-invoiced?</text></g>
+                                <g class="as-flag" transform="translate(616 208)"><rect width="150" height="28" rx="14" fill="#FBE0E0" stroke="#DB3B3B" stroke-width="2"/><text x="75" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#DB3B3B">B2B in consolidated?</text></g>
+                                <g class="as-flag" transform="translate(616 240)"><rect width="150" height="28" rx="14" fill="#FBE0E0" stroke="#DB3B3B" stroke-width="2"/><text x="75" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#DB3B3B">Self-billed needed?</text></g>
+                                <g class="ei-ok" transform="translate(616 176)"><rect width="150" height="28" rx="14" fill="#DCF3E9" stroke="#1E9E6A" stroke-width="2"/><text x="75" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#1E9E6A">Explained</text></g>
+                                <g class="ei-ok" transform="translate(616 208)"><rect width="150" height="28" rx="14" fill="#DCF3E9" stroke="#1E9E6A" stroke-width="2"/><text x="75" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#1E9E6A">Explained</text></g>
+                                <g class="ei-ok" transform="translate(616 240)"><rect width="150" height="28" rx="14" fill="#DCF3E9" stroke="#1E9E6A" stroke-width="2"/><text x="75" y="19" text-anchor="middle" class="as-b" font-size="12" fill="#1E9E6A">Explained</text></g>
+                                <g id="ei-mag"><circle cx="0" cy="0" r="26" fill="#E5EAFD" fill-opacity=".45" stroke="#15213B" stroke-width="5"/><path d="M18 18l22 22" stroke="#15213B" stroke-width="8" stroke-linecap="round"/></g>
+                            </g>
+
+                            <!-- closed file + stamp (scene 5) -->
+                            <g id="ei-file">
+                                <path d="M318 300h44l8-10h60v50H318z" fill="#E5EAFD" stroke="#15213B" stroke-width="3" stroke-linejoin="round"/>
+                                <rect x="318" y="300" width="148" height="40" rx="3" fill="#E5EAFD" stroke="#15213B" stroke-width="3"/>
+                                                                <path d="M440 318l7-7 7 7M440 327l7-7 7 7" stroke="#15B5A6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <g id="ei-stamp"><g transform="rotate(-10 392 300)"><rect x="336" y="282" width="112" height="36" rx="6" fill="#fff" fill-opacity=".85" stroke="#1E9E6A" stroke-width="4"/><text x="392" y="307" text-anchor="middle" class="as-t" font-size="17" fill="#1E9E6A">REVIEWED</text></g></g>
+
+                            <!-- speech bubbles -->
+                            <g id="ei-bub1" class="as-bub"><rect x="404" y="70" width="196" height="44" rx="22" fill="#fff" stroke="#15213B" stroke-width="2.5"/><path d="M548 114l14 16 0-16" fill="#fff" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><text x="502" y="98" text-anchor="middle" class="as-b" font-size="14" fill="#15213B">Can we see your e-Invoices?</text></g>
+                            <g id="ei-bub2" class="as-bub"><rect x="566" y="250" width="198" height="44" rx="22" fill="#fff" stroke="#15213B" stroke-width="2.5"/><text x="665" y="278" text-anchor="middle" class="as-b" font-size="14" fill="#15213B">Could you explain these?</text></g>
+                            <g id="ei-bub3" class="as-bub"><rect x="626" y="186" width="166" height="58" rx="20" fill="#fff" stroke="#15213B" stroke-width="2.5"/><path d="M628 210l-16 6 16 6" fill="#fff" stroke="#15213B" stroke-width="2.5" stroke-linejoin="round"/><text x="709" y="210" text-anchor="middle" class="as-b" font-size="13" fill="#15213B">Thank you. The</text><text x="709" y="229" text-anchor="middle" class="as-b" font-size="13" fill="#15213B">numbers agree now.</text></g>
+                        </svg>
+                        <ul class="as-legend" aria-label="Who is who">
+                            <li><i style="background:#15B5A6"></i>Taxpayer <span>the business owner</span></li>
+                            <li><i style="background:#908C7E"></i>Tax officer <span>conducting the review</span></li>
+                            <li><i style="background:#3457E5"></i>Tax agent <span>B &amp; K, licensed under s.153</span></li>
+                        </ul>
+                        <p class="as-note">Illustration only. Characters are fictional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Audit readiness check ===== -->
+        <section class="audit-check" id="audit-check" aria-labelledby="ac-title">
+            <div class="container">
+                <div class="ac-card">
+                    <div class="ac-head">
+                        <p class="hero-kicker">One-minute self-check</p>
+                        <h2 id="ac-title">Would your records survive an audit?</h2>
+                        <p class="ac-lead">Six quick questions. Your answers stay in your browser and are not sent anywhere.</p>
+                    </div>
+                    <ol class="ac-list">
+                        <li class="ac-q" data-q="1"><span>Do you keep a receipt or invoice for every business expense?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="2"><span>Is your bank statement reconciled to your accounts every month?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="3"><span>Can you explain every large cash deposit into the business account?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="4"><span>Are director's loans and withdrawals documented, not just "in the director's account"?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="5"><span>Do your e-Invoices and sales records match the income you declare?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                        <li class="ac-q" data-q="6"><span>Do you keep records for at least seven years after the year of assessment?</span><div class="bk-chips" role="group"><button type="button" class="bk-chip" data-v="1">Yes</button><button type="button" class="bk-chip" data-v="0">No</button></div></li>
+                    </ol>
+                    <div class="ac-result" aria-live="polite" hidden>
+                        <div class="ac-score"><span class="bk-hero-num"><span class="ac-n">0</span><span class="bk-unit">/ 6</span></span></div>
+                        <div class="ac-msg">
+                            <h3 class="ac-msg-title"></h3>
+                            <p class="ac-msg-body"></p>
+                            <div class="ac-actions">
+                                <a href="contact.html?topic=audit" class="btn btn-primary">Book a confidential review</a>
+                                <button type="button" class="btn btn-outline ac-reset">Start again</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="ac-fine">A general self-check, not tax advice. Record-keeping duties are set out in s.82 of the Income Tax Act 1967; your position depends on your facts.</p>
                 </div>
             </div>
         </section>
@@ -176,6 +663,7 @@
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
     <script src="js/cinematic.js"></script>
+    <script src="js/audit-story.js"></script>
     <script src="js/programmes.js"></script>
 </body>
 </html>

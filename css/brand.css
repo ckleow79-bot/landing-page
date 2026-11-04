@@ -195,3 +195,32 @@ body { background: var(--surface-page); color: var(--text-body); font-family: va
 /* pop CTA on an ink surface: ink shadow would vanish, so lift with paper */
 .hero-cine .hero-ctas a.btn.btn-pop { box-shadow: 4px 4px 0 var(--bk-paper); border-color: var(--bk-paper); }
 .hero-cine .hero-ctas a.btn.btn-pop:active { box-shadow: 2px 2px 0 var(--bk-paper); }
+
+/* ---------- Photo hero (ink scrim per design system) ---------- */
+.page-hero-cine.has-photo { position: relative; }
+.page-hero-cine .hero-photo { position: absolute; inset: 0; z-index: 0; }
+.page-hero-cine .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; filter: blur(2.5px) saturate(.9); transform: scale(1.06); transition: transform 1.6s var(--ease-out); }
+.page-hero-cine.has-photo::before { z-index: 1; opacity: 1; background: linear-gradient(90deg, rgba(21,33,59,.94) 0%, rgba(21,33,59,.82) 45%, rgba(21,33,59,.45) 100%); mask-image: none; }
+.page-hero-cine.has-photo .container { z-index: 2; }
+.page-hero-cine.has-photo.is-loaded .hero-photo img { transform: scale(1); }
+
+/* ---------- In the room gallery ---------- */
+.in-room { background: var(--surface-page); padding: 5rem 0; }
+.ir-head { max-width: 720px; margin-bottom: 2.2rem; }
+.ir-head .hero-kicker { color: var(--bk-blue); }
+.ir-head h2 { font-family: var(--font-display); font-weight: var(--fw-extra); letter-spacing: var(--ls-tight); font-size: clamp(1.8rem, 3.2vw, 2.6rem); line-height: 1.12; color: var(--text-strong); margin: 0 0 .6rem; }
+.ir-head p { color: var(--text-body); font-size: 1.05rem; }
+.ir-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 210px; gap: 14px; }
+.ir-grid figure { margin: 0; position: relative; overflow: hidden; border-radius: var(--r-lg); background: var(--bk-n-100); }
+.ir-grid img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--ease-out); }
+.ir-grid figure:hover img { transform: scale(1.04); }
+.ir-grid figcaption { position: absolute; left: 12px; bottom: 12px; background: var(--surface-card); color: var(--bk-ink); font-weight: var(--fw-bold); font-size: .8rem; padding: 6px 12px; border-radius: var(--r-pill); border: 2px solid var(--bk-ink); }
+.ir-a { grid-column: span 2; grid-row: span 2; border: 3px solid var(--bk-amber); }
+.ir-b { grid-column: span 1; }
+.ir-c { grid-column: span 1; grid-row: span 2; }
+.ir-d { grid-column: span 1; }
+.ir-e { grid-column: span 2; }
+.ir-f { grid-column: span 2; }
+@media (max-width: 991px) { .ir-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; } .ir-c { grid-row: span 1; } .ir-e, .ir-f { grid-column: span 2; } }
+@media (max-width: 600px) { .ir-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 140px; gap: 10px; } .ir-a { grid-column: span 2; } .ir-b, .ir-c, .ir-d { grid-column: span 1; } }
+@media (prefers-reduced-motion: reduce) { .page-hero-cine .hero-photo img, .ir-grid img { transition: none; transform: none; } }
