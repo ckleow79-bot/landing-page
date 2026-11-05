@@ -388,7 +388,7 @@ function initProjectFilters() {
                 const category = card.getAttribute('data-category');
                 
                 if (filter === 'all' || category === filter) {
-                    card.style.display = 'block';
+                    card.style.display = '';
                     card.style.animation = 'fadeInUp 0.5s ease forwards';
                 } else {
                     card.style.display = 'none';
@@ -402,7 +402,7 @@ function initProjectFilters() {
  * Initialize Blog Category Filtering
  */
 function initBlogFilters() {
-    const categoryButtons = document.querySelectorAll('.category-btn');
+    const categoryButtons = document.querySelectorAll('.categories-filter .category-btn[data-category]');
     const blogCards = document.querySelectorAll('.blog-card');
 
     if (categoryButtons.length === 0 || blogCards.length === 0) return;
@@ -418,7 +418,7 @@ function initBlogFilters() {
                 const cardCategory = card.getAttribute('data-category');
                 
                 if (category === 'all' || cardCategory === category) {
-                    card.style.display = 'block';
+                    card.style.display = '';
                     card.style.animation = 'fadeInUp 0.5s ease forwards';
                 } else {
                     card.style.display = 'none';

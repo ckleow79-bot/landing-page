@@ -25,8 +25,10 @@ Supported Markdown: `##`/`###` headings, paragraphs, `-` and `1.` lists, `**bold
 Netlify runs `python3 tools/build-insights.py` on every deploy. It builds `insight-<slug>.html`,
 `data/insights.json` and `feed.xml` from **published** posts only.
 
-**Drafts are public if committed here** (this repository is public). Keep drafts outside the
-repository until they are approved, then copy them in with `status: published`.
+**Drafts are public if committed here** (this repository is public). Keep drafts in
+`content/insights/_drafts/`: that folder is git-ignored and the build skips subfolders.
+When a post is approved, set `status: published` and move it up into `content/insights/`.
 
-To preview drafts privately: `python3 tools/build-insights.py --preview review/insights-preview --src <drafts folder>`
-(`review/` is not committed).
+To preview drafts privately: `python3 tools/build-insights.py --preview --src content/insights/_drafts`,
+start the server (`npm start`) and open `http://localhost:5700/preview-insight-<slug>.html`.
+Preview files are git-ignored; never commit them.

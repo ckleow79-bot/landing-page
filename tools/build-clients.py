@@ -28,5 +28,5 @@ for page, anchor in (('index.html', '        <!-- Pillars -->'), ('academy.html'
         s = re.sub(r'<!-- clients-bar:start.*?<!-- clients-bar:end -->', block, s, flags=re.S)
     else:
         s = s.replace(anchor, '        ' + block + '\n\n' + anchor, 1)
-    open(p, 'w', encoding='utf-8').write(s)
+    open(p, 'w', encoding='utf-8', newline='\n').write(s)
     print('clients bar ->', page)

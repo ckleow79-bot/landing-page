@@ -1,15 +1,17 @@
 # Handoff: B & K Group website (PR #3, branch `ccr-b2fa6464-hgxz8q`)
 
-Status at 5 November 2026. Read this first in a new session, then continue with **Next fixes** below.
+Status at 5 November 2026. Read this first in a new session (together with `CLAUDE.md`, which holds the standing rules), then continue with **Next fixes** below.
 
 ## Run it
 
 ```
 git checkout ccr-b2fa6464-hgxz8q
-python3 tools/bundle-css.py        # css/*.css -> css/site.css (pages load only site.css)
-python3 tools/build-insights.py    # content/insights/*.md (published only) -> insight-*.html, data/insights.json, feed.xml
-python3 -m http.server 5700        # http://localhost:5700
+npm run build      # python3 tools/bundle-css.py && python3 tools/build-insights.py
+npm start          # python3 -m http.server 5700 -> http://localhost:5700
+npm install && npx playwright install chromium    # once, for tests
+npm test           # tests/regression.js + tests/features.js against :5700; screenshots in tests/out/
 ```
+Windows: if `python3` is not found, use `python` in the same commands.
 
 Netlify (project snazzy-choux-2ee2b7) runs both build steps; preview: https://deploy-preview-3--snazzy-choux-2ee2b7.netlify.app
 
@@ -21,7 +23,8 @@ Netlify (project snazzy-choux-2ee2b7) runs both build steps; preview: https://de
 - **Forms** (js/supabase.js): always preventDefault; on failure `BKFormFallback` shows pre-filled WhatsApp / email buttons. Reply preference (WhatsApp / email / video / phone); phone OR email required.
 - **Programmes:** Supabase with 1.5 s timeout, falls back to `data/programmes.json`.
 - **Insights:** Markdown in `content/insights/` (see its README). Only `status: published` goes live. **The repo is public: do not commit drafts.**
-- Tests used: Playwright scripts (regression + new-feature checks) against port 5700.
+- Tests: `tests/regression.js` (all pages x 3 widths for errors/overflow, anchors, forms, programmes, 中文, reduced motion) and `tests/features.js` (BM/中文 coverage, fees, forms, programmes, phone action bar). Both passed at handoff.
+- Insights drafts: put them in `content/insights/_drafts/` (git-ignored); preview with `python3 tools/build-insights.py --preview --src content/insights/_drafts` then open `http://localhost:5700/preview-insight-<slug>.html` (also git-ignored).
 
 ## Decisions Keith has made (do not re-ask)
 
@@ -40,8 +43,14 @@ Netlify (project snazzy-choux-2ee2b7) runs both build steps; preview: https://de
 3. Seminar payment terms (how/when to pay) and cancellation / replacement policy (B & K's or High Impact's).
 4. Wording on working with referring accounting firms (beyond referral fees: not soliciting the firm's work, keeping it informed with client consent, coordinating with auditors). Needs Keith's approval.
 5. Proof: portrait photo, named second reviewer/team, anonymised case outcomes, testimonials.
-6. Insights drafts (e-Invoice RM3m exemption, Budget 2027, *Kind Action* case note) were sent to Keith outside the repo; figures unverified, he must check sources before publishing.
+6. Insights drafts (e-Invoice RM3m exemption, Budget 2027, *Kind Action* case note) were sent to Keith outside the repo (move pack, folder `insights-drafts`); figures unverified (the cloud sandbox could not open LHDN, MOF or eLaw), he must check sources before publishing.
 7. Still to do in Supabase: run `migrations/003_admin_only_access.sql`; disable public sign-ups.
+
+## Done during the handoff audit
+- Build scripts are Windows-safe (LF line endings, no `%-d` date format); `.gitattributes` forces LF.
+- `.gitignore` covers `review/`, `content/insights/_drafts/`, `preview-insight-*.html`, `tests/out/`, `*.xlsx`.
+- `package.json` scripts point at the real build (the old npm minify/live-server scripts were wrong).
+- Insights list date shown in Malaysia time (was a day early); Insights type filter no longer hides the "In the pipeline" cards; pipeline cards styled.
 
 ## Next fixes (from 10-visitor test round 2, no input needed)
 

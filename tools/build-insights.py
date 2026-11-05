@@ -16,8 +16,9 @@ No third-party packages: a small Markdown subset is supported (## / ### headings
 paragraphs, - lists, 1. lists, **bold**, *italic*, [links](https://...), > quotes).
 
 Run:  python3 tools/build-insights.py            (publishes status: published only)
-      python3 tools/build-insights.py --preview DIR --src DIR2
-            renders every post in DIR2, drafts included, into DIR for private review
+      python3 tools/build-insights.py --preview --src content/insights/_drafts
+            renders every post in that folder, drafts included, as preview-insight-<slug>.html
+            (git-ignored) for private review on the local server
 """
 import html, json, os, re, sys, datetime
 from email.utils import format_datetime
@@ -108,7 +109,8 @@ def md(text):
 
 def fmt_date(d):
     try:
-        return datetime.date.fromisoformat(d).strftime('%-d %B %Y')
+        x = datetime.date.fromisoformat(d)
+        return f'{x.day} {x:%B %Y}'
     except ValueError:
         return d
 
@@ -217,16 +219,18 @@ def main():
     src = os.path.join(ROOT, 'content', 'insights')
     if '--src' in args:
         src = os.path.abspath(args[args.index('--src') + 1])
-    files = sorted(f for f in os.listdir(src) if f.endswith('.md') and f.lower() != 'readme.md') if os.path.isdir(src) else []
+    files = sorted(f for f in os.listdir(src) if f.endswith('.md') and f.lower() != 'readme.md') if os.path.isdir(src) else []  # subfolders (e.g. _drafts/) are ignored
     posts = [parse(os.path.join(src, f)) for f in files]
 
     if '--preview' in args:
-        out = os.path.abspath(args[args.index('--preview') + 1])
-        os.makedirs(out, exist_ok=True)
+        # private preview of every post, drafts included: preview-insight-<slug>.html at the site root
+        # (git-ignored, noindex for drafts), so header, footer and styles load as on the real page
+        for f in os.listdir(ROOT):
+            if f.startswith('preview-insight-') and f.endswith('.html'):
+                os.remove(os.path.join(ROOT, f))
         for p in posts:
-            rel = os.path.relpath(ROOT, out).replace(os.sep, '/') + '/'
-            open(os.path.join(out, f'insight-{p["slug"]}.html'), 'w', encoding='utf-8').write(page(p, rel))
-        print(f'preview: {len(posts)} posts (drafts included) -> {out}')
+            open(os.path.join(ROOT, f'preview-insight-{p["slug"]}.html'), 'w', encoding='utf-8', newline='\n').write(page(p))
+        print(f'preview: {len(posts)} posts (drafts included) -> preview-insight-*.html, open http://localhost:5700/preview-insight-<slug>.html')
         return
 
     pub = sorted((p for p in posts if p['status'] == 'published'), key=lambda p: p['date'], reverse=True)
@@ -234,12 +238,12 @@ def main():
         if f.startswith('insight-') and f.endswith('.html') and f[8:-5] not in {p['slug'] for p in pub}:
             os.remove(os.path.join(ROOT, f))
     for p in pub:
-        open(os.path.join(ROOT, f'insight-{p["slug"]}.html'), 'w', encoding='utf-8').write(page(p))
+        open(os.path.join(ROOT, f'insight-{p["slug"]}.html'), 'w', encoding='utf-8', newline='\n').write(page(p))
     listing = [{k: p.get(k) for k in ('slug', 'title', 'type', 'date', 'as_at', 'topic', 'summary')} for p in pub]
     for x in listing:
         x['type_label'] = TYPES.get(x['type'], 'Insight')
-    json.dump(listing, open(os.path.join(ROOT, 'data', 'insights.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    open(os.path.join(ROOT, 'feed.xml'), 'w', encoding='utf-8').write(feed(pub))
+    json.dump(listing, open(os.path.join(ROOT, 'data', 'insights.json'), 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
+    open(os.path.join(ROOT, 'feed.xml'), 'w', encoding='utf-8', newline='\n').write(feed(pub))
     print(f'insights: {len(pub)} published, {len(posts) - len(pub)} not published')
 
 

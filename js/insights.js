@@ -9,7 +9,7 @@
     if (!root) return;
     const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const lang = (window.BKi18n && window.BKi18n.lang) || 'en';
-    const fmt = new Intl.DateTimeFormat({ zh: 'zh-CN', ms: 'ms-MY' }[lang] || 'en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
+    const fmt = new Intl.DateTimeFormat({ zh: 'zh-CN', ms: 'ms-MY' }[lang] || 'en-MY', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' });
     let posts = [];
 
     function render(type) {

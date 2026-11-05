@@ -736,3 +736,15 @@ html[data-lang="ms"] .nav-link { font-size: 14.5px; }
     html[data-lang="ms"] .nav-link-home { display: none; }
     html[data-lang="ms"] .header .logo-text { display: none; }
 }
+
+/* ---------- Insights: "In the pipeline" cards ---------- */
+.blog-categories { padding: calc(var(--sec-y, 96px) * .4) 0 1rem; }
+.blog-grid-section { padding: 0 0 var(--sec-y, 96px); }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.1rem; }
+.blog-card { background: var(--surface-card); border: 1px dashed var(--border-base, #D6D3C9); border-radius: var(--r-lg); padding: 1.3rem 1.4rem; }
+.blog-card[hidden] { display: none !important; }
+.blog-content { display: flex; flex-direction: column; gap: .5rem; height: 100%; }
+.blog-category { font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+.blog-card h3 { margin: 0; font-family: var(--font-display); font-size: 1.08rem; line-height: 1.3; color: var(--text-strong); }
+.blog-card p { margin: 0; font-size: .93rem; line-height: 1.55; color: var(--text-body); }
+.blog-meta { margin-top: auto; padding-top: .4rem; }

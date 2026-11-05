@@ -39,6 +39,6 @@ for f in ORDER:
     with open(os.path.join(ROOT, f), encoding='utf-8') as fh:
         parts.append(rebase(fh.read(), f))
 out = '/*! B&K Group site styles, bundled from css/*.css by tools/bundle-css.py. Edit the sources, not this file. */\n' + minify('\n'.join(parts)) + '\n'
-with open(OUT, 'w', encoding='utf-8') as fh:
+with open(OUT, 'w', encoding='utf-8', newline='\n') as fh:
     fh.write(out)
 print(f'css/site.css: {len(out) // 1024} KB from {len(ORDER)} files')
