@@ -41,7 +41,11 @@
             window.BKProgrammes.load().then(d => {
                 const next = d.list.filter(p => p.status === 'upcoming').slice(0, 4);
                 live.innerHTML = next.length
-                    ? next.map(p => `<li><span data-i18n-skip>${esc(p.title)}</span><span class="st-chip st-ready"><i></i>${esc(fmt.format(new Date(p.start_date)))}</span></li>`).join('')
+                    ? next.map(p => {
+                        const city = (p.venue || p.mode || '').split(',').pop().trim();
+                        const t = window.BKi18n && BKi18n.tr ? BKi18n.tr(p.title) : p.title;
+                        return `<li><span data-i18n-skip>${esc(t)}${city ? ' · ' + esc(city) : ''}</span><span class="st-chip st-ready"><i></i>${esc(fmt.format(new Date(p.start_date)))}</span></li>`;
+                    }).join('')
                     : `<li><span>${zh ? '新课程即将公布' : 'New dates coming soon'}</span></li>`;
             }).catch(() => { live.innerHTML = `<li><span>${zh ? '请查看课程页面' : 'See the Programmes page'}</span></li>`; });
         }
@@ -88,14 +92,7 @@
         document.querySelectorAll('.letter-decoder').forEach(root => {
             const chips = [...root.querySelectorAll('.ld-chip')];
             const panels = [...root.querySelectorAll('.ld-panel')];
-            // WhatsApp text in the visitor's language
-            if (zh) {
-                const zhType = { audit: '审计通知', ja: '额外估税通知（JA）', info: '资料索取信', inv: '税务调查信', einv: '电子发票查询' };
-                root.querySelectorAll('.ld-panel').forEach(p => {
-                    const a = p.querySelector('a[href^="https://wa.me/"]');
-                    if (a) a.href = 'https://wa.me/601130636198?text=' + encodeURIComponent('您好 B&K，我收到 LHDN 的' + (zhType[p.dataset.panel] || '来信') + '，日期 …，参考编号 …，回复期限 …。');
-                });
-            }
+            // the WhatsApp text follows the page language through data/i18n (js/i18n.js)
             chips.forEach(c => c.addEventListener('click', () => {
                 chips.forEach(x => { const on = x === c; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
                 panels.forEach(p => { p.hidden = p.dataset.panel !== c.dataset.letter; });

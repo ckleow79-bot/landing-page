@@ -1,6 +1,6 @@
 # Handoff: B & K Group website (PR #3, branch `ccr-b2fa6464-hgxz8q`)
 
-Status at 5 November 2026. Read this first in a new session (together with `CLAUDE.md`, which holds the standing rules), then continue with **Next fixes** below.
+Status at 5 November 2026. Read this first in a new session (together with `CLAUDE.md`, which holds the standing rules), then pick up the **Open questions**.
 
 ## Run it
 
@@ -52,17 +52,18 @@ Netlify (project snazzy-choux-2ee2b7) runs both build steps; preview: https://de
 - `package.json` scripts point at the real build (the old npm minify/live-server scripts were wrong).
 - Insights list date shown in Malaysia time (was a day early); Insights type filter no longer hides the "In the pipeline" cards; pipeline cards styled.
 
-## Next fixes (from 10-visitor test round 2, no input needed)
+## Done after the handoff (5 November 2026, round 2 fixes)
 
-- Every pre-filled WhatsApp/email text in the visitor's language (bottom action bar, menu/footer, contact page, FAQ, fee section "free 15-minute call", urgent-deadline link, post pages), and email subjects include topic + company (currently "Quote request: <name>" in English).
-- 中文/BM leftovers: contact message placeholder; ribbon title "E-Invoice Latest Update" (consider per-language title in programmes.json).
-- Form: if only email is filled, switch reply preference to email instead of erroring; phone placeholder not "+60"-only (foreign visitors); "Where is the business based?" should allow individuals; speaking topic gets its own submit label and email subject.
-- New form topics: "JA / appeal (Form Q)" (decoder JA card should preselect it) and "Accounting firm"; the accounting-firms card on advisory.html#who should open the form (topic preselected), not only the FAQ. "Senior review" card should preselect audit/investigation, not M&A.
-- Letter decoder cards: add "Clients outside KL served by video call, on site when needed" and the free 15-minute call line. Investigation WhatsApp text says "LHDN investigation letter from LHDN": fix wording.
-- Home: add an "Individual / landlord" hat; assistant first menu should include property tax and speaking; assistant session buttons show the city (three e-Invoice dates look identical); ribbon shows the city too.
-- Copy: "Startup package" -> "Startup enquiry"; e-Invoice self-check result must not show the "final_v3_REAL" joke out of context; "Sample screen" note under real programme dates.
-- Layout: advisory.html#fees "CFO and training" card amounts overflow at 1440 px (allow wrap / wider min column); ribbon still pushes the header on first load on some pages (reserve height earlier or show without layout shift); newsletter consent label splits into columns on phones (index.html); programme registration modal: on empty submit, focus the first invalid field and keep the error in view; with large text, ribbon + header + action bar take too much height (hide ribbon on scroll on phones); assistant should open scrolled to the greeting.
-- Make "Book Keith to speak" easier to find on the home page.
+All "Next fixes" from visitor test round 2 are in; `npm test` passes with no failures.
+- Pre-filled WhatsApp text and email subject/body follow the page language: `js/i18n.js` translates `wa.me` / `mailto:` links from the dictionary (`<a data-msg="..." data-msg-tail="...">` for a sentence plus an untranslated tail, used on post pages). JS-built text uses `BKi18n.tr(en)`. Subjects now read "Quote request: <topic> – <company or name>", "Speaking enquiry: …", "Registration: <programme> – <city> – <company>".
+- `?lang=en` now resets the saved language (it used to keep 中文 on the next page; this was the cause of the "CPD line" test failure). Textarea placeholders are translated.
+- Form: email-only switches the reply to email (phone-only + email reply switches to WhatsApp); phone placeholder shows the country code; "Where are you or your business based?"; speaking topic has its own button label and subject; new topics `ja` (JA / appeal, Form Q) and `firm` (Accounting firm).
+- Decoder: JA quote opens `topic=ja`; investigation WhatsApp wording fixed; free 15-minute call and outside-KL video line added. Who-we-help: firms card opens the form (FAQ link below the cards); "Senior review" opens audit; "Startup enquiry".
+- Home: hats "Individual / landlord" and "Event or chamber organiser" (Book Keith to speak); "Sample screen" hidden on the live programme screen; assistant first menu has property tax and speaking, opens at the greeting; session lists, ribbon and home programme screen show the city; ribbon title translated.
+- Layout: fee cards wrap amounts (no overflow at 1440 px); newsletter consent is one text block on phones; ribbon placeholder is inserted before the header loads (no jump) and tucks away on phone scroll; registration modal focuses the first invalid field.
+- e-Invoice self-check: the "final_v3_REAL" result title is replaced.
+
+Windows note: the folder name contains `&`, which breaks `npx` (.cmd shim). Use `node node_modules/playwright/cli.js install chromium`.
 
 ## Visitor test results (fictional personas; all 10 made contact both rounds)
 

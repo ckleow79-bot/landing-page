@@ -30,6 +30,14 @@
     const api = window.BKi18n = {
         lang,
         t: (en, zh, ms) => (lang === 'zh' && zh ? zh : lang === 'ms' && ms ? ms : en),
+        // dictionary lookup for strings built in JS; keeps leading/trailing spaces
+        tr(en) {
+            if (!dict || en == null) return en;
+            const k = norm(String(en)), v = dict.text[k];
+            if (!v || v === k) return en;
+            // a full-width colon already carries its own space
+            return String(en).match(/^\s*/)[0] + v + (/[：，。]$/.test(v) ? '' : String(en).match(/\s*$/)[0]);
+        },
         set(next) {
             try { localStorage.setItem(KEY, next); } catch (e) { /* private mode: fall back to the URL */ }
             const url = new URL(location.href);
@@ -74,6 +82,35 @@
         });
     }
 
+    // pre-filled WhatsApp text and email subject/body follow the page language
+    function translateHref(el) {
+        // <a data-msg="sentence" data-msg-tail="title">: translated sentence + untranslated tail (post titles)
+        const mk = el.getAttribute('data-msg');
+        if (mk && /^https:\/\/wa\.me\//.test(el.getAttribute('href') || '')) {
+            if (collect) { found.text.add(norm(mk)); return; }
+            const t = dict.text[norm(mk)];
+            if (t && t !== norm(mk)) el.setAttribute('href', el.getAttribute('href').split('?')[0] + '?text=' + encodeURIComponent(t + ' ' + (el.getAttribute('data-msg-tail') || '')));
+            return;
+        }
+        const h = el.getAttribute('href') || '';
+        const q = h.indexOf('?');
+        if (q < 0 || !/^(https:\/\/wa\.me\/|mailto:)/.test(h)) return;
+        let changed = false;
+        const parts = h.slice(q + 1).split('&').map(kv => {
+            const i = kv.indexOf('='), k = kv.slice(0, i);
+            if (i < 0 || ['text', 'subject', 'body'].indexOf(k) < 0) return kv;
+            let v; try { v = decodeURIComponent(kv.slice(i + 1)); } catch (e) { return kv; }
+            const key = norm(v);
+            if (!/[A-Za-z]/.test(key)) return kv;
+            if (collect) { found.text.add(key); return kv; }
+            const t = dict.text[key];
+            if (!t || t === key) return kv;
+            changed = true;
+            return k + '=' + encodeURIComponent(t);
+        });
+        if (changed) el.setAttribute('href', h.slice(0, q + 1) + parts.join('&'));
+    }
+
     function walk(node) {
         if (node.nodeType === 3) {
             const k = norm(node.nodeValue);
@@ -87,13 +124,16 @@
             }
             return;
         }
-        if (node.nodeType !== 1 || skipped(node)) return;
+        if (node.nodeType !== 1) return;
+        if (node.tagName === 'TEXTAREA') { translateAttrs(node); return; } // placeholder only, never the typed text
+        if (skipped(node)) return;
         translateAttrs(node);
+        if (node.tagName === 'A') translateHref(node);
         if (isLeafBlock(node)) {
             const k = norm(node.innerHTML);
             if (/[A-Za-z]/.test(node.textContent)) {
                 if (collect) { found.html.add(k); return; }
-                if (dict.html[k] && dict.html[k] !== k) { node.innerHTML = dict.html[k]; node.querySelectorAll('*').forEach(translateAttrs); return; }
+                if (dict.html[k] && dict.html[k] !== k) { node.innerHTML = dict.html[k]; node.querySelectorAll('*').forEach(translateAttrs); node.querySelectorAll('a').forEach(translateHref); return; }
             }
         }
         for (let c = node.firstChild; c; c = c.nextSibling) walk(c);
@@ -141,8 +181,8 @@
         new MutationObserver(sync).observe(document.getElementById('header-container') || document.body, { childList: true });
     }
 
-    // keep the language when moving between pages opened with ?lang=zh
-    if (lang !== 'en') { try { localStorage.setItem(KEY, lang); } catch (e) { /* ignore */ } }
+    // keep the language when moving between pages opened with ?lang=zh (and ?lang=en resets it)
+    if (lang !== 'en' || params.get('lang')) { try { localStorage.setItem(KEY, lang); } catch (e) { /* ignore */ } }
 
     document.documentElement.setAttribute('data-lang', lang);
     toggleUi();

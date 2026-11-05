@@ -215,7 +215,7 @@
         einvoice: [
             { min: 6, title: 'Your e-Invoices and your books agree.', body: 'Sales, credit notes and self-billed cases all appear to flow through MyInvois and match the ledger. A periodic sample check keeps it that way as LHDN updates its guidelines.' },
             { min: 4, title: 'Close, with a few mismatches waiting.', body: 'The basics are running, but each "No" is a place where your accounts and MyInvois can drift apart. Those gaps are usually fixed with a monthly reconciliation and a short written policy.' },
-            { min: 0, title: 'final_v3_REAL is not a control.', body: 'Several areas would be hard to explain in an e-Invoice compliance review. The fix is a reconciliation between your sales ledger and MyInvois, then clear rules for consolidated, self-billed and adjustment notes.' }
+            { min: 0, title: 'Your e-Invoices and your books are drifting apart.', body: 'Several areas would be hard to explain in an e-Invoice compliance review. The fix is a reconciliation between your sales ledger and MyInvois, then clear rules for consolidated, self-billed and adjustment notes.' }
         ]
     };
 

@@ -22,7 +22,7 @@ const fs = require('fs');
   // tap-only assistant, form messages, ribbon and programme modal: English side of T('en', 'zh')
   for (const f of ['js/chatbot.js', 'js/supabase.js', 'js/programmes.js']) {
     const t = fs.readFileSync(f, 'utf8');
-    const r2 = /T\(\s*(['"])((?:\\.|(?!\1).)*)\1\s*,/g; let n;
+    const r2 = /\b[TL]\(\s*(['"])((?:\\.|(?!\1).)*)\1\s*,/g; let n;
     while ((n = r2.exec(t))) { const v = n[2].replace(/\\'/g, "'").replace(/\\"/g, '"'); if (/[A-Za-z]{3}/.test(v) && !/\$\{/.test(v)) all.text[v.replace(/\s+/g, ' ').trim()] = f; }
   }
   fs.writeFileSync(process.argv[2], JSON.stringify(all, null, 1));

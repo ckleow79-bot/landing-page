@@ -16,8 +16,13 @@
     const SUPABASE_KEY = (window.ENV && window.ENV.SUPABASE_KEY) || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsb29kYXZ6cXVhcmRrZWVjcmx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTc3MjMsImV4cCI6MjA4ODQ5MzcyM30.VqUNZWMKcqLolTnFDlOP874871r6AQmIEVnihdrAtwk';
     const WA = '601130636198';
     const MAIL = 'keith@bkcorporate.com';
-    const zh = () => !!(window.BKi18n && window.BKi18n.lang === 'zh');
-    const T = (en, cn) => (zh() ? cn : en);
+    // English source text, translated from data/i18n/<lang>.json; the inline Chinese is the fallback
+    const T = (en, cn) => {
+        const i = window.BKi18n;
+        if (!i || i.lang === 'en') return en;
+        const v = i.tr ? i.tr(en) : en;
+        return v !== en ? v : (i.lang === 'zh' && cn ? cn : en);
+    };
 
     let client = null;
     try {
@@ -98,7 +103,6 @@
                 message: $('contact-message').value.trim(),
                 reply: (form.querySelector('input[name="reply"]:checked') || {}).value || 'whatsapp'
             };
-            const replyText = { whatsapp: 'WhatsApp', email: T('Email', '电邮'), video: T('Video call', '视频通话'), phone: T('Phone call', '电话') }[d.reply];
             const speak = d.topic === 'speaking' ? [
                 $('sp-date') && $('sp-date').value ? T('Event date: ', '活动日期：') + $('sp-date').value : '',
                 $('sp-aud') && $('sp-aud').value ? T('Audience: ', '听众人数：') + $('sp-aud').value : '',
@@ -114,6 +118,11 @@
 
             let ok = true;
             if (!d.name) { fieldError($('contact-name'), T('Please enter your name', '请填写姓名')); ok = false; }
+            // only one way to reach them was given: reply that way instead of raising an error
+            const pick = v => { const r = form.querySelector('input[name="reply"][value="' + v + '"]'); if (r) r.checked = true; d.reply = v; };
+            if (d.email && !d.phone && d.reply !== 'email' && d.reply !== 'video') pick('email');
+            else if (d.phone && !d.email && d.reply === 'email') pick('whatsapp');
+            const replyText = { whatsapp: 'WhatsApp', email: T('Email', '电邮'), video: T('Video call', '视频通话'), phone: T('Phone call', '电话') }[d.reply];
             const needPhone = d.reply === 'whatsapp' || d.reply === 'phone';
             if (!d.phone && !d.email) {
                 fieldError(needPhone ? $('contact-phone') : $('contact-email'), T('Please give a phone number or an email so we can reply', '请留下电话或电邮，以便我们回复')); ok = false;
@@ -127,8 +136,9 @@
             if (!ok) { status(msgEl, T('Please correct the highlighted fields.', '请更正标示的栏位。'), 'error', true); const f = form.querySelector('.error'); if (f) f.focus(); msgEl.scrollIntoView({ block: 'nearest' }); return; }
 
             const header = [d.location && T('Location: ', '地点：') + d.location, d.urgency && T('Urgency: ', '紧急程度：') + d.urgency, T('Reply by: ', '回复方式：') + replyText].concat(inhouse, speak).filter(Boolean).join(' | ');
+            const isSpeak = d.topic === 'speaking';
             const lines = [
-                T('Quote request from the B & K website', 'B & K 网站报价请求'),
+                isSpeak ? T('Speaking enquiry from the B & K website', 'B & K 网站演讲邀请') : T('Quote request from the B & K website', 'B & K 网站报价请求'),
                 T('Name: ', '姓名：') + d.name,
                 d.phone && T('Phone / WhatsApp: ', '电话／WhatsApp：') + d.phone,
                 d.email && T('Email: ', '电邮：') + d.email,
@@ -136,7 +146,9 @@
                 d.topicText && T('Topic: ', '主题：') + d.topicText,
                 header, '', d.message
             ];
-            if (!client) { fallback(msgEl, lines, 'Quote request: ' + d.name, d.reply); return; }
+            const subject = (isSpeak ? T('Speaking enquiry', '演讲邀请') : T('Quote request', '报价请求')) + ': ' +
+                [isSpeak ? '' : d.topicText, d.company || d.name].filter(Boolean).join(' – ');
+            if (!client) { fallback(msgEl, lines, subject, d.reply); return; }
             const original = btn.textContent; btn.disabled = true; btn.textContent = T('Sending…', '发送中…');
             try {
                 const { error } = await client.from('contact_submissions').insert([{
@@ -149,7 +161,7 @@
                 form.reset(); toggleInhouse();
                 if (typeof gtag === 'function') gtag('event', 'quote_request', { topic: d.topic });
             } catch (err) {
-                fallback(msgEl, lines, 'Quote request: ' + d.name, d.reply);
+                fallback(msgEl, lines, subject, d.reply);
             } finally { btn.disabled = false; btn.textContent = original; }
         });
         const sel = $('contact-industry');
@@ -157,7 +169,10 @@
             const box = document.getElementById('inhouse-fields');
             if (box) box.hidden = !(sel && sel.value === 'inhouse');
             const sp = document.getElementById('speak-fields');
-            if (sp) sp.hidden = !(sel && sel.value === 'speaking');
+            const speaking = !!(sel && sel.value === 'speaking');
+            if (sp) sp.hidden = !speaking;
+            const b = form.querySelector('button[type="submit"]');
+            if (b && !b.disabled) { b.dataset.label = b.dataset.label || b.textContent; b.textContent = speaking ? T('Send a speaking enquiry', '发送演讲邀请') : b.dataset.label; }
         }
         if (sel) { sel.addEventListener('change', toggleInhouse); toggleInhouse(); }
     }
@@ -166,7 +181,7 @@
     function subscribeByMail(el, email) {
         status(el, T('Subscriptions are offline right now. Tap below to send us a one-line email and we will add you.', '订阅功能暂时无法使用。请点击下方按钮发一封简短电邮，我们会为您加入。'), 'error', true);
         const a = document.createElement('a'); a.className = 'btn btn-primary btn-sm'; a.style.marginTop = '.6rem';
-        a.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent('Subscribe: B & K tax updates') + '&body=' + encodeURIComponent('Please add ' + email + ' to the B & K tax update list. I consent to receiving these emails.');
+        a.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent(T('Subscribe: B & K tax updates', '订阅：B & K 税务快讯')) + '&body=' + encodeURIComponent(T('Please add this email to the B & K tax update list. I consent to receiving these emails.', '请将此电邮加入 B & K 税务快讯名单。我同意接收这些电邮。') + '\n' + email);
         a.textContent = T('Email us to subscribe', '电邮订阅');
         el.appendChild(document.createElement('br')); el.appendChild(a);
     }

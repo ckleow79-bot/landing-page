@@ -166,7 +166,7 @@ def page(p, rel=''):
                 <aside class="post-cta">
                     <h2>Does this affect you?</h2>
                     <p>Tell us your situation and we will say plainly whether it matters and what it would take. The first 15-minute call is free.</p>
-                    <p class="post-cta-btns"><a class="btn btn-primary" href="{rel}contact.html#quote">Request a quote</a><a class="btn btn-outline" href="https://wa.me/601130636198?text={html.escape(__import__("urllib.parse").parse.quote("Hi B&K, I read your note: " + p["title"] + ". My question is ..."))}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-outline" href="{rel}insights.html#subscribe">Get updates by email</a></p>
+                    <p class="post-cta-btns"><a class="btn btn-primary" href="{rel}contact.html#quote">Request a quote</a><a class="btn btn-outline" href="https://wa.me/601130636198?text={html.escape(__import__("urllib.parse").parse.quote("Hi B & K, I read your note and have a question: " + p["title"]))}" data-msg="Hi B &amp; K, I read your note and have a question:" data-msg-tail="{e(p["title"])}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-outline" href="{rel}insights.html#subscribe">Get updates by email</a></p>
                 </aside>
             </div>
         </article>

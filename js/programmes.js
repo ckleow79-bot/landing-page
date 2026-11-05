@@ -241,7 +241,7 @@
                     <div class="form-group"><label>Email *</label><input aria-label="Email" type="email" name="email" required autocomplete="email"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Mobile</label><input aria-label="Mobile" type="tel" name="phone" autocomplete="tel" placeholder="+60"></div>
+                    <div class="form-group"><label>Mobile</label><input aria-label="Mobile" type="tel" name="phone" autocomplete="tel" placeholder="With country code, e.g. +60 12-345 6789"></div>
                     <div class="form-group"><label>Company</label><input aria-label="Company" name="company" autocomplete="organization"></div>
                 </div>
                 <div class="form-row">
@@ -318,11 +318,20 @@
         delete data.attendees;
         if (others) data.message = ('Other attendees:\n' + others + (data.message ? '\n\n' + data.message : '')).trim();
         const p = (document.getElementById('prog-modal') || {})._prog || {};
-        if (!data.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-            msg.textContent = 'Please enter your name and a valid email.'; msg.className = 'form-message error'; return;
-        }
-        if (!data.consent_pdpa) {
-            msg.textContent = 'Consent is required to process your registration.'; msg.className = 'form-message error'; return;
+        // mark every missing field, focus the first one and keep the message in view
+        f.querySelectorAll('.error').forEach(i => { i.classList.remove('error'); i.removeAttribute('aria-invalid'); });
+        const bad = [];
+        if (!data.name) bad.push(f.name);
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) bad.push(f.email);
+        if (!data.consent_pdpa) bad.push(f.consent_pdpa);
+        if (bad.length) {
+            bad.forEach(i => { i.classList.add('error'); i.setAttribute('aria-invalid', 'true'); });
+            msg.textContent = bad.length === 1 && bad[0] === f.consent_pdpa ? 'Consent is required to process your registration.' : 'Please enter your name and a valid email.';
+            msg.className = 'form-message error';
+            msg.setAttribute('role', 'alert');
+            bad[0].focus({ preventScroll: true });
+            bad[0].scrollIntoView({ block: 'center' });
+            return;
         }
         btn.disabled = true; btn.textContent = 'Submitting…';
         try {
@@ -335,16 +344,21 @@
             btn.textContent = 'Submitted';
             if (typeof gtag === 'function') gtag('event', 'programme_register', { programme: data.programme_slug });
         } catch (err) {
+            // pre-filled text in the visitor's language (data/i18n), details as typed
+            const L = s => (window.BKi18n && BKi18n.tr ? BKi18n.tr(s) : s);
+            const title = L(data.programme_title);
             const lines = [
-                'Programme registration from the B & K website',
-                `Programme: ${data.programme_title}`,
-                p.start_date ? `Date: ${dateRange(p)}, ${fmtTime.format(new Date(p.start_date))}` : '',
-                p.venue ? `Venue: ${p.venue}` : '',
-                `Name: ${data.name}`, `Email: ${data.email}`, data.phone ? `Phone: ${data.phone}` : '',
-                data.company ? `Company: ${data.company}` : '', data.designation ? `Designation: ${data.designation}` : '',
-                `Participants: ${data.pax}`, `HRD Corp claim: ${data.hrdc_claim ? 'Yes' : 'No'}`, '', data.message || ''
+                L('Programme registration from the B & K website'),
+                L('Programme: ') + title,
+                p.start_date ? L('Date: ') + `${dateRange(p)}, ${fmtTime.format(new Date(p.start_date))}` : '',
+                p.venue ? L('Venue: ') + p.venue : '',
+                L('Name: ') + data.name, L('Email: ') + data.email, data.phone ? L('Phone: ') + data.phone : '',
+                data.company ? L('Company: ') + data.company : '', data.designation ? L('Designation: ') + data.designation : '',
+                L('Participants: ') + data.pax, L('HRD Corp claim: ') + L(data.hrdc_claim ? 'Yes' : 'No'), '', data.message || ''
             ];
-            if (window.BKFormFallback) window.BKFormFallback(msg, lines, `Registration: ${data.programme_title}`);
+            const city = (p.venue || '').split(',').pop().trim();
+            const subject = L('Registration: ') + [title, city, data.company || data.name].filter(Boolean).join(' – ');
+            if (window.BKFormFallback) window.BKFormFallback(msg, lines, subject, data.phone ? 'whatsapp' : 'email');
             else { msg.textContent = 'We could not reach the registration service. Please email keith@bkcorporate.com or WhatsApp +60 11-3063 6198.'; msg.className = 'form-message error'; }
             btn.disabled = false; btn.textContent = 'Submit registration';
         }

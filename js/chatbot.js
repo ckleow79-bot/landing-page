@@ -19,9 +19,7 @@
         more: () => ({
             say: [T('Sure. What else can I help with?', '好的，还有什么可以帮您？')],
             options: MENU().concat([
-                ['personal', T('Personal or property tax', '个人或产业税务')],
-                ['startup', T('Startup or setting up in Malaysia', '初创公司或在马来西亚设立公司')],
-                ['speaking', T('Invite Keith to speak', '邀请 Keith 演讲')]
+                ['startup', T('Startup or setting up in Malaysia', '初创公司或在马来西亚设立公司')]
             ])
         }),
         fees: () => ({
@@ -41,7 +39,7 @@
         startup: () => ({
             say: [T('For startups and foreign companies: company set-up and secretarial, Form C and CP204, SST and e-Invoice registration, management accounts and a review of incentives and intercompany charges.', '针对初创及外国公司：公司设立与秘书服务、C 表格与 CP204、SST 及电子发票注册、管理账目，以及奖励与关联交易审阅。')],
             links: [
-                ['contact.html?topic=startup#quote', T('Startup quote', '初创公司报价')],
+                ['contact.html?topic=startup#quote', T('Startup enquiry', '初创公司咨询')],
                 ['contact.html?topic=setup#quote', T('Setting up in Malaysia', '在马来西亚设立公司')]
             ]
         }),
@@ -108,6 +106,8 @@
         ['tax', T('Tax compliance and planning', '税务申报与规划')],
         ['cfo', T('Fractional CFO or board reports', '外包CFO或董事会报告')],
         ['training', T('Seminars and training', '讲座与培训')],
+        ['personal', T('Personal or property tax', '个人或产业税务')],
+        ['speaking', T('Invite Keith to speak', '邀请 Keith 演讲')],
         ['fees', T('What does it cost?', '收费多少？')],
         ['human', T('Talk to a person', '找真人联系')]
     ];
@@ -176,7 +176,9 @@
             const fmt = new Intl.DateTimeFormat(zh() ? 'zh-CN' : (window.BKi18n && BKi18n.lang === 'ms' ? 'ms-MY' : 'en-MY'), { day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
             window.BKProgrammes.load().then(d => {
                 d.list.filter(p => p.status === 'upcoming').slice(0, 3).forEach(p => {
-                    const a = linkBtn('programmes.html?open=' + encodeURIComponent(p.slug), fmt.format(new Date(p.start_date)) + ' · ' + p.title);
+                    const city = (p.venue || p.mode || '').split(',').pop().trim();
+                    const title = window.BKi18n && BKi18n.tr ? BKi18n.tr(p.title) : p.title;
+                    const a = linkBtn('programmes.html?open=' + encodeURIComponent(p.slug), [fmt.format(new Date(p.start_date)), city, title].filter(Boolean).join(' · '));
                     a.setAttribute('data-i18n-skip', '');
                     holder.appendChild(a);
                 });
@@ -195,7 +197,7 @@
         tog.classList.toggle('hidden', state);
         tog.setAttribute('aria-expanded', state ? 'true' : 'false');
         if (state) {
-            if (!box.childElementCount) show('home');
+            if (!box.childElementCount) { show('home'); box.scrollTop = 0; } // start at the greeting
             setTimeout(() => { const f = win.querySelector('.quick-reply-btn'); if (f) f.focus(); }, 250);
         } else tog.focus();
     }

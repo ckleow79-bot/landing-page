@@ -17,12 +17,21 @@
     const fmt = new Intl.DateTimeFormat(zh ? 'zh-CN' : (window.BKi18n && BKi18n.lang === 'ms' ? 'ms-MY' : 'en-MY'), { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
     const KEY = 'bk-ribbon-dismissed';
     const SEEN = 'bk-ribbon-next';
-    // reserve the ribbon's space before first paint when we already know it will show,
-    // so the header never jumps or sits under the ribbon
+    // Put an empty bar in place straight away (this script runs before the header is
+    // loaded), so the header never jumps down when the programme data arrives.
+    // Skipped only when the visitor already dismissed the programme we showed last.
+    let bar = null;
     try {
         const seen = sessionStorage.getItem(SEEN);
-        if (seen && sessionStorage.getItem(KEY) !== seen) document.documentElement.style.setProperty('--ribbon-h', '40px');
-    } catch (e) { /* ignore */ }
+        if (!(seen && sessionStorage.getItem(KEY) === seen)) bar = document.createElement('div');
+    } catch (e) { bar = document.createElement('div'); }
+    if (bar) {
+        bar.className = 'next-ribbon';
+        bar.setAttribute('aria-hidden', 'true');
+        document.body.prepend(bar);
+        document.documentElement.style.setProperty('--ribbon-h', '40px');
+    }
+    const drop = () => { if (bar && !bar.querySelector('.nr-in')) bar.remove(); setHeight(0); };
 
     const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -36,35 +45,49 @@
     function setHeight(px) { document.documentElement.style.setProperty('--ribbon-h', px + 'px'); }
 
     async function init() {
-        if (!window.BKProgrammes) { setHeight(0); return; }
+        if (!window.BKProgrammes) { drop(); return; }
         let data;
-        try { data = await window.BKProgrammes.load(); } catch (e) { setHeight(0); return; }
+        try { data = await window.BKProgrammes.load(); } catch (e) { drop(); return; }
         const now = Date.now();
         const next = data.list.filter(p => p.status === 'upcoming' && p.provider !== 'external' && p._start > now - 8 * 3600e3)
             .sort((a, b) => a._start - b._start)[0];
-        if (!next) { setHeight(0); return; }
+        if (!next) { drop(); return; }
         try {
-            if (sessionStorage.getItem(KEY) === next.slug) { setHeight(0); return; }
+            if (sessionStorage.getItem(KEY) === next.slug) { drop(); return; }
             sessionStorage.setItem(SEEN, next.slug);
         } catch (e) { /* ignore */ }
 
-        const bar = document.createElement('div');
-        bar.className = 'next-ribbon';
+        if (!bar) { bar = document.createElement('div'); bar.className = 'next-ribbon'; document.body.prepend(bar); }
+        bar.removeAttribute('aria-hidden');
         bar.setAttribute('role', 'region');
         bar.setAttribute('aria-label', T.label);
-        const where = next.venue || next.mode || '';
+        // the city, so three sessions of the same seminar can be told apart
+        const city = (next.venue || next.mode || '').split(',').pop().trim();
+        const title = window.BKi18n && BKi18n.tr ? BKi18n.tr(next.title) : next.title;
         bar.setAttribute('data-i18n-skip', '');
         bar.innerHTML = `
             <div class="nr-in">
                 <span class="nr-tag">${T.tag}</span>
-                <span class="nr-title" data-i18n-skip>${esc(next.title)}</span>
-                <span class="nr-meta" data-i18n-skip>${esc(fmt.format(new Date(next.start_date)))}${where ? ' · ' + esc(where) : ''}</span>
+                <span class="nr-title" data-i18n-skip>${esc(title)}${city ? ' · ' + esc(city) : ''}</span>
+                <span class="nr-meta" data-i18n-skip>${esc(fmt.format(new Date(next.start_date)))}${next.venue && next.venue.indexOf(',') > 0 ? ' · ' + esc(next.venue.slice(0, next.venue.lastIndexOf(','))) : ''}</span>
                 <span class="nr-count" aria-live="off"></span>
                 <a class="nr-cta" href="programmes.html?open=${encodeURIComponent(next.slug)}">${T.details}</a>
             </div>
             <button type="button" class="nr-x" aria-label="${T.close}">&times;</button>`;
-        document.body.prepend(bar);
         setHeight(bar.offsetHeight);
+
+        // phones: give the screen back while reading (large text makes ribbon + header + action bar tall)
+        const phone = window.matchMedia('(max-width: 767px)');
+        let tucked = false;
+        const onScroll = () => {
+            if (bar.classList.contains('is-gone')) return;
+            const t = phone.matches && window.scrollY > 120;
+            if (t === tucked) return;
+            tucked = t;
+            bar.classList.toggle('is-out', t);
+            setHeight(t ? 0 : bar.offsetHeight);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
 
         const out = bar.querySelector('.nr-count');
         const tick = () => { out.textContent = countdown(next._start - Date.now()); };
@@ -73,7 +96,7 @@
 
         bar.querySelector('.nr-x').addEventListener('click', () => {
             clearInterval(timer);
-            bar.classList.add('is-out');
+            bar.classList.add('is-out', 'is-gone');
             setHeight(0);
             setTimeout(() => bar.remove(), 400);
             try { sessionStorage.setItem(KEY, next.slug); } catch (e) { /* ignore */ }
