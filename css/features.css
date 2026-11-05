@@ -477,3 +477,6 @@ a:not(.btn):not(.nav-link):not(.logo):not(.quick-reply-btn):not(.path-card):not(
 /* elements waiting for a reveal must sit in place when motion is off or scripts never ran */
 @media (prefers-reduced-motion: reduce) { .reveal, .reveal-up, .reveal-stagger > *, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; } }
 html:not(.has-gsap) .reveal, html:not(.has-gsap) .reveal-up { opacity: 1; transform: none; }
+
+/* anything with the hidden attribute stays hidden, whatever its display rule (fixes the letter decoder showing every answer) */
+[hidden] { display: none !important; }
