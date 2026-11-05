@@ -1,8 +1,8 @@
 /**
- * English / 中文 switch.
+ * English / Bahasa Malaysia / 中文 switch.
  *
- * One HTML source per page. English is the source text; data/i18n/zh.json maps
- * English strings to Simplified Chinese. Two kinds of keys:
+ * One HTML source per page. English is the source text; data/i18n/zh.json and ms.json map
+ * English strings to Simplified Chinese and Bahasa Malaysia. Two kinds of keys:
  *   - "text":  a plain text node, whitespace-collapsed
  *   - "html":  the innerHTML of a "leaf block" (an element whose descendants are
  *              all inline tags such as <em>, <a>, <strong>, <br>), whitespace-collapsed
@@ -24,16 +24,17 @@
     const collect = params.get('i18n') === 'collect';
     let lang = 'en';
     try { lang = params.get('lang') || localStorage.getItem(KEY) || 'en'; } catch (e) { lang = params.get('lang') || 'en'; }
-    if (lang !== 'zh') lang = 'en';
+    const LANGS = ['en', 'ms', 'zh'];
+    if (LANGS.indexOf(lang) < 0) lang = 'en';
 
     const api = window.BKi18n = {
         lang,
-        t: (en, zh) => (lang === 'zh' && zh ? zh : en),
+        t: (en, zh, ms) => (lang === 'zh' && zh ? zh : lang === 'ms' && ms ? ms : en),
         set(next) {
             try { localStorage.setItem(KEY, next); } catch (e) { /* private mode: fall back to the URL */ }
             const url = new URL(location.href);
             url.searchParams.delete('lang');
-            if (next === 'zh') url.searchParams.set('lang', 'zh');
+            if (next !== 'en') url.searchParams.set('lang', next);
             location.replace(url.toString());
         }
     };
@@ -69,7 +70,7 @@
             if (!v || !/[A-Za-z]/.test(v)) return;
             const k = norm(v);
             if (collect) { found.text.add(k); return; }
-            if (dict.text[k]) el.setAttribute(a, dict.text[k]);
+            if (dict.text[k] && dict.text[k] !== k) el.setAttribute(a, dict.text[k]);
         });
     }
 
@@ -79,7 +80,7 @@
             if (!k || !/[A-Za-z]/.test(k)) return;
             if (collect) { found.text.add(k); return; }
             const zh = dict.text[k];
-            if (zh) {
+            if (zh && zh !== k) {
                 const lead = node.nodeValue.match(/^\s*/)[0] ? ' ' : '';
                 const tail = node.nodeValue.match(/\s*$/)[0] ? ' ' : '';
                 node.nodeValue = lead + zh + tail;
@@ -92,7 +93,7 @@
             const k = norm(node.innerHTML);
             if (/[A-Za-z]/.test(node.textContent)) {
                 if (collect) { found.html.add(k); return; }
-                if (dict.html[k]) { node.innerHTML = dict.html[k]; node.querySelectorAll('*').forEach(translateAttrs); return; }
+                if (dict.html[k] && dict.html[k] !== k) { node.innerHTML = dict.html[k]; node.querySelectorAll('*').forEach(translateAttrs); return; }
             }
         }
         for (let c = node.firstChild; c; c = c.nextSibling) walk(c);
@@ -125,39 +126,42 @@
 
     function toggleUi() {
         document.addEventListener('click', e => {
-            const b = e.target.closest('[data-lang-toggle]');
+            const b = e.target.closest('[data-lang-set]');
             if (!b) return;
             e.preventDefault();
-            api.set(lang === 'zh' ? 'en' : 'zh');
+            const next = b.getAttribute('data-lang-set');
+            if (next !== lang) api.set(next);
         });
-        const sync = () => document.querySelectorAll('[data-lang-toggle]').forEach(b => {
-            b.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
-            b.setAttribute('lang', lang === 'zh' ? 'en' : 'zh-Hans');
-            b.querySelector('.lang-label') && (b.querySelector('.lang-label').textContent = lang === 'zh' ? 'EN' : '中文');
+        const sync = () => document.querySelectorAll('[data-lang-set]').forEach(b => {
+            const on = b.getAttribute('data-lang-set') === lang;
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            b.classList.toggle('is-on', on);
         });
         sync();
         new MutationObserver(sync).observe(document.getElementById('header-container') || document.body, { childList: true });
     }
 
     // keep the language when moving between pages opened with ?lang=zh
-    if (lang === 'zh') { try { localStorage.setItem(KEY, 'zh'); } catch (e) { /* ignore */ } }
+    if (lang !== 'en') { try { localStorage.setItem(KEY, lang); } catch (e) { /* ignore */ } }
 
     document.documentElement.setAttribute('data-lang', lang);
     toggleUi();
 
     if (collect) { translateTitle(); walk(document.body); observe(); return; }
-    if (lang !== 'zh') return;
+    if (lang === 'en') return;
 
-    document.documentElement.lang = 'zh-Hans';
+    document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'ms';
     // Chinese headings: Noto Sans SC from Google Fonts (sliced by unicode-range, only needed glyphs download)
-    const gf = document.createElement('link');
-    gf.rel = 'stylesheet';
-    gf.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;800&display=swap';
-    document.head.appendChild(gf);
+    if (lang === 'zh') {
+        const gf = document.createElement('link');
+        gf.rel = 'stylesheet';
+        gf.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;800&display=swap';
+        document.head.appendChild(gf);
+    }
     // synchronous load so the page is translated before animations measure it
     try {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'data/i18n/zh.json', false);
+        xhr.open('GET', 'data/i18n/' + lang + '.json', false);
         xhr.send();
         if (xhr.status !== 200) throw new Error(xhr.status);
         dict = JSON.parse(xhr.responseText);

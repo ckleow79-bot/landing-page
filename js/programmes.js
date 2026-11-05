@@ -20,7 +20,7 @@
         'bk-academy': { name: 'B & K Academy PLT', short: 'B & K Academy' }
     };
 
-    const LOC = (window.BKi18n && window.BKi18n.lang === 'zh') ? 'zh-CN' : 'en-MY';
+    const LOC = !window.BKi18n ? 'en-MY' : ({ zh: 'zh-CN', ms: 'ms-MY' }[window.BKi18n.lang] || 'en-MY');
     const fmtDate = new Intl.DateTimeFormat(LOC, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' });
     const fmtDay = new Intl.DateTimeFormat(LOC, { day: '2-digit', timeZone: 'Asia/Kuala_Lumpur' });
     const fmtMon = new Intl.DateTimeFormat(LOC, { month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
@@ -86,6 +86,13 @@
         return sameDay ? fmtDate.format(s) : `${fmtDay.format(s)} ${fmtMon.format(s)} – ${fmtDate.format(e)}`;
     }
 
+    function place(p) {
+        const mode = p.mode || '', venue = p.venue || '';
+        if (!venue || venue === mode) return mode;
+        if (mode && venue.toLowerCase().indexOf(mode.toLowerCase()) === 0) return venue;
+        return mode ? mode + ' · ' + venue : venue;
+    }
+
     function feeLine(p) {
         if (p.fee_myr == null) return p.provider === 'external'
             ? `<span class="prog-fee prog-fee-na">Fee and registration via ${escapeHtml(p.organiser || 'organiser')}</span>`
@@ -131,8 +138,8 @@
                 ${p.subtitle ? `<p class="prog-subtitle" data-i18n-skip>${escapeHtml(p.subtitle)}</p>` : ''}
                 <ul class="prog-facts">
                     <li><i class="far fa-calendar"></i> ${dateRange(p)}, ${fmtTime.format(s)}${p.end_date ? ' – ' + fmtTime.format(new Date(p.end_date)) : ''}</li>
-                    <li><i class="fas fa-map-marker-alt"></i> ${escapeHtml(p.mode || '')}${p.venue ? ' · ' + escapeHtml(p.venue) : ''}</li>
-                    ${p.cpd_hours ? `<li><i class="fas fa-certificate"></i> ${p.cpd_hours} CPD hours</li>` : ''}
+                    <li><i class="fas fa-map-marker-alt"></i> ${escapeHtml(place(p))}</li>
+                    ${p.cpd_hours ? `<li><i class="fas fa-certificate"></i> ${p.cpd_hours} CPD hours per full day <small class="prog-cpd-note">(subject to each professional body's assessment and decision)</small></li>` : ''}
                     ${p.language ? `<li><i class="fas fa-language"></i> ${escapeHtml(p.language)}</li>` : ''}
                 </ul>
                 ${highlights ? `<ul class="prog-highlights" data-i18n-skip>${highlights}</ul>` : ''}
@@ -142,9 +149,9 @@
             <div class="prog-aside">
                 ${feeLine(p)}
                 <div class="prog-actions">
-                    ${regBtn}
+                    ${p.status === 'past' ? '' : regBtn}
                     ${safeUrl(p.brochure_url) ? `<a class="btn btn-outline btn-sm" href="${escapeHtml(safeUrl(p.brochure_url))}" target="_blank" rel="noopener">Brochure</a>` : ''}
-                    <button class="btn-link" data-ics="${escapeHtml(p.slug)}"><i class="far fa-calendar-plus"></i> Add to calendar</button>
+                    ${p.status === 'past' ? '' : `<button class="btn-link" data-ics="${escapeHtml(p.slug)}"><i class="far fa-calendar-plus"></i> Add to calendar</button>`}
                 </div>
             </div>
         </article>`;
@@ -152,7 +159,7 @@
 
     function renderFeatured(container, list) {
         const n = parseInt(container.getAttribute('data-limit') || '3', 10);
-        const items = list.filter(p => p.status === 'upcoming').sort((a, b) => (b.featured - a.featured) || (a._start - b._start)).slice(0, n);
+        const items = list.filter(p => p.status === 'upcoming').sort((a, b) => a._start - b._start).slice(0, n);
         container.innerHTML = items.length
             ? items.map(p => card(p, true)).join('')
             : '<p class="prog-empty">New programmes are being scheduled. Leave your email below and we will notify you.</p>';
@@ -270,7 +277,7 @@
         const m = ensureModal();
         m._prog = p;
         m.querySelector('.prog-modal-title').textContent = p.title;
-        m.querySelector('.prog-modal-sub').textContent = `${dateRange(p)} · ${p.mode || ''}${p.venue ? ' · ' + p.venue : ''}`;
+        m.querySelector('.prog-modal-sub').textContent = `${dateRange(p)} · ${place(p)}`;
         const f = m.querySelector('form');
         f.reset();
         f.programme_slug.value = p.slug;
@@ -280,6 +287,7 @@
         const add = (label, val) => { if (!val) return; const r = document.createElement('p'); const b = document.createElement('strong'); b.textContent = label + ' '; r.append(b, document.createTextNode(val)); recap.appendChild(r); };
         add('Fee:', p.fee_myr != null ? fmtMYR.format(p.fee_myr) + ' per participant' : '');
         add('Includes:', p.includes || '');
+        add('CPD:', p.cpd_hours ? p.cpd_hours + ' CPD hours per full day, subject to each professional body\'s assessment and decision' : '');
         add('HRD Corp training provider:', p.hrdc_claimable ? (PROVIDERS[p.provider] || {}).name : '');
         m.querySelector('.prog-hrdc-check').hidden = p.provider === 'external';
         m.querySelector('.prog-modal-kicker').textContent = p.provider === 'external' ? 'Enquire' : 'Register';
@@ -372,8 +380,8 @@
             return;
         }
         // live stat: number of upcoming public sessions (counted up by cinematic.js when it scrolls in)
-        const n = data.list.filter(p => p.status === 'upcoming' && p.provider !== 'external').length;
-        counts.forEach(el => { el.dataset.count = n; if (!el.dataset.counting) el.textContent = n; });
+        const n = data.list.filter(p => p.status === 'upcoming').length;
+        counts.forEach(el => { el.dataset.count = n; el.textContent = n; });
         targets.forEach(t => t.getAttribute('data-programmes') === 'list' ? renderList(t, data.list) : renderFeatured(t, data.list));
         document.addEventListener('click', e => {
             const r = e.target.closest('[data-register]');

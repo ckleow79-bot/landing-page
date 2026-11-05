@@ -14,13 +14,42 @@
     const FLOWS = {
         home: () => ({
             say: [T("Hi, I'm the B & K assistant. What do you need help with?", '您好，我是 B & K 助理。请问需要哪方面的协助？')],
-            options: [
-                ['audit', T('LHDN letter or tax audit', 'LHDN 来信或税务审计')],
-                ['einvoice', T('e-Invoice', '电子发票')],
-                ['tax', T('Tax compliance and planning', '税务申报与规划')],
-                ['cfo', T('Fractional CFO or board reports', '外包CFO或董事会报告')],
-                ['training', T('Seminars and training', '讲座与培训')],
-                ['human', T('Talk to a person', '找真人联系')]
+            options: MENU()
+        }),
+        more: () => ({
+            say: [T('Sure. What else can I help with?', '好的，还有什么可以帮您？')],
+            options: MENU().concat([
+                ['personal', T('Personal or property tax', '个人或产业税务')],
+                ['startup', T('Startup or setting up in Malaysia', '初创公司或在马来西亚设立公司')],
+                ['speaking', T('Invite Keith to speak', '邀请 Keith 演讲')]
+            ])
+        }),
+        fees: () => ({
+            say: [T('The first 15-minute call is free. A 60-minute consultation is from RM 500, credited to the fee if you engage us. Starting fees for audits, appeals, e-Invoice, CFO work and training are in the fee guide. All fees exclude SST; the final fee is confirmed in an engagement letter.', '首次15分钟通话免费。60分钟咨询从 RM 500 起，若正式委托可抵扣费用。审计、上诉、电子发票、CFO 及培训的起价列于收费指南。所有费用不含 SST，最终费用以委托书为准。')],
+            links: [
+                ['advisory.html#fees', T('See the fee guide', '查看收费指南')],
+                ['contact.html#quote', T('Request a quote', '索取报价')]
+            ]
+        }),
+        personal: () => ({
+            say: [T('We help individuals with rental income, Form B/BE, selling property (RPGT) and passing property or shares to the next generation.', '我们协助个人处理租金收入、B/BE 表格、出售产业（RPGT）以及将产业或股份传给下一代。')],
+            links: [
+                ['contact.html?topic=personal#quote', T('Request a quote', '索取报价')],
+                ['advisory.html#who', T('Who we help', '服务对象')]
+            ]
+        }),
+        startup: () => ({
+            say: [T('For startups and foreign companies: company set-up and secretarial, Form C and CP204, SST and e-Invoice registration, management accounts and a review of incentives and intercompany charges.', '针对初创及外国公司：公司设立与秘书服务、C 表格与 CP204、SST 及电子发票注册、管理账目，以及奖励与关联交易审阅。')],
+            links: [
+                ['contact.html?topic=startup#quote', T('Startup quote', '初创公司报价')],
+                ['contact.html?topic=setup#quote', T('Setting up in Malaysia', '在马来西亚设立公司')]
+            ]
+        }),
+        speaking: () => ({
+            say: [T('Keith speaks at conferences, association events, post-Budget briefings and webinars, in English or Mandarin. The fee is on request.', 'Keith 可在研讨会、公会活动、财政预算案解读会及网络研讨会中以英语或华语演讲，费用请询问。')],
+            links: [
+                ['contact.html?topic=speaking#quote', T('Send a speaking enquiry', '发送演讲邀请')],
+                ['about.html#speaking', T('Topics', '演讲题目')]
             ]
         }),
         audit: () => ({
@@ -72,6 +101,16 @@
             ]
         })
     };
+
+    const MENU = () => [
+        ['audit', T('LHDN letter or tax audit', 'LHDN 来信或税务审计')],
+        ['einvoice', T('e-Invoice', '电子发票')],
+        ['tax', T('Tax compliance and planning', '税务申报与规划')],
+        ['cfo', T('Fractional CFO or board reports', '外包CFO或董事会报告')],
+        ['training', T('Seminars and training', '讲座与培训')],
+        ['fees', T('What does it cost?', '收费多少？')],
+        ['human', T('Talk to a person', '找真人联系')]
+    ];
 
     let box, opened = false;
 
@@ -129,11 +168,12 @@
         const items = [];
         if (f.options) f.options.forEach(([k, l]) => items.push(optionBtn(k, l)));
         if (f.links) f.links.forEach(([h, l, ext]) => items.push(linkBtn(h, l, ext)));
-        if (key !== 'home') items.push(optionBtn('home', T('Something else', '其他问题')));
+        if (key !== 'home' && key !== 'more') items.push(optionBtn('more', T('Something else', '其他问题')));
+        if (key !== 'home' && key !== 'more' && key !== 'human') items.push(optionBtn('human', T('Talk to a person', '找真人联系')));
         if (f.live && window.BKProgrammes) {
             const holder = el('div', 'quick-replies');
             box.appendChild(holder);
-            const fmt = new Intl.DateTimeFormat(zh() ? 'zh-CN' : 'en-MY', { day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
+            const fmt = new Intl.DateTimeFormat(zh() ? 'zh-CN' : (window.BKi18n && BKi18n.lang === 'ms' ? 'ms-MY' : 'en-MY'), { day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
             window.BKProgrammes.load().then(d => {
                 d.list.filter(p => p.status === 'upcoming').slice(0, 3).forEach(p => {
                     const a = linkBtn('programmes.html?open=' + encodeURIComponent(p.slug), fmt.format(new Date(p.start_date)) + ' · ' + p.title);
@@ -167,6 +207,7 @@
         if (!tog || !box) return;
         tog.addEventListener('click', () => setOpen(!opened));
         if (close) close.addEventListener('click', () => setOpen(false));
+        document.addEventListener('click', e => { if (e.target.closest('[data-open-chat]')) { e.preventDefault(); setOpen(true); } });
         document.addEventListener('keydown', e => { if (e.key === 'Escape' && opened) setOpen(false); });
     };
 })();

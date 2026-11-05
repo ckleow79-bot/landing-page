@@ -224,7 +224,7 @@
         };
         // aim again after late images and pinned sections settle, unless the visitor has started scrolling
         let userMoved = false;
-        ['wheel', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, () => { userMoved = true; }, { once: true, passive: true }));
+        ['wheel', 'touchstart', 'keydown', 'mousedown', 'hashchange'].forEach(ev => window.addEventListener(ev, () => { userMoved = true; }, { once: true, passive: true }));
         const run = () => { [450, 1300, 2600].forEach(t => setTimeout(() => { if (!userMoved) go(); }, t)); };
         if (document.readyState === 'complete') run(); else window.addEventListener('load', run, { once: true });
     }

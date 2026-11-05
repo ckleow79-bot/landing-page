@@ -3,7 +3,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 (async () => {
-  const pages = ["index", "advisory", "academy", "programmes", "insights", "about", "contact", "faq"];
+  const pages = ["index", "advisory", "academy", "programmes", "insights", "about", "contact", "faq", "terms-of-service", "cookie-policy"];
   const b = await chromium.launch();
   const all = { text: {}, html: {} };
   for (const pg of pages) {
@@ -19,6 +19,12 @@ const fs = require('fs');
   const src = fs.readFileSync('js/audit-story.js', 'utf8');
   const re = /(title|body): '((?:[^'\\]|\\.)*)'/g; let m;
   while ((m = re.exec(src))) all.text[m[2].replace(/\\'/g, "'")] = 'advisory-js';
+  // tap-only assistant, form messages, ribbon and programme modal: English side of T('en', 'zh')
+  for (const f of ['js/chatbot.js', 'js/supabase.js', 'js/programmes.js']) {
+    const t = fs.readFileSync(f, 'utf8');
+    const r2 = /T\(\s*(['"])((?:\\.|(?!\1).)*)\1\s*,/g; let n;
+    while ((n = r2.exec(t))) { const v = n[2].replace(/\\'/g, "'").replace(/\\"/g, '"'); if (/[A-Za-z]{3}/.test(v) && !/\$\{/.test(v)) all.text[v.replace(/\s+/g, ' ').trim()] = f; }
+  }
   fs.writeFileSync(process.argv[2], JSON.stringify(all, null, 1));
   console.log('text', Object.keys(all.text).length, 'html', Object.keys(all.html).length);
   await b.close();

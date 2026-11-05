@@ -7,12 +7,22 @@
 (function () {
     'use strict';
 
-    const zh = window.BKi18n && window.BKi18n.lang === 'zh';
-    const T = zh
-        ? { tag: '下一场', starts: '倒数', today: '今天开始', details: '查看详情', close: '关闭提示', d: '天', h: '小时', m: '分' }
-        : { tag: 'Next up', starts: 'Starts in', today: 'Starts today', details: 'Details', close: 'Dismiss', d: 'd', h: 'h', m: 'm' };
-    const fmt = new Intl.DateTimeFormat(zh ? 'zh-CN' : 'en-MY', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
+    const lang = (window.BKi18n && window.BKi18n.lang) || 'en';
+    const zh = lang === 'zh';
+    const T = {
+        zh: { tag: '下一场', starts: '倒数', today: '今天开始', details: '查看详情', close: '关闭提示', d: '天', h: '小时', m: '分', label: '下一场课程' },
+        ms: { tag: 'Seterusnya', starts: 'Bermula dalam', today: 'Bermula hari ini', details: 'Butiran', close: 'Tutup', d: 'h', h: 'j', m: 'm', label: 'Program seterusnya' },
+        en: { tag: 'Next up', starts: 'Starts in', today: 'Starts today', details: 'Details', close: 'Dismiss', d: 'd', h: 'h', m: 'm', label: 'Next programme' }
+    }[lang] || {};
+    const fmt = new Intl.DateTimeFormat(zh ? 'zh-CN' : (window.BKi18n && BKi18n.lang === 'ms' ? 'ms-MY' : 'en-MY'), { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
     const KEY = 'bk-ribbon-dismissed';
+    const SEEN = 'bk-ribbon-next';
+    // reserve the ribbon's space before first paint when we already know it will show,
+    // so the header never jumps or sits under the ribbon
+    try {
+        const seen = sessionStorage.getItem(SEEN);
+        if (seen && sessionStorage.getItem(KEY) !== seen) document.documentElement.style.setProperty('--ribbon-h', '40px');
+    } catch (e) { /* ignore */ }
 
     const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -26,19 +36,24 @@
     function setHeight(px) { document.documentElement.style.setProperty('--ribbon-h', px + 'px'); }
 
     async function init() {
-        if (!window.BKProgrammes) return;
+        if (!window.BKProgrammes) { setHeight(0); return; }
         let data;
-        try { data = await window.BKProgrammes.load(); } catch (e) { return; }
+        try { data = await window.BKProgrammes.load(); } catch (e) { setHeight(0); return; }
         const now = Date.now();
-        const next = data.list.find(p => p.status === 'upcoming' && p.provider !== 'external' && p._start > now - 8 * 3600e3);
-        if (!next) return;
-        try { if (sessionStorage.getItem(KEY) === next.slug) return; } catch (e) { /* ignore */ }
+        const next = data.list.filter(p => p.status === 'upcoming' && p.provider !== 'external' && p._start > now - 8 * 3600e3)
+            .sort((a, b) => a._start - b._start)[0];
+        if (!next) { setHeight(0); return; }
+        try {
+            if (sessionStorage.getItem(KEY) === next.slug) { setHeight(0); return; }
+            sessionStorage.setItem(SEEN, next.slug);
+        } catch (e) { /* ignore */ }
 
         const bar = document.createElement('div');
         bar.className = 'next-ribbon';
         bar.setAttribute('role', 'region');
-        bar.setAttribute('aria-label', zh ? '下一场课程' : 'Next programme');
+        bar.setAttribute('aria-label', T.label);
         const where = next.venue || next.mode || '';
+        bar.setAttribute('data-i18n-skip', '');
         bar.innerHTML = `
             <div class="nr-in">
                 <span class="nr-tag">${T.tag}</span>

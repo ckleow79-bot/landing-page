@@ -37,7 +37,7 @@
         // accountant screen: next sessions from the live programme list
         const live = root.querySelector('[data-live-programmes]');
         if (live && window.BKProgrammes) {
-            const fmt = new Intl.DateTimeFormat(zh ? 'zh-CN' : 'en-MY', { day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
+            const fmt = new Intl.DateTimeFormat(zh ? 'zh-CN' : (window.BKi18n && BKi18n.lang === 'ms' ? 'ms-MY' : 'en-MY'), { day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
             window.BKProgrammes.load().then(d => {
                 const next = d.list.filter(p => p.status === 'upcoming').slice(0, 4);
                 live.innerHTML = next.length

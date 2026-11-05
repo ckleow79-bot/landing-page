@@ -157,7 +157,7 @@
         document.querySelectorAll('.numbers-grid').forEach(grid => {
             const cards = grid.querySelectorAll('.number');
             grid.classList.add('is-counting');
-            cards.forEach(c => c.querySelectorAll('[data-count]').forEach(el => { el.dataset.counting = '1'; el.textContent = '0'; }));
+            // the real figures stay visible until the grid scrolls in, then count up from zero
             ScrollTrigger.create({
                 trigger: grid, start: 'top 82%', once: true,
                 onEnter: () => cards.forEach((c, i) => {

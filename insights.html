@@ -22,6 +22,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
     <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png">
     <link rel="canonical" href="https://bkcorporate.com/insights.html">
+    <link rel="alternate" type="application/rss+xml" title="B &amp; K Group Insights" href="feed.xml">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,8 +44,28 @@
             </div>
         </section>
 
+        <section class="ins-latest" id="latest" aria-labelledby="ins-latest-title">
+            <div class="container">
+                <div class="ins-head">
+                    <div>
+                        <p class="hero-kicker">Tax updates and case notes</p>
+                        <h2 id="ins-latest-title">Latest from the practice</h2>
+                    </div>
+                    <div class="ins-filter" role="group" aria-label="Filter by type">
+                        <button type="button" class="category-btn active" data-ins="all" aria-pressed="true">All</button>
+                        <button type="button" class="category-btn" data-ins="update" aria-pressed="false">Tax updates</button>
+                        <button type="button" class="category-btn" data-ins="case-note" aria-pressed="false">Case notes</button>
+                        <button type="button" class="category-btn" data-ins="practice-note" aria-pressed="false">Practice notes</button>
+                    </div>
+                </div>
+                <div class="ins-list" data-insights><p class="ins-empty">Our first tax updates and case notes are in final review. <a href="#subscribe">Subscribe</a> and they will reach you first.</p></div>
+                <p class="ins-rss"><a href="feed.xml"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#rss"></use></svg> RSS feed</a> · Each note is checked against primary sources (LHDN, the Federal Gazette, published judgments) and dated, because tax rules change.</p>
+            </div>
+        </section>
+
         <section class="blog-categories" id="blog-categories">
             <div class="container">
+                <h2 class="ins-pipe-title">In the pipeline</h2>
                 <div class="categories-filter">
                     <button class="category-btn active" data-category="all">All</button>
                     <button class="category-btn" data-category="tax">Income Tax</button>
@@ -86,7 +107,7 @@
             </div>
         </section>
 
-        <section class="newsletter">
+        <section class="newsletter" id="subscribe">
             <div class="container">
                 <div class="newsletter-content">
                     <div class="newsletter-text"><h2>Get new articles by email</h2><p>Monthly. Unsubscribe any time.</p></div>
@@ -116,5 +137,6 @@
     <script src="js/programmes.js"></script>
     <script src="js/next-ribbon.js"></script>
     <script src="js/motion.js"></script>
+    <script src="js/insights.js"></script>
 </body>
 </html>
