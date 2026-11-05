@@ -40,6 +40,11 @@ After changing page text:
 
 **Hero video:** put a short silent clip at `assets/video/hero.mp4` (10 to 20 s, 1920 px wide, under 6 MB, faces of participants blurred) and add `data-video="assets/video/hero.mp4"` to the `<section class="hero-cine">` in `index.html`. It plays over the photo on desktop only.
 
+## Styles, icons and images
+- **Styles:** pages load one file, `css/site.css`, built from the sources in `css/`. After editing any CSS, run `python3 tools/bundle-css.py` (Netlify also runs it on every deploy).
+- **Icons:** self-hosted SVG sprite in `assets/icons/sprite.svg` (Lucide, ISC licence; Simple Icons for social logos). Use `<svg class="ic"><use href="assets/icons/sprite.svg#NAME"></use></svg>`; `js/icons.js` converts any old `<i class="fas fa-NAME">` added by scripts.
+- **Photos:** each training photo has `.avif` and `.webp` versions (1600 px and 800 px); `<picture>` serves AVIF where supported.
+
 ## Finance dashboard
 See `dashboard/README.md` for the Supabase warehouse schema, role-based RLS (owner / board / finance), AutoCount Cloud and on-premise ingestion, and Metabase setup.
 

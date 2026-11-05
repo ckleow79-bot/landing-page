@@ -83,6 +83,19 @@
         });
     }
 
-    function boot() { initHats(); initRing(); initFlow(); }
+    /* ---------- LHDN letter decoder ---------- */
+    function initDecoder() {
+        document.querySelectorAll('.letter-decoder').forEach(root => {
+            const chips = [...root.querySelectorAll('.ld-chip')];
+            const panels = [...root.querySelectorAll('.ld-panel')];
+            chips.forEach(c => c.addEventListener('click', () => {
+                chips.forEach(x => { const on = x === c; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+                panels.forEach(p => { p.hidden = p.dataset.panel !== c.dataset.letter; });
+                if (typeof gtag === 'function') gtag('event', 'letter_decoder', { letter: c.dataset.letter });
+            }));
+        });
+    }
+
+    function boot() { initHats(); initRing(); initFlow(); initDecoder(); }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(boot, 0)); else setTimeout(boot, 0);
 })();

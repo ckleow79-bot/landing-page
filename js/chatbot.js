@@ -27,6 +27,7 @@
             say: [T('If the letter has a reply deadline, contact us now. Send the letter date and reference only, not the letter itself; we will set up a secure way to receive documents.', '如果来信有回复期限，请尽快联系我们。请只发来信日期和参考编号，不要发送信件本身；我们会安排安全的方式接收文件。'),
                   T('We reply the same business day.', '我们会在同一个工作日内回复。')],
             links: [
+                ['advisory.html#letter-decoder', T('Decode your letter', '解读您的来信')],
                 [wa('Hi B & K, I received an LHDN letter dated ... (ref ...).'), T('WhatsApp us', 'WhatsApp 我们'), true],
                 ['contact.html?topic=audit#quote', T('Request a quote', '索取报价')],
                 ['advisory.html#audit-check', T('1-minute audit check', '1分钟审计自我检测')]

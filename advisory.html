@@ -6,22 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B &amp; K Advisory PLT | Tax Audit Defence, Tax Planning, SST, e-Invoice &amp; Fractional CFO</title>
     <meta name="description" content="Licensed tax agent firm in Kuala Lumpur. Tax audit and investigation representation, corporate tax planning, SST and e-Invoice compliance, company secretarial and outsourced CFO services.">
-    <link rel="stylesheet" href="css/tokens/fonts.css">
-    <link rel="stylesheet" href="css/tokens/colors.css">
-    <link rel="stylesheet" href="css/tokens/typography.css">
-    <link rel="stylesheet" href="css/tokens/spacing.css">
-    <link rel="stylesheet" href="css/tokens/theme-dark.css">
-    <link rel="stylesheet" href="css/tokens/signature.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pages.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/chatbot.css">
-    <link rel="stylesheet" href="css/cinematic.css">
-    <link rel="stylesheet" href="css/brand.css">
-    <link rel="stylesheet" href="css/audit-story.css">
-    <link rel="stylesheet" href="css/features.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" href="assets/fonts/bricolage-grotesque-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/public-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
 
     <meta property="og:title" content="B &amp; K Advisory PLT | Tax Audit Defence, Tax Planning, SST, e-Invoice &amp; Fractional CFO">
     <meta property="og:description" content="Licensed tax agent firm in Kuala Lumpur. Tax audit and investigation representation, corporate tax planning, SST and e-Invoice compliance, company secretarial and outsourced CFO services.">
@@ -67,6 +54,59 @@
 
 
         <!-- ===== Audit story (scroll-driven, 5 scenes) ===== -->
+        <!-- ===== LHDN letter decoder ===== -->
+        <section class="letter-decoder" id="letter-decoder" aria-labelledby="ld-title">
+            <div class="container">
+                <div class="ld-head">
+                    <p class="hero-kicker">Got a letter from LHDN?</p>
+                    <h2 id="ld-title">Decode it in ten seconds.</h2>
+                    <p>Pick the letter that looks like yours. Send us only the date and reference, never the letter itself, until we set up a secure channel.</p>
+                </div>
+                <div class="ld-card">
+                    <div class="ld-chips" role="group" aria-label="Type of letter">
+                        <button type="button" class="ld-chip is-on" data-letter="audit" aria-pressed="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#search"></use></svg>Audit notice</button>
+                        <button type="button" class="ld-chip" data-letter="ja" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#file-invoice"></use></svg>Additional assessment (JA)</button>
+                        <button type="button" class="ld-chip" data-letter="info" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#file-signature"></use></svg>Request for information</button>
+                        <button type="button" class="ld-chip" data-letter="inv" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shield-halved"></use></svg>Investigation</button>
+                        <button type="button" class="ld-chip" data-letter="einv" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#receipt"></use></svg>e-Invoice query</button>
+                    </div>
+                    <div class="ld-panels" aria-live="polite">
+                    <div class="ld-panel" data-panel="audit">
+                        <div class="ld-col"><p class="ld-k">What it usually means</p><p>LHDN has selected one or more of your returns for a tax audit, either a desk audit by letter or a field audit at your premises.</p></div>
+                        <div class="ld-col"><p class="ld-k">What to do this week</p><ol><li>Note the date, reference and officer named in the letter.</li><li>Gather records for the years listed: ledgers, bank statements, invoices, receipts.</li><li>Call your tax agent before you reply or agree a visit date.</li></ol></div>
+                        <div class="ld-col ld-due"><p class="ld-k">Deadline</p><p class="ld-dl">The reply or visit date stated in the letter.</p>
+                            <div class="ld-ctas"><a class="btn btn-primary btn-sm" href="https://wa.me/601130636198?text=Hi%20B%26K%2C%20I%20received%20an%20audit%20notice%20from%20LHDN%20dated%20...%20%28reference%20...%29.%20The%20reply%20date%20is%20..." target="_blank" rel="noopener">WhatsApp the letter details</a><a class="btn btn-outline btn-sm" href="contact.html?topic=audit#quote">Request a quote</a></div></div>
+                    </div>
+                    <div class="ld-panel" data-panel="ja" hidden>
+                        <div class="ld-col"><p class="ld-k">What it usually means</p><p>LHDN has assessed more tax than your return showed, often after an audit or review. The notice states the extra tax and any penalty.</p></div>
+                        <div class="ld-col"><p class="ld-k">What to do this week</p><ol><li>Check the years, amounts and penalty against your records.</li><li>Decide quickly whether to accept or appeal; an appeal is filed on Form Q.</li><li>Plan payment: the tax shown is generally still payable by its due date even if you appeal.</li></ol></div>
+                        <div class="ld-col ld-due"><p class="ld-k">Deadline</p><p class="ld-dl">An appeal on Form Q is due within 30 days of the notice date (s.99 ITA 1967).</p>
+                            <div class="ld-ctas"><a class="btn btn-primary btn-sm" href="https://wa.me/601130636198?text=Hi%20B%26K%2C%20I%20received%20a%20notice%20of%20additional%20assessment%20%28JA%29%20from%20LHDN%20dated%20...%20%28reference%20...%29.%20The%20reply%20date%20is%20..." target="_blank" rel="noopener">WhatsApp the letter details</a><a class="btn btn-outline btn-sm" href="contact.html?topic=audit#quote">Request a quote</a></div></div>
+                    </div>
+                    <div class="ld-panel" data-panel="info" hidden>
+                        <div class="ld-col"><p class="ld-k">What it usually means</p><p>LHDN wants explanations or documents on specific items in your return. It may be the start of a desk review.</p></div>
+                        <div class="ld-col"><p class="ld-k">What to do this week</p><ol><li>List exactly what is asked and for which year.</li><li>Prepare clear, complete answers with copies, never originals.</li><li>Keep a copy of everything you send and when.</li></ol></div>
+                        <div class="ld-col ld-due"><p class="ld-k">Deadline</p><p class="ld-dl">The reply date stated in the letter.</p>
+                            <div class="ld-ctas"><a class="btn btn-primary btn-sm" href="https://wa.me/601130636198?text=Hi%20B%26K%2C%20I%20received%20a%20request%20for%20information%20from%20LHDN%20dated%20...%20%28reference%20...%29.%20The%20reply%20date%20is%20..." target="_blank" rel="noopener">WhatsApp the letter details</a><a class="btn btn-outline btn-sm" href="contact.html?topic=audit#quote">Request a quote</a></div></div>
+                    </div>
+                    <div class="ld-panel" data-panel="inv" hidden>
+                        <div class="ld-col"><p class="ld-k">What it usually means</p><p>A tax investigation is more serious than an audit and can involve officers visiting and taking records.</p></div>
+                        <div class="ld-col"><p class="ld-k">What to do this week</p><ol><li>Contact your tax agent at once.</li><li>Speak to your tax agent or lawyer before giving statements.</li><li>Keep all records safe and unchanged.</li></ol></div>
+                        <div class="ld-col ld-due"><p class="ld-k">Deadline</p><p class="ld-dl">Act immediately; follow any dates stated by the officers.</p>
+                            <div class="ld-ctas"><a class="btn btn-primary btn-sm" href="https://wa.me/601130636198?text=Hi%20B%26K%2C%20I%20received%20an%20LHDN%20investigation%20letter%20from%20LHDN%20dated%20...%20%28reference%20...%29.%20The%20reply%20date%20is%20..." target="_blank" rel="noopener">WhatsApp the letter details</a><a class="btn btn-outline btn-sm" href="contact.html?topic=audit#quote">Request a quote</a></div></div>
+                    </div>
+                    <div class="ld-panel" data-panel="einv" hidden>
+                        <div class="ld-col"><p class="ld-k">What it usually means</p><p>LHDN is asking about e-Invoices in MyInvois, for example sales not e-invoiced, consolidated e-Invoices or self-billed cases.</p></div>
+                        <div class="ld-col"><p class="ld-k">What to do this week</p><ol><li>Reconcile MyInvois to your sales ledger for the period asked.</li><li>Prepare explanations for consolidated and self-billed transactions.</li><li>Reply by the stated date with the reconciliation attached.</li></ol></div>
+                        <div class="ld-col ld-due"><p class="ld-k">Deadline</p><p class="ld-dl">The reply date stated in the letter or e-mail.</p>
+                            <div class="ld-ctas"><a class="btn btn-primary btn-sm" href="https://wa.me/601130636198?text=Hi%20B%26K%2C%20I%20received%20an%20e-Invoice%20query%20from%20LHDN%20dated%20...%20%28reference%20...%29.%20The%20reply%20date%20is%20..." target="_blank" rel="noopener">WhatsApp the letter details</a><a class="btn btn-outline btn-sm" href="contact.html?topic=sst#quote">Request a quote</a></div></div>
+                    </div>
+                    </div>
+                    <p class="ld-fine">General guidance only, not advice on your case. Letters differ: always follow the dates and instructions in your own letter.</p>
+                </div>
+            </div>
+        </section>
+
         <section class="audit-story" id="audit-story" data-kind="as" aria-labelledby="as-title">
             <div class="as-pin">
                 <div class="container as-grid">
@@ -591,56 +631,56 @@
                 </div>
                 <div class="service-grid reveal-stagger">
                     <article class="service-card" id="tax">
-                        <div class="svc-icon"><i class="fas fa-file-invoice"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#file-invoice"></use></svg></div>
                         <h3>Corporate &amp; Individual Tax Compliance</h3>
                         <p>Form C, Form e-BE/B, CP204 estimates and revisions, withholding tax and capital allowance reviews.</p>
                         <ul><li>Tax computation review and sign-off</li><li>CP204 / CP204A monitoring</li><li>Withholding tax (s.107A, s.109, s.109B)</li></ul>
                         <p class="svc-ref">ITA 1967 s.77A, s.107C, s.113</p>
                     </article>
                     <article class="service-card" id="audit">
-                        <div class="svc-icon"><i class="fas fa-shield-halved"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#shield-halved"></use></svg></div>
                         <h3>Tax Audit &amp; Investigation</h3>
                         <p>Representation during desk and field audits, Jabatan Siasatan cases, Dispute Resolution Panel proceedings and SCIT appeals.</p>
                         <ul><li>Capital statement reconstruction</li><li>Penalty mitigation and voluntary disclosure</li><li>Form Q appeals and DRP submissions</li></ul>
                         <p class="svc-ref">ITA 1967 s.99, s.113(2), s.114; Tax Audit Framework</p>
                     </article>
                     <article class="service-card" id="planning">
-                        <div class="svc-icon"><i class="fas fa-chess"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#chess"></use></svg></div>
                         <h3>Tax Planning &amp; Restructuring</h3>
                         <p>Group structures, investment holding companies, shareholder remuneration, real property and share disposals.</p>
                         <ul><li>s.60F investment holding company planning</li><li>RPGT and capital gains tax on unlisted shares</li><li>Pre-IPO and succession structures</li></ul>
                         <p class="svc-ref">ITA 1967 s.60F, s.140; RPGT Act 1976</p>
                     </article>
                     <article class="service-card" id="sst">
-                        <div class="svc-icon"><i class="fas fa-receipt"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#receipt"></use></svg></div>
                         <h3>SST &amp; e-Invoice</h3>
                         <p>Registration, scope analysis, imported services, exemptions and MyInvois implementation controls.</p>
                         <ul><li>SST registration and return review</li><li>e-Invoice readiness and consolidated invoice policy</li><li>Self-billed and cross-border scenarios</li></ul>
                         <p class="svc-ref">Sales Tax Act 2018; Service Tax Act 2018; LHDN e-Invoice Guideline</p>
                     </article>
                     <article class="service-card" id="ma">
-                        <div class="svc-icon"><i class="fas fa-handshake"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#handshake"></use></svg></div>
                         <h3>M&amp;A Tax &amp; Due Diligence</h3>
                         <p>Buy-side and sell-side tax due diligence, deal structuring and post-acquisition integration of tax positions.</p>
                         <ul><li>Tax DD red-flag reports</li><li>Stamp duty and RPGT modelling</li><li>Share vs asset deal analysis</li></ul>
                         <p class="svc-ref">Stamp Act 1949; ITA 1967 Sch 3 controlled transfers</p>
                     </article>
                     <article class="service-card" id="cfo">
-                        <div class="svc-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#chart-line"></use></svg></div>
                         <h3>Fractional CFO &amp; Financial Review</h3>
                         <p>Monthly, quarterly and annual management accounts review with two outputs: a granular finance-team report and a board-level summary.</p>
                         <ul><li>Variance analysis and action tracking</li><li>Cash flow forecasting and covenant monitoring</li><li>Forensic review: red flags, related parties, anomalies</li></ul>
                         <p class="svc-ref">MFRS / MPERS; Companies Act 2016 s.245</p>
                     </article>
                     <article class="service-card" id="cosec">
-                        <div class="svc-icon"><i class="fas fa-building"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#building"></use></svg></div>
                         <h3>Company Secretarial</h3>
                         <p>Incorporation, statutory registers, annual returns, board resolutions and SSM compliance for Sdn Bhd and PLT entities.</p>
                         <ul><li>Annual return and financial statement lodgement</li><li>Share transfers and allotments</li><li>Beneficial ownership reporting</li></ul>
                         <p class="svc-ref">Companies Act 2016; LLP Act 2012</p>
                     </article>
                     <article class="service-card" id="ai">
-                        <div class="svc-icon"><i class="fas fa-robot"></i></div>
+                        <div class="svc-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#robot"></use></svg></div>
                         <h3>AI in Finance Operations</h3>
                         <p>Design and deployment of AI automation for finance teams: document intake, reconciliations, review agents and reporting, kept in-tenant.</p>
                         <ul><li>Workflow design and control points</li><li>PDPA 2010 compliant architecture</li><li>Team enablement through the Academy</li></ul>
@@ -659,28 +699,28 @@
                 <div class="flow-track" aria-hidden="true"><span class="flow-fill"></span><span class="flow-token"></span></div>
                 <ol class="flow-steps">
                     <li class="tl-step" style="--i:0">
-                        <span class="tl-ic"><i class="fas fa-user-shield" aria-hidden="true"></i></span>
+                        <span class="tl-ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#user-shield"></use></svg></span>
                         <span class="tl-n">Step 1</span>
                         <h3>Confidential intake</h3>
                         <p>A 30-minute call to understand the facts, deadlines and documents. Engagement letters follow MIA and CTIM requirements.</p>
                         <span class="st-chip st-info"><i></i>Confidential</span>
                     </li>
                     <li class="tl-step" style="--i:1">
-                        <span class="tl-ic"><i class="fas fa-file-signature" aria-hidden="true"></i></span>
+                        <span class="tl-ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#file-signature"></use></svg></span>
                         <span class="tl-n">Step 2</span>
                         <h3>Scope and fee</h3>
                         <p>Fixed fees for compliance and secretarial work. Audit and investigation matters are scoped in phases with capped estimates.</p>
                         <span class="st-chip st-wait"><i></i>Your go-ahead</span>
                     </li>
                     <li class="tl-step" style="--i:2">
-                        <span class="tl-ic"><i class="fas fa-check-double" aria-hidden="true"></i></span>
+                        <span class="tl-ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#check-double"></use></svg></span>
                         <span class="tl-n">Step 3</span>
                         <h3>Delivery</h3>
                         <p>Deliverables are reviewed by a licensed tax agent before release. You receive position papers, not just numbers.</p>
                         <span class="st-chip st-ready"><i></i>Agent-reviewed</span>
                     </li>
                     <li class="tl-step" style="--i:3">
-                        <span class="tl-ic"><i class="fas fa-calendar-check" aria-hidden="true"></i></span>
+                        <span class="tl-ic"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#calendar-check"></use></svg></span>
                         <span class="tl-n">Step 4</span>
                         <h3>Ongoing monitoring</h3>
                         <p>Deadline calendar, LHDN correspondence tracking and quarterly check-ins for retained clients.</p>
@@ -706,6 +746,7 @@
     <div id="footer-container"></div>
     <div id="chatbot-container"></div>
     <script src="js/i18n.js"></script>
+    <script src="js/icons.js"></script>
 
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>

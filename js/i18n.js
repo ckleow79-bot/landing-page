@@ -149,6 +149,11 @@
     if (lang !== 'zh') return;
 
     document.documentElement.lang = 'zh-Hans';
+    // Chinese headings: Noto Sans SC from Google Fonts (sliced by unicode-range, only needed glyphs download)
+    const gf = document.createElement('link');
+    gf.rel = 'stylesheet';
+    gf.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;800&display=swap';
+    document.head.appendChild(gf);
     // synchronous load so the page is translated before animations measure it
     try {
         const xhr = new XMLHttpRequest();

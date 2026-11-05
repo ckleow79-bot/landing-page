@@ -1,7 +1,7 @@
-# Netlify configuration for bkcorporate.com (static site, no build step)
+# Netlify configuration for bkcorporate.com (static site; the only build step bundles css/ into css/site.css)
 [build]
   publish = "."
-  command = ""
+  command = "python3 tools/bundle-css.py"
 
 # Clean URLs: /programmes -> /programmes.html
 [[redirects]]

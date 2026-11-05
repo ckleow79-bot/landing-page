@@ -7,22 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B &amp; K Group | Tax Advisory, Fractional CFO &amp; Professional Training, Kuala Lumpur</title>
     <meta name="description" content="Licensed tax agent (s.153 ITA 1967), fractional CFO services and CPD training from an HRD Corp registered training provider. B &amp; K Advisory PLT, B &amp; K Academy PLT, B &amp; K Training Services PLT, High Impact Training Services PLT.">
-    <link rel="stylesheet" href="css/tokens/fonts.css">
-    <link rel="stylesheet" href="css/tokens/colors.css">
-    <link rel="stylesheet" href="css/tokens/typography.css">
-    <link rel="stylesheet" href="css/tokens/spacing.css">
-    <link rel="stylesheet" href="css/tokens/theme-dark.css">
-    <link rel="stylesheet" href="css/tokens/signature.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pages.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/chatbot.css">
-    <link rel="stylesheet" href="css/cinematic.css">
-    <link rel="stylesheet" href="css/brand.css">
-    <link rel="stylesheet" href="css/audit-story.css">
-    <link rel="stylesheet" href="css/features.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" href="assets/fonts/bricolage-grotesque-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/public-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
 
     <meta property="og:title" content="B &amp; K Group | Tax Advisory, Fractional CFO &amp; Professional Training, Kuala Lumpur">
     <meta property="og:description" content="Licensed tax agent (s.153 ITA 1967), fractional CFO services and CPD training from an HRD Corp registered training provider. B &amp; K Advisory PLT, B &amp; K Academy PLT, B &amp; K Training Services PLT, High Impact Training Services PLT.">
@@ -82,7 +69,7 @@
     <main>
         <!-- Cinematic Hero -->
         <section class="hero-cine" id="hero" data-theme-dark>
-            <div class="hero-layer layer-photo"><picture><source media="(max-width: 767px)" srcset="assets/images/training/hall-packed-800.webp"><img src="assets/images/training/hall-packed.webp" alt="" width="1600" height="900" fetchpriority="high"></picture></div>
+            <div class="hero-layer layer-photo"><picture><source media="(max-width: 767px)" type="image/avif" srcset="assets/images/training/hall-packed-800.avif"><source media="(max-width: 767px)" srcset="assets/images/training/hall-packed-800.webp"><source type="image/avif" srcset="assets/images/training/hall-packed.avif"><img src="assets/images/training/hall-packed.webp" alt="" width="1600" height="900" fetchpriority="high"></picture></div>
             <div class="hero-layer layer-shade"></div>
             <div class="hero-layer layer-grid"></div>
             <div class="hero-layer layer-orb"></div>
@@ -111,12 +98,12 @@
         <!-- Trust strip -->
         <div class="trust-strip" data-theme-dark>
             <div class="marquee">
-                <span><i class="fas fa-circle"></i>Licensed Tax Agent s.153 ITA 1967</span>
-                <span><i class="fas fa-circle"></i>MIA · CTIM · MACS · MFPC</span>
-                <span><i class="fas fa-circle"></i>HRD Corp Registered Training Provider</span>
-                <span><i class="fas fa-circle"></i>20+ Years in Tax Practice</span>
-                <span><i class="fas fa-circle"></i>English &amp; Mandarin Delivery</span>
-                <span><i class="fas fa-circle"></i>IPA Australia · IFA UK · ASEAN CPA</span>
+                <span><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle"></use></svg>Licensed Tax Agent s.153 ITA 1967</span>
+                <span><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle"></use></svg>MIA · CTIM · MACS · MFPC</span>
+                <span><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle"></use></svg>HRD Corp Registered Training Provider</span>
+                <span><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle"></use></svg>20+ Years in Tax Practice</span>
+                <span><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle"></use></svg>English &amp; Mandarin Delivery</span>
+                <span><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#circle"></use></svg>IPA Australia · IFA UK · ASEAN CPA</span>
             </div>
         </div>
 
@@ -142,7 +129,7 @@
                             <div class="ph-screen is-on" data-screen="0">
                                 <p class="ph-title">Tax audit file</p>
                                 <ul class="ph-rows"><li><span>Audit notice received</span><span class="st-chip st-info"><i></i>Day 0</span></li><li><span>Records gathered</span><span class="st-chip st-wait"><i></i>In progress</span></li><li><span>Position paper</span><span class="st-chip st-wait"><i></i>Agent drafting</span></li><li><span>Meeting with the officer</span><span class="st-chip st-ready"><i></i>Represented</span></li></ul>
-                                <a class="btn btn-primary btn-sm ph-cta" href="advisory.html#audit-story">Advisory for SME owners</a>
+                                <a class="btn btn-primary btn-sm ph-cta" href="advisory.html#letter-decoder">Decode your LHDN letter</a>
                             </div>
                             <div class="ph-screen" data-screen="1">
                                 <p class="ph-title">Month-end review</p>
@@ -172,14 +159,6 @@
         </section>
 
 
-        <!-- ===== Iris photo stage ===== -->
-        <section class="stage-iris" aria-labelledby="si-title">
-            <div class="si-pin">
-                <div class="si-photo"><picture><source media="(max-width: 767px)" srcset="assets/images/training/auditorium-800.webp"><img src="assets/images/training/auditorium.webp" alt="A full auditorium at a B &amp; K public seminar" loading="lazy" width="1600" height="860"></picture></div>
-                <h2 class="si-title" id="si-title">Taught by people who still do the work.</h2>
-                <p class="si-cap"><span>Public seminars</span><span>In-house workshops</span><span>English &amp; Mandarin</span></p>
-            </div>
-        </section>
 
         <!-- ===== Audit teaser ===== -->
         <section class="audit-teaser" aria-labelledby="at-title">
@@ -224,7 +203,7 @@
                     <div class="pillars-track">
                         <article class="pillar pillar-advisory">
                             <span class="pillar-index">01</span>
-                            <i class="fas fa-scale-balanced pillar-icon"></i>
+                            <svg class="ic pillar-icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#scale-balanced"></use></svg>
                             <p class="pillar-entity">B &amp; K Advisory PLT</p>
                             <h3>Tax &amp; Corporate Advisory</h3>
                             <p>Compliance, planning, audit defence and corporate secretarial work for Malaysian SMEs, groups and investment holding companies.</p>
@@ -237,7 +216,7 @@
                         </article>
                         <article class="pillar pillar-academy">
                             <span class="pillar-index">02</span>
-                            <i class="fas fa-graduation-cap pillar-icon"></i>
+                            <svg class="ic pillar-icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#graduation-cap"></use></svg>
                             <p class="pillar-entity">B &amp; K Academy PLT</p>
                             <h3>Professional Education</h3>
                             <p>CPD/CPE programmes for accountants, tax practitioners, CFOs and financial planners, including the MFPC RFP Capstone Tax Module.</p>
@@ -250,7 +229,7 @@
                         </article>
                         <article class="pillar pillar-training">
                             <span class="pillar-index">03</span>
-                            <i class="fas fa-chalkboard-user pillar-icon"></i>
+                            <svg class="ic pillar-icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#chalkboard-user"></use></svg>
                             <p class="pillar-entity">B &amp; K Training Services PLT</p>
                             <h3>Seminars &amp; Webinars</h3>
                             <p>HRD Corp registered training provider for public seminars and webinars on the year's tax developments: post-Budget analysis, e-Invoice, SST and LHDN practice.</p>
@@ -263,7 +242,7 @@
                         </article>
                         <article class="pillar pillar-high-impact">
                             <span class="pillar-index">04</span>
-                            <i class="fas fa-bolt pillar-icon"></i>
+                            <svg class="ic pillar-icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#bolt"></use></svg>
                             <p class="pillar-entity">Training partner · High Impact</p>
                             <h3>Nationwide Public Seminars</h3>
                             <p>One-day seminars delivered by Keith Leow across Malaysia: e-Invoice Latest Update, Income Tax Audit, Corporate Tax and Employer LHDN obligations. HRD Corp claimable sessions are marked on the programme list.</p>
@@ -319,7 +298,7 @@
                         <p class="hero-kicker" style="color:var(--secondary-dark)">Seminars &amp; programmes</p>
                         <h2>Next on the calendar</h2>
                     </div>
-                    <a href="programmes.html" class="btn btn-outline">Full programme calendar <i class="fas fa-arrow-right"></i></a>
+                    <a href="programmes.html" class="btn btn-outline">Full programme calendar <svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#arrow-right"></use></svg></a>
                 </div>
                 <div class="prog-grid" data-programmes="featured" data-limit="3">
                     <p class="prog-empty">Loading programmes…</p>
@@ -356,7 +335,7 @@
                 </div>
                 <div class="cta-actions">
                     <a href="contact.html" class="btn btn-primary btn-large btn-magnetic">Book a consultation</a>
-                    <a href="https://wa.me/601130636198" class="btn btn-ghost btn-large btn-magnetic" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="https://wa.me/601130636198" class="btn btn-ghost btn-large btn-magnetic" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#whatsapp"></use></svg> WhatsApp</a>
                 </div>
             </div>
         </section>
@@ -365,6 +344,7 @@
     <div id="footer-container"></div>
     <div id="chatbot-container"></div>
     <script src="js/i18n.js"></script>
+    <script src="js/icons.js"></script>
 
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>
