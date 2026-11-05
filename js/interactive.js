@@ -88,6 +88,14 @@
         document.querySelectorAll('.letter-decoder').forEach(root => {
             const chips = [...root.querySelectorAll('.ld-chip')];
             const panels = [...root.querySelectorAll('.ld-panel')];
+            // WhatsApp text in the visitor's language
+            if (zh) {
+                const zhType = { audit: '审计通知', ja: '额外估税通知（JA）', info: '资料索取信', inv: '税务调查信', einv: '电子发票查询' };
+                root.querySelectorAll('.ld-panel').forEach(p => {
+                    const a = p.querySelector('a[href^="https://wa.me/"]');
+                    if (a) a.href = 'https://wa.me/601130636198?text=' + encodeURIComponent('您好 B&K，我收到 LHDN 的' + (zhType[p.dataset.panel] || '来信') + '，日期 …，参考编号 …，回复期限 …。');
+                });
+            }
             chips.forEach(c => c.addEventListener('click', () => {
                 chips.forEach(x => { const on = x === c; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
                 panels.forEach(p => { p.hidden = p.dataset.panel !== c.dataset.letter; });

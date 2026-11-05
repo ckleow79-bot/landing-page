@@ -28,7 +28,7 @@
                   T('We reply the same business day.', '我们会在同一个工作日内回复。')],
             links: [
                 ['advisory.html#letter-decoder', T('Decode your letter', '解读您的来信')],
-                [wa('Hi B & K, I received an LHDN letter dated ... (ref ...).'), T('WhatsApp us', 'WhatsApp 我们'), true],
+                [wa(T('Hi B & K, I received an LHDN letter dated ... (ref ...).', '您好 B&K，我收到 LHDN 来信，日期 …，参考编号 …。')), T('WhatsApp us', 'WhatsApp 我们'), true],
                 ['contact.html?topic=audit#quote', T('Request a quote', '索取报价')],
                 ['advisory.html#audit-check', T('1-minute audit check', '1分钟审计自我检测')]
             ]
@@ -67,7 +67,7 @@
             say: [T('Monday to Friday, 9:00 to 18:00. We reply the same business day.', '星期一至五，上午9时至下午6时。我们会在同一个工作日内回复。')],
             links: [
                 ['tel:+601130636198', T('Call +60 11-3063 6198', '致电 +60 11-3063 6198')],
-                [WA, T('WhatsApp', 'WhatsApp'), true],
+                [wa(T('Hi B & K, I would like to ask about ...', '您好 B&K，我想询问 …')), T('WhatsApp', 'WhatsApp'), true],
                 ['mailto:keith@bkcorporate.com', T('Email us', '电邮联系')]
             ]
         })

@@ -195,7 +195,43 @@
         v.load();
     }
 
+    /* clients bar pause button (WCAG 2.2.2) */
+    function initClientsBar() {
+        document.querySelectorAll('.clients-bar').forEach(bar => {
+            const b = bar.querySelector('.cb-pause');
+            if (!b) return;
+            b.addEventListener('click', () => {
+                const paused = bar.classList.toggle('is-paused');
+                b.setAttribute('aria-pressed', paused ? 'true' : 'false');
+                b.textContent = paused ? (window.BKi18n && BKi18n.lang === 'zh' ? '播放' : 'Play') : (window.BKi18n && BKi18n.lang === 'zh' ? '暂停' : 'Pause');
+            });
+        });
+    }
+
+    /* arriving with #section from another page: pinned sections and late layout can leave
+       the browser at the top, so scroll to the target once the page has settled */
+    function initHashLanding() {
+        if (!location.hash || location.hash.length < 2) return;
+        let target;
+        try { target = document.querySelector(location.hash); } catch (e) { return; }
+        if (!target) return;
+        const go = () => {
+            if (window.ScrollTrigger) ScrollTrigger.refresh();
+            const offset = (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ribbon-h'), 10) || 0) + 96;
+            const y = target.getBoundingClientRect().top + window.scrollY - offset;
+            if (window.BKMotion && window.BKMotion.lenis) window.BKMotion.lenis.scrollTo(y, { immediate: true });
+            else window.scrollTo(0, y);
+        };
+        // aim again after late images and pinned sections settle, unless the visitor has started scrolling
+        let userMoved = false;
+        ['wheel', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, () => { userMoved = true; }, { once: true, passive: true }));
+        const run = () => { [450, 1300, 2600].forEach(t => setTimeout(() => { if (!userMoved) go(); }, t)); };
+        if (document.readyState === 'complete') run(); else window.addEventListener('load', run, { once: true });
+    }
+
     function boot() {
+        initHashLanding();
+        initClientsBar();
         initTransitions();
         if (reduce) return;
         initHeroVideo();

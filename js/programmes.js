@@ -16,7 +16,7 @@
 
     const PROVIDERS = {
         'bk-training': { name: 'B & K Training Services PLT', short: 'B & K Training' },
-        'high-impact': { name: 'High Impact Training Services', short: 'High Impact' },
+        'high-impact': { name: 'High Impact Training Services PLT', short: 'High Impact' },
         'bk-academy': { name: 'B & K Academy PLT', short: 'B & K Academy' }
     };
 
@@ -30,13 +30,15 @@
     let cache = null;
 
     async function fetchFromSupabase() {
+        if (window.BKSupabaseReady) { try { await window.BKSupabaseReady; } catch (e) { /* ignore */ } }
         if (!window.supabaseClient || typeof window.supabaseClient.from !== 'function') return null;
         try {
-            const { data, error } = await window.supabaseClient
+            const timeout = new Promise(res => setTimeout(() => res({ data: null, error: 'timeout' }), 1500));
+            const { data, error } = await Promise.race([window.supabaseClient
                 .from('programmes')
                 .select('*')
                 .eq('published', true)
-                .order('start_date', { ascending: true });
+                .order('start_date', { ascending: true }), timeout]);
             if (error || !data || !data.length) return null;
             return data;
         } catch (e) {
@@ -56,6 +58,10 @@
         let list = await fetchFromSupabase();
         let source = 'supabase';
         if (!list) { list = await fetchFromJson(); source = 'json'; }
+        else {
+            // keep the published history: past sessions from the JSON file that the database does not hold
+            try { const json = await fetchFromJson(); const have = new Set(list.map(p => p.slug)); list = list.concat(json.filter(p => p.status === 'past' && !have.has(p.slug))); } catch (e) { /* ignore */ }
+        }
         const now = Date.now();
         list = list.map(p => {
             const end = new Date(p.end_date || p.start_date).getTime();
@@ -70,6 +76,9 @@
     function escapeHtml(s) {
         return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
+
+    // only https links from the data source are allowed on cards
+    const safeUrl = u => (/^https:\/\//i.test(String(u || '').trim()) ? String(u).trim() : '');
 
     function dateRange(p) {
         const s = new Date(p.start_date), e = new Date(p.end_date || p.start_date);
@@ -101,8 +110,8 @@
         const highlights = (Array.isArray(p.highlights) ? p.highlights : []).slice(0, compact ? 0 : 4)
             .map(h => `<li>${escapeHtml(h)}</li>`).join('');
         const canRegister = p.status === 'upcoming';
-        const regBtn = p.register_url
-            ? `<a class="btn btn-primary btn-sm" href="${escapeHtml(p.register_url)}" target="_blank" rel="noopener">Register</a>`
+        const regBtn = safeUrl(p.register_url)
+            ? `<a class="btn btn-primary btn-sm" href="${escapeHtml(safeUrl(p.register_url))}" target="_blank" rel="noopener">Register</a>`
             : `<button class="btn btn-primary btn-sm" data-register="${escapeHtml(p.slug)}" ${canRegister ? '' : 'disabled'}>${canRegister ? (p.provider === 'external' ? 'Enquire' : 'Register') : 'Closed'}</button>`;
         return `
         <article class="prog-card reveal" data-provider="${escapeHtml(p.provider)}" data-category="${escapeHtml(p.category)}" data-status="${p.status}" data-slug="${escapeHtml(p.slug)}">
@@ -121,18 +130,20 @@
                 <h3 class="prog-title" data-i18n-skip>${escapeHtml(p.title)}</h3>
                 ${p.subtitle ? `<p class="prog-subtitle" data-i18n-skip>${escapeHtml(p.subtitle)}</p>` : ''}
                 <ul class="prog-facts">
-                    <li><i class="far fa-calendar"></i> ${dateRange(p)}, ${fmtTime.format(s)}</li>
+                    <li><i class="far fa-calendar"></i> ${dateRange(p)}, ${fmtTime.format(s)}${p.end_date ? ' – ' + fmtTime.format(new Date(p.end_date)) : ''}</li>
                     <li><i class="fas fa-map-marker-alt"></i> ${escapeHtml(p.mode || '')}${p.venue ? ' · ' + escapeHtml(p.venue) : ''}</li>
                     ${p.cpd_hours ? `<li><i class="fas fa-certificate"></i> ${p.cpd_hours} CPD hours</li>` : ''}
                     ${p.language ? `<li><i class="fas fa-language"></i> ${escapeHtml(p.language)}</li>` : ''}
                 </ul>
                 ${highlights ? `<ul class="prog-highlights" data-i18n-skip>${highlights}</ul>` : ''}
+                ${p.includes && p.status !== 'past' ? `<p class="prog-includes"><strong>Fee includes:</strong> ${escapeHtml(p.includes)}</p>` : ''}
+                ${p.hrdc_claimable && p.status !== 'past' ? `<p class="prog-tp">HRD Corp training provider: <strong>${escapeHtml(prov.name)}</strong></p>` : ''}
             </div>
             <div class="prog-aside">
                 ${feeLine(p)}
                 <div class="prog-actions">
                     ${regBtn}
-                    ${p.brochure_url ? `<a class="btn btn-outline btn-sm" href="${escapeHtml(p.brochure_url)}" target="_blank" rel="noopener">Brochure</a>` : ''}
+                    ${safeUrl(p.brochure_url) ? `<a class="btn btn-outline btn-sm" href="${escapeHtml(safeUrl(p.brochure_url))}" target="_blank" rel="noopener">Brochure</a>` : ''}
                     <button class="btn-link" data-ics="${escapeHtml(p.slug)}"><i class="far fa-calendar-plus"></i> Add to calendar</button>
                 </div>
             </div>
@@ -188,6 +199,7 @@
                 (state.category === 'all' || p.category === state.category) &&
                 (state.when === 'past' ? p.status === 'past' : p.status !== 'past')
             );
+            if (state.when === 'past') items.sort((a, b) => b._start - a._start);
             container.innerHTML = items.length
                 ? items.map(p => card(p, false)).join('')
                 : '<p class="prog-empty">No programmes match this filter yet. Register your interest and we will notify you when one is scheduled.</p>';
@@ -205,13 +217,15 @@
         m.className = 'prog-modal';
         m.setAttribute('role', 'dialog');
         m.setAttribute('aria-modal', 'true');
+        m.setAttribute('aria-labelledby', 'prog-modal-title');
         m.innerHTML = `
         <div class="prog-modal-backdrop" data-close></div>
         <div class="prog-modal-card">
             <button class="prog-modal-close" data-close aria-label="Close"><i class="fas fa-times"></i></button>
-            <p class="prog-modal-kicker">Register interest</p>
-            <h3 class="prog-modal-title"></h3>
+            <p class="prog-modal-kicker">Register</p>
+            <h3 class="prog-modal-title" id="prog-modal-title"></h3>
             <p class="prog-modal-sub"></p>
+            <div class="prog-modal-recap"></div>
             <form class="prog-form" novalidate>
                 <input type="hidden" name="programme_slug">
                 <input type="hidden" name="programme_title">
@@ -227,8 +241,9 @@
                     <div class="form-group"><label>Designation</label><input aria-label="Designation" name="designation" autocomplete="organization-title"></div>
                     <div class="form-group"><label>No. of participants</label><input aria-label="No. of participants" type="number" name="pax" min="1" max="50" value="1"></div>
                 </div>
+                <div class="form-group prog-others"><label>Other attendees</label><textarea aria-label="Other attendees" name="attendees" rows="3" placeholder="One per line: name, email, designation"></textarea></div>
                 <div class="form-group"><label>Message</label><textarea aria-label="Message" name="message" rows="3" placeholder="Invoice details, HRD Corp grant reference, dietary needs..."></textarea></div>
-                <label class="prog-check"><input type="checkbox" name="hrdc_claim"> We intend to claim under HRD Corp</label>
+                <label class="prog-check prog-hrdc-check"><input type="checkbox" name="hrdc_claim"> We intend to claim under HRD Corp</label>
                 <label class="prog-check"><input type="checkbox" name="consent_pdpa" required> I consent to B &amp; K Group processing my personal data to administer this registration, in line with the <a href="privacy-policy.html" target="_blank">Privacy Notice</a> (PDPA 2010). *</label>
                 <button type="submit" class="btn btn-primary btn-full">Submit registration</button>
                 <div class="form-message" aria-live="polite"></div>
@@ -236,19 +251,38 @@
         </div>`;
         document.body.appendChild(m);
         m.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('keydown', e => {
+            if (!m.classList.contains('is-open')) return;
+            if (e.key === 'Escape') { closeModal(); return; }
+            if (e.key !== 'Tab') return;
+            const f = [...m.querySelectorAll('button, [href], input:not([type=hidden]), textarea, select')].filter(x => !x.disabled && x.offsetParent !== null);
+            if (!f.length) return;
+            if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+            else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+        });
         m.querySelector('form').addEventListener('submit', submitRegistration);
         return m;
     }
 
+    let lastTrigger = null;
     function openModal(p) {
+        lastTrigger = document.activeElement;
         const m = ensureModal();
+        m._prog = p;
         m.querySelector('.prog-modal-title').textContent = p.title;
         m.querySelector('.prog-modal-sub').textContent = `${dateRange(p)} · ${p.mode || ''}${p.venue ? ' · ' + p.venue : ''}`;
         const f = m.querySelector('form');
         f.reset();
         f.programme_slug.value = p.slug;
         f.programme_title.value = p.title;
+        const recap = m.querySelector('.prog-modal-recap');
+        recap.textContent = '';
+        const add = (label, val) => { if (!val) return; const r = document.createElement('p'); const b = document.createElement('strong'); b.textContent = label + ' '; r.append(b, document.createTextNode(val)); recap.appendChild(r); };
+        add('Fee:', p.fee_myr != null ? fmtMYR.format(p.fee_myr) + ' per participant' : '');
+        add('Includes:', p.includes || '');
+        add('HRD Corp training provider:', p.hrdc_claimable ? (PROVIDERS[p.provider] || {}).name : '');
+        m.querySelector('.prog-hrdc-check').hidden = p.provider === 'external';
+        m.querySelector('.prog-modal-kicker').textContent = p.provider === 'external' ? 'Enquire' : 'Register';
         f.querySelector('.form-message').textContent = '';
         f.querySelector('.form-message').className = 'form-message';
         m.classList.add('is-open');
@@ -260,6 +294,7 @@
         if (!m) return;
         m.classList.remove('is-open');
         document.body.style.overflow = '';
+        if (lastTrigger && document.contains(lastTrigger)) lastTrigger.focus();
     }
 
     async function submitRegistration(e) {
@@ -271,6 +306,10 @@
         data.hrdc_claim = !!f.hrdc_claim.checked;
         data.consent_pdpa = !!f.consent_pdpa.checked;
         data.pax = parseInt(data.pax || '1', 10);
+        const others = (data.attendees || '').trim();
+        delete data.attendees;
+        if (others) data.message = ('Other attendees:\n' + others + (data.message ? '\n\n' + data.message : '')).trim();
+        const p = (document.getElementById('prog-modal') || {})._prog || {};
         if (!data.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
             msg.textContent = 'Please enter your name and a valid email.'; msg.className = 'form-message error'; return;
         }
@@ -288,10 +327,17 @@
             btn.textContent = 'Submitted';
             if (typeof gtag === 'function') gtag('event', 'programme_register', { programme: data.programme_slug });
         } catch (err) {
-            const subject = encodeURIComponent(`Registration: ${data.programme_title}`);
-            const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || ''}\nCompany: ${data.company || ''}\nPax: ${data.pax}\nHRD Corp: ${data.hrdc_claim ? 'Yes' : 'No'}\n\n${data.message || ''}`);
-            msg.innerHTML = `We could not reach the registration service. <a href="mailto:keith@bkcorporate.com?subject=${subject}&body=${body}">Click here to email your registration instead</a>.`;
-            msg.className = 'form-message error';
+            const lines = [
+                'Programme registration from the B & K website',
+                `Programme: ${data.programme_title}`,
+                p.start_date ? `Date: ${dateRange(p)}, ${fmtTime.format(new Date(p.start_date))}` : '',
+                p.venue ? `Venue: ${p.venue}` : '',
+                `Name: ${data.name}`, `Email: ${data.email}`, data.phone ? `Phone: ${data.phone}` : '',
+                data.company ? `Company: ${data.company}` : '', data.designation ? `Designation: ${data.designation}` : '',
+                `Participants: ${data.pax}`, `HRD Corp claim: ${data.hrdc_claim ? 'Yes' : 'No'}`, '', data.message || ''
+            ];
+            if (window.BKFormFallback) window.BKFormFallback(msg, lines, `Registration: ${data.programme_title}`);
+            else { msg.textContent = 'We could not reach the registration service. Please email keith@bkcorporate.com or WhatsApp +60 11-3063 6198.'; msg.className = 'form-message error'; }
             btn.disabled = false; btn.textContent = 'Submit registration';
         }
     }
@@ -326,7 +372,7 @@
             return;
         }
         // live stat: number of upcoming public sessions (counted up by cinematic.js when it scrolls in)
-        const n = data.list.filter(p => p.status === 'upcoming').length;
+        const n = data.list.filter(p => p.status === 'upcoming' && p.provider !== 'external').length;
         counts.forEach(el => { el.dataset.count = n; if (!el.dataset.counting) el.textContent = n; });
         targets.forEach(t => t.getAttribute('data-programmes') === 'list' ? renderList(t, data.list) : renderFeatured(t, data.list));
         document.addEventListener('click', e => {

@@ -32,12 +32,13 @@
     </script>
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-container"></div>
-    <main>
+    <main id="main">
         <section class="page-hero-cine" data-theme-dark>
             <div class="container">
                 <p class="hero-kicker">Contact</p>
-                <h1 class="reveal-up">Request a quote from a licensed tax agent.</h1>
+                <h1 class="reveal-up">Request a quote for advisory or training.</h1>
                 <p class="reveal-up">Initial consultations are confidential. Please do not upload or paste sensitive documents here; we will arrange a secure channel.</p>
             </div>
         </section>
@@ -53,14 +54,14 @@
                         <div class="contact-item"><div class="contact-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#clock"></use></svg></div><div class="contact-details"><h3>Hours</h3><p>Mon to Fri, 9:00 to 18:00 (MYT)</p></div></div>
                     </div>
                     <div class="contact-form-container reveal-up" id="quote">
-                        <form class="contact-form" id="contact-form">
+                        <form class="contact-form" id="contact-form" novalidate>
                             <div class="form-row">
-                                <div class="form-group"><label for="contact-name">Full Name *</label><input type="text" id="contact-name" name="name" autocomplete="name" required></div>
-                                <div class="form-group"><label for="contact-email">Email Address *</label><input type="email" id="contact-email" name="email" autocomplete="email" required></div>
+                                <div class="form-group"><label for="contact-name">Full name *</label><input type="text" id="contact-name" name="name" autocomplete="name" required></div>
+                                <div class="form-group"><label for="contact-email">Email</label><input type="email" id="contact-email" name="email" autocomplete="email"></div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group"><label for="contact-company">Company</label><input type="text" id="contact-company" name="company" autocomplete="organization"></div>
-                                <div class="form-group"><label for="contact-phone">Phone</label><input type="tel" id="contact-phone" name="phone" autocomplete="tel"></div>
+                                <div class="form-group"><label for="contact-phone">Mobile / WhatsApp *</label><input type="tel" id="contact-phone" name="phone" autocomplete="tel" required placeholder="+60"></div>
                             </div>
                             <div class="form-group">
                                 <label for="contact-industry">What do you need help with?</label>
@@ -91,11 +92,22 @@
                                         <option value="planning">Planning ahead</option>
                                     </select></div>
                             </div>
+                            <fieldset class="inhouse-fields" id="inhouse-fields" hidden>
+                                <legend>In-house training details</legend>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="ih-pax">Number of participants</label><input type="number" id="ih-pax" name="ih_pax" min="2" max="50" inputmode="numeric" placeholder="2 to 50"></div>
+                                    <div class="form-group"><label for="ih-lang">Language of delivery</label><select id="ih-lang" name="ih_lang"><option value="">Select</option><option value="en">English</option><option value="bm">Bahasa Malaysia</option><option value="zh">Mandarin</option><option value="mixed">Mixed</option></select></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="ih-month">Preferred month</label><input type="month" id="ih-month" name="ih_month"></div>
+                                    <div class="form-group"><label for="ih-hrdc">Claim under HRD Corp?</label><select id="ih-hrdc" name="ih_hrdc"><option value="">Select</option><option value="yes">Yes, HRD Corp Claimable Courses</option><option value="no">No</option><option value="unsure">Not sure yet</option></select></div>
+                                </div>
+                            </fieldset>
                             <div class="form-group"><label for="contact-message">Message *</label><textarea id="contact-message" name="message" rows="5" required placeholder="Briefly describe the matter and any deadlines. No confidential documents, please."></textarea></div>
                             <label class="prog-check"><input type="checkbox" required> I consent to B &amp; K Group processing my personal data to respond to this enquiry, per the <a href="privacy-policy.html" target="_blank">Privacy Notice</a> (PDPA 2010). *</label>
                             <button type="submit" class="btn btn-primary btn-full">Request a quote</button>
                             <p class="form-promise"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#clock"></use></svg> We reply the same business day (Mon to Fri). Urgent LHDN deadline? <a href="https://wa.me/601130636198" target="_blank" rel="noopener">WhatsApp us</a>.</p>
-                            <div class="form-message" id="contact-message-status"></div>
+                            <div class="form-message" id="contact-message-status" aria-live="polite"></div>
                         </form>
                     </div>
                 </div>
@@ -110,7 +122,7 @@
                         <ul class="sa-list">
                             <li><strong>Advisory</strong> Meetings at our Segambut office, at your premises in the Klang Valley, or online for clients in other states.</li>
                             <li><strong>Public seminars</strong> Held in Kuala Lumpur and Selangor, Johor Bahru and Kuching, plus live webinars. See <a href="programmes.html">upcoming dates</a>.</li>
-                            <li><strong>In-house training</strong> Delivered at your office anywhere in Malaysia, in English or Mandarin.</li>
+                            <li><strong>In-house training</strong> Delivered at your office anywhere in Malaysia, in English, Bahasa Malaysia or Mandarin.</li>
                         </ul>
                     </div>
                     <div class="sa-map" data-map-src="https://www.google.com/maps?q=Residensi+Berpadu,+Jalan+Lang+Emas,+51200+Segambut,+Kuala+Lumpur&amp;output=embed">

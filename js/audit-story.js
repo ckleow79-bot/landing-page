@@ -210,7 +210,7 @@
         audit: [
             { min: 6, title: 'Audit-ready. Nicely done.', body: 'Your records look like they could answer an officer\'s questions on the spot. A periodic review keeps it that way as rules and your business change.' },
             { min: 4, title: 'Mostly there. A few loose receipts.', body: 'The foundations are in place, but the gaps you marked "No" are exactly where audit questions tend to start. They are usually quick to close with the right schedules and documents.' },
-            { min: 0, title: 'The shoebox is showing.', body: 'Several areas would be hard to explain if an audit letter arrived tomorrow. The good news: records can be rebuilt and reconciled before anyone asks. Better now than under a deadline.' }
+            { min: 0, title: 'The shoebox is showing.', body: 'Several areas would be hard to explain to a tax officer. The good news: records can be rebuilt and reconciled, even if the letter has already arrived. The sooner you start, the easier it is.' }
         ],
         einvoice: [
             { min: 6, title: 'Your e-Invoices and your books agree.', body: 'Sales, credit notes and self-billed cases all appear to flow through MyInvois and match the ledger. A periodic sample check keeps it that way as LHDN updates its guidelines.' },
