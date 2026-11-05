@@ -35,6 +35,11 @@ After changing page text:
 2. Add the new or changed strings to `data/i18n/zh.json` (`text` for plain strings, `html` for sentences that contain a link or highlight; keep the tags).
 3. Have the Chinese reviewed before publishing.
 
+## Motion
+`js/motion.js` adds page-to-page wipes, a scroll progress line, headings that rise word by word, card tilt, photo parallax and receipt confetti on a 6/6 self-check. All of it is skipped for visitors with "reduce motion" switched on.
+
+**Hero video:** put a short silent clip at `assets/video/hero.mp4` (10 to 20 s, 1920 px wide, under 6 MB, faces of participants blurred) and add `data-video="assets/video/hero.mp4"` to the `<section class="hero-cine">` in `index.html`. It plays over the photo on desktop only.
+
 ## Finance dashboard
 See `dashboard/README.md` for the Supabase warehouse schema, role-based RLS (owner / board / finance), AutoCount Cloud and on-premise ingestion, and Metabase setup.
 

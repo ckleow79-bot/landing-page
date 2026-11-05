@@ -241,6 +241,8 @@
             result.querySelector('.ac-msg-body').textContent = band.body;
             const wasHidden = result.hidden;
             result.hidden = false;
+            if (score === qs.length && result.dataset.cheered !== '1' && window.BKConfetti) { result.dataset.cheered = '1'; setTimeout(() => window.BKConfetti(result.querySelector('.ac-score')), 250); }
+            if (score < qs.length) result.dataset.cheered = '';
             if (wasHidden) {
                 if (hasGsap && !reduce) gsap.from(result, { opacity: 0, y: 16, scale: 0.98, duration: 0.45, ease: 'back.out(1.6)' });
                 if (typeof gtag === 'function') gtag('event', kind + '_check_complete', { score: score });
