@@ -1,56 +1,23 @@
 <div class="chatbot-container">
-    <!-- Chatbot Toggle Button -->
-    <button class="chatbot-toggle" aria-label="Open chat">
-        <div class="chatbot-icon">
-            <i class="fas fa-comments"></i>
-        </div>
-        <div class="chatbot-badge">1</div>
+    <button type="button" class="chatbot-toggle" aria-label="Open the B &amp; K assistant" aria-expanded="false" aria-controls="bk-chat">
+        <div class="chatbot-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
         <div class="chatbot-tooltip">How can we help?</div>
     </button>
-    
-    <!-- Chatbot Window -->
-    <div class="chatbot-window">
-        <!-- Chatbot Header -->
+
+    <div class="chatbot-window" id="bk-chat" role="dialog" aria-label="B &amp; K assistant">
         <div class="chatbot-header">
             <div class="chatbot-header-info">
-                <div class="chatbot-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
+                <div class="chatbot-avatar"><img src="assets/brand/mark-white.svg" alt="" width="24" height="24"></div>
                 <div class="chatbot-title">
                     <h4>B &amp; K Assistant</h4>
-                    <span class="chatbot-status">
-                        <span class="status-dot"></span>
-                        Online
-                    </span>
+                    <span class="chatbot-status"><span class="status-dot"></span>We reply the same business day</span>
                 </div>
             </div>
-            <button class="chatbot-close" aria-label="Close chat">
-                <i class="fas fa-times"></i>
-            </button>
+            <button type="button" class="chatbot-close" aria-label="Close the assistant"><i class="fas fa-times" aria-hidden="true"></i></button>
         </div>
-        
-        <!-- Chatbot Messages -->
-        <div class="chatbot-messages">
-            <!-- Messages will be dynamically added here -->
-        </div>
-        
-        <!-- Chatbot Input -->
+        <div class="chatbot-messages" aria-live="polite"></div>
         <div class="chatbot-input-area">
-            <form class="chatbot-input" onsubmit="return false;">
-                <input 
-                    type="text" 
-                    placeholder="Type your message..." 
-                    autocomplete="off"
-                    aria-label="Type your message"
-                >
-                <button type="button" class="chatbot-send" aria-label="Send message">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
-            <p class="chatbot-disclaimer">
-                <i class="fas fa-shield-alt"></i>
-                Confidential. Handled under PDPA 2010.
-            </p>
+            <p class="chatbot-disclaimer"><i class="fas fa-shield-alt" aria-hidden="true"></i> Guided answers only. Nothing you tap here is stored.</p>
         </div>
     </div>
 </div>

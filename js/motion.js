@@ -44,7 +44,7 @@
             e.preventDefault();
             try { sessionStorage.setItem(WIPE, '1'); } catch (err) { /* ignore */ }
             root.classList.add('wipe-leave');
-            setTimeout(() => { location.href = url.href; }, 520);
+            setTimeout(() => { location.href = url.href; }, 280);
         });
         // back/forward cache: never come back to a covered page
         window.addEventListener('pageshow', ev => { if (ev.persisted) root.classList.remove('wipe-leave', 'wipe-in', 'wipe-out'); });
@@ -202,6 +202,13 @@
         initProgress();
         const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
         initHeadings(io);
+        // trust-strip marquee pauses on hover / focus (WCAG 2.2.2)
+        if (hasGsap) document.querySelectorAll('.trust-strip').forEach(ts => {
+            const m = ts.querySelector('.marquee');
+            const set = p => gsap.getTweensOf(m).forEach(t => (p ? t.pause() : t.resume()));
+            ts.addEventListener('mouseenter', () => set(true)); ts.addEventListener('mouseleave', () => set(false));
+            ts.addEventListener('focusin', () => set(true)); ts.addEventListener('focusout', () => set(false));
+        });
         initCards(io);
         initParallax();
         if (hasGsap) ScrollTrigger.refresh();

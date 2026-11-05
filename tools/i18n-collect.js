@@ -7,7 +7,7 @@ const fs = require('fs');
   const b = await chromium.launch();
   const all = { text: {}, html: {} };
   for (const pg of pages) {
-    const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+    const p = await (await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' })).newPage(); // no word-splitting while collecting
     await p.goto(`http://localhost:5500/${pg}.html?i18n=collect`, { waitUntil: 'load' });
     await p.waitForTimeout(2500);
     const k = await p.evaluate(() => window.__i18nKeys());

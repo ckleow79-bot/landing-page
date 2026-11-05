@@ -289,13 +289,13 @@ html[data-lang="zh"] .st-chip { letter-spacing: .02em; }
 .page-wipe .pw-b { background: var(--bk-ink, #15213B); display: grid; place-items: center; }
 .page-wipe .pw-b img { width: 64px; height: 64px; opacity: 0; transform: scale(.7); transition: opacity .3s, transform .4s cubic-bezier(.2,.6,.3,1); }
 html.wipe-leave .page-wipe { pointer-events: auto; }
-html.wipe-leave .page-wipe .pw-a { transform: translateY(0); transition: transform .42s cubic-bezier(.7,0,.3,1); }
-html.wipe-leave .page-wipe .pw-b { transform: translateY(0); transition: transform .42s cubic-bezier(.7,0,.3,1) .08s; }
-html.wipe-leave .page-wipe .pw-b img { opacity: 1; transform: none; transition-delay: .3s; }
+html.wipe-leave .page-wipe .pw-a { transform: translateY(0); transition: transform .24s cubic-bezier(.7,0,.3,1); }
+html.wipe-leave .page-wipe .pw-b { transform: translateY(0); transition: transform .24s cubic-bezier(.7,0,.3,1) .05s; }
+html.wipe-leave .page-wipe .pw-b img { opacity: 1; transform: none; transition-delay: .15s; }
 html.wipe-in .page-wipe span { transform: translateY(0); }
 html.wipe-in .page-wipe .pw-b img { opacity: 1; transform: none; }
-html.wipe-in.wipe-out .page-wipe .pw-b { transform: translateY(-101%); transition: transform .6s cubic-bezier(.7,0,.3,1); }
-html.wipe-in.wipe-out .page-wipe .pw-a { transform: translateY(-101%); transition: transform .6s cubic-bezier(.7,0,.3,1) .1s; }
+html.wipe-in.wipe-out .page-wipe .pw-b { transform: translateY(-101%); transition: transform .45s cubic-bezier(.7,0,.3,1); }
+html.wipe-in.wipe-out .page-wipe .pw-a { transform: translateY(-101%); transition: transform .45s cubic-bezier(.7,0,.3,1) .06s; }
 html.wipe-in.wipe-out .page-wipe .pw-b img { opacity: 0; transition: opacity .2s; }
 /* safety: if scripts never run, the cover lifts by itself */
 html.wipe-in:not(.wipe-out) .page-wipe { animation: wipe-safety .01s 2.4s forwards; }
@@ -340,3 +340,67 @@ html[data-lang="zh"] .mw-i { transition-delay: calc(var(--w, 0) * 14ms); }
     .hero-cine .layer-photo img, .hero-cine .layer-shade::after { animation: none; }
     .page-wipe { display: none; }
 }
+.form-fallback { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .7rem; }
+
+/* ---------- Legal pages ---------- */
+.legal-doc { padding: 4rem 0 5rem; background: var(--surface-page); }
+.legal-body { max-width: 780px; margin: 0 auto; color: var(--text-body); line-height: 1.75; }
+.legal-body h2 { font-family: var(--font-display); font-weight: var(--fw-bold, 700); font-size: 1.3rem; color: var(--text-strong); margin: 2.2rem 0 .6rem; }
+.legal-body ul { padding-left: 1.2rem; } .legal-body li { margin: .35rem 0; }
+.legal-body a { color: var(--bk-blue); }
+.legal-body hr { margin: 3.5rem 0 2.5rem; border: 0; border-top: 2px dashed var(--border-base, #D6D3C9); }
+.legal-date { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ============================================================
+   AUDIT FIXES: contrast, reduced motion, phone layout, keyboard
+   ============================================================ */
+/* step numbers: ink on amber, not amber on amber */
+.story-step .n.bk-coin { color: var(--bk-ink, #15213B); }
+/* footer links on navy */
+.footer-contact a, .footer .footer-contact a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255,178,62,.6); text-underline-offset: 3px; }
+.footer-links a { color: rgba(255,255,255,.82); }
+/* small labels on light backgrounds */
+.prog-hrdc { color: #8A5300 !important; }
+.prog-source-note { color: var(--text-muted, #6B6658); }
+.chatbot-disclaimer, .message-time { color: #5E5A4F !important; }
+/* teal pillar: dark text for contrast */
+.pillar-training { color: var(--bk-ink, #15213B); }
+.pillar-training p, .pillar-training li, .pillar-training .pillar-entity, .pillar-training .pillar-index { color: rgba(21,33,59,.88); opacity: 1; }
+.pillar-training .btn { color: var(--bk-ink); border-color: rgba(21,33,59,.5); background: rgba(255,255,255,.35); }
+.pillar .pillar-entity, .pillar .pillar-index { opacity: .92; }
+
+/* reduced motion: show every story step and wrap the pillars instead of a sideways track */
+@media (prefers-reduced-motion: reduce) {
+    .story-step { opacity: 1 !important; }
+    .pillars-track { flex-wrap: wrap; transform: none !important; }
+    .pillar { flex: 1 1 min(460px, 100%); }
+    .marquee { animation: none !important; transform: none !important; flex-wrap: wrap; white-space: normal; justify-content: center; gap: 1rem 2rem; }
+}
+html:not(.has-gsap) .story-step { opacity: 1; }
+
+/* role ring on phones: fits inside the screen */
+#leadership { overflow-x: clip; }
+@media (max-width: 560px) {
+    .role-ring { --size: 300px; --r: 118px; }
+    .rr-card { width: 120px; padding: 10px 8px; }
+    .rr-sub { font-size: 9px; letter-spacing: .1em; }
+    .rr-item .st-chip { height: 24px; padding: 0 9px; font-size: 9.5px; letter-spacing: .05em; }
+}
+
+/* marquee pauses on hover and keyboard focus */
+.trust-strip:hover .marquee, .trust-strip:focus-within .marquee { animation-play-state: paused; }
+
+/* mobile menu: closed drawer is not reachable by keyboard or screen readers */
+@media (max-width: 991px) {
+    .nav-menu:not(.active) { visibility: hidden; transition: right var(--transition-normal, .3s), visibility 0s linear .3s; }
+    .nav-menu.active { visibility: visible; transition: right var(--transition-normal, .3s), visibility 0s; }
+}
+.mobile-menu-toggle { background: none; border: 0; }
+.mobile-menu-toggle:focus-visible { outline: 3px solid var(--focus-ring, #3457E5); outline-offset: 3px; border-radius: 8px; }
+.form-promise { margin: .8rem 0 0; font-size: .9rem; color: var(--text-body); } .form-promise a { color: var(--bk-blue); font-weight: 600; }
+
+/* chat messages stay visible (two older stylesheets clashed on the same keyframe name) */
+.chat-message { opacity: 1; transform: none; animation: bk-msg-in .4s cubic-bezier(.16,1,.3,1) both; }
+@keyframes bk-msg-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.quick-reply-btn.is-link { text-decoration: none; display: inline-flex; align-items: center; }
+@media (prefers-reduced-motion: reduce) { .chat-message { animation: none; } }

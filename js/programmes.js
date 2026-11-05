@@ -216,18 +216,18 @@
                 <input type="hidden" name="programme_slug">
                 <input type="hidden" name="programme_title">
                 <div class="form-row">
-                    <div class="form-group"><label>Full name *</label><input name="name" required autocomplete="name"></div>
-                    <div class="form-group"><label>Email *</label><input type="email" name="email" required autocomplete="email"></div>
+                    <div class="form-group"><label>Full name *</label><input aria-label="Full name" name="name" required autocomplete="name"></div>
+                    <div class="form-group"><label>Email *</label><input aria-label="Email" type="email" name="email" required autocomplete="email"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Mobile</label><input type="tel" name="phone" autocomplete="tel" placeholder="+60"></div>
-                    <div class="form-group"><label>Company</label><input name="company" autocomplete="organization"></div>
+                    <div class="form-group"><label>Mobile</label><input aria-label="Mobile" type="tel" name="phone" autocomplete="tel" placeholder="+60"></div>
+                    <div class="form-group"><label>Company</label><input aria-label="Company" name="company" autocomplete="organization"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Designation</label><input name="designation"></div>
-                    <div class="form-group"><label>No. of participants</label><input type="number" name="pax" min="1" max="50" value="1"></div>
+                    <div class="form-group"><label>Designation</label><input aria-label="Designation" name="designation" autocomplete="organization-title"></div>
+                    <div class="form-group"><label>No. of participants</label><input aria-label="No. of participants" type="number" name="pax" min="1" max="50" value="1"></div>
                 </div>
-                <div class="form-group"><label>Message</label><textarea name="message" rows="3" placeholder="Invoice details, HRD Corp grant reference, dietary needs..."></textarea></div>
+                <div class="form-group"><label>Message</label><textarea aria-label="Message" name="message" rows="3" placeholder="Invoice details, HRD Corp grant reference, dietary needs..."></textarea></div>
                 <label class="prog-check"><input type="checkbox" name="hrdc_claim"> We intend to claim under HRD Corp</label>
                 <label class="prog-check"><input type="checkbox" name="consent_pdpa" required> I consent to B &amp; K Group processing my personal data to administer this registration, in line with the <a href="privacy-policy.html" target="_blank">Privacy Notice</a> (PDPA 2010). *</label>
                 <button type="submit" class="btn btn-primary btn-full">Submit registration</button>

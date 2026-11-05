@@ -20,7 +20,7 @@
         root.classList.add('is-live');
         const btns = [...root.querySelectorAll('.hat')];
         const screens = [...root.querySelectorAll('.ph-screen')];
-        let current = 0;
+        let current = 0, userPicked = false;
         function set(i, user) {
             if (i === current && !user) return;
             current = i;
@@ -28,10 +28,10 @@
             screens.forEach((s, k) => s.classList.toggle('is-on', k === i));
             if (user && typeof gtag === 'function') gtag('event', 'hat_select', { hat: i });
         }
-        btns.forEach((b, i) => b.addEventListener('click', () => set(i, true)));
+        btns.forEach((b, i) => b.addEventListener('click', () => { userPicked = true; set(i, true); }));
         // desktop: the hat in the middle of the screen becomes active as you scroll
         if ('IntersectionObserver' in window && window.matchMedia('(min-width: 992px)').matches) {
-            const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(btns.indexOf(e.target)); }), { rootMargin: '-45% 0px -45% 0px' });
+            const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !userPicked) set(btns.indexOf(e.target)); }), { rootMargin: '-45% 0px -45% 0px' });
             btns.forEach(b => io.observe(b));
         }
         // accountant screen: next sessions from the live programme list

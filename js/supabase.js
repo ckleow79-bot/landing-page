@@ -184,7 +184,7 @@ function initContactForm() {
                     throw error;
                 }
                 
-                showFormMessage(messageEl, `Thank you, ${name}! Your message has been received. Our team will contact you within 24-48 hours.`, 'success');
+                showFormMessage(messageEl, `Thank you, ${name}! Your message has been received. We reply the same business day.`, 'success');
                 form.reset();
                 
                 // Trigger success animation
@@ -192,10 +192,8 @@ function initContactForm() {
                     showSuccessAnimation(form);
                 }
             } else {
-                // Fallback: Simulate submission for demo
-                console.log('Form data (Supabase not configured):', formData);
-                showFormMessage(messageEl, `Thank you, ${name}! Your message has been received. Our team will contact you within 24-48 hours.`, 'success');
-                form.reset();
+                // No database connection: never pretend it was sent. Offer WhatsApp / email with the text prefilled.
+                showContactFallback(messageEl, formData);
             }
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -208,11 +206,9 @@ function initContactForm() {
                 errorMessage = 'Some information you provided doesn\'t meet our requirements. Please check and try again.';
             } else if (!navigator.onLine) {
                 errorMessage = 'You appear to be offline. Please check your internet connection and try again.';
-            } else if (error.code) {
-                errorMessage = `Server error (${error.code}): Please try again later or contact us directly at info@yourcompany.com`;
             }
-            
-            showFormMessage(messageEl, errorMessage, 'error');
+            if (error.message === 'duplicate' || error.message === 'constraint') showFormMessage(messageEl, errorMessage, 'error');
+            else showContactFallback(messageEl, formData);
         } finally {
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
@@ -345,6 +341,33 @@ function initInvestorForm() {
 /**
  * Show Form Message
  */
+/**
+ * The form could not be sent: say so plainly and give one-tap alternatives
+ * (WhatsApp and email, with the enquiry prefilled). Stays visible.
+ */
+function showContactFallback(element, data) {
+    const zh = window.BKi18n && window.BKi18n.lang === 'zh';
+    const body = `Name: ${data.name}\nEmail: ${data.email}${data.phone ? '\nPhone: ' + data.phone : ''}${data.company ? '\nCompany: ' + data.company : ''}${data.industry ? '\nTopic: ' + data.industry : ''}\n\n${data.message}`;
+    element.textContent = '';
+    element.className = 'form-message error';
+    element.style.display = 'block';
+    const p = document.createElement('p');
+    p.textContent = zh ? '抱歉，表格暂时无法发送，您的信息尚未送出。请用以下方式联系我们（内容已帮您填好），我们会在同一个工作日内回复。'
+                       : 'Sorry, the form could not be sent and your message has NOT reached us. Please use one of these instead (your details are filled in). We reply the same business day.';
+    const row = document.createElement('div');
+    row.className = 'form-fallback';
+    const wa = document.createElement('a');
+    wa.className = 'btn btn-primary btn-sm'; wa.target = '_blank'; wa.rel = 'noopener';
+    wa.href = 'https://wa.me/601130636198?text=' + encodeURIComponent(body);
+    wa.textContent = 'WhatsApp';
+    const em = document.createElement('a');
+    em.className = 'btn btn-outline btn-sm';
+    em.href = 'mailto:keith@bkcorporate.com?subject=' + encodeURIComponent('Quote request from ' + data.name) + '&body=' + encodeURIComponent(body);
+    em.textContent = zh ? '电邮' : 'Email';
+    row.append(wa, em);
+    element.append(p, row);
+}
+
 function showFormMessage(element, message, type) {
     element.textContent = message;
     element.className = `form-message ${type}`;
@@ -356,31 +379,6 @@ function showFormMessage(element, message, type) {
     }, 5000);
 }
 
-/**
- * Save Chat Conversation
- */
-async function saveChatConversation(visitorId, messages) {
-    if (!supabaseClient) {
-        console.log('Chat conversation (Supabase not configured):', { visitorId, messages });
-        return;
-    }
-
-    try {
-        const { error } = await supabaseClient
-            .from('chat_conversations')
-            .upsert({
-                visitor_id: visitorId,
-                messages: JSON.stringify(messages),
-                updated_at: new Date().toISOString()
-            }, {
-                onConflict: 'visitor_id'
-            });
-
-        if (error) throw error;
-    } catch (error) {
-        console.error('Error saving chat:', error);
-    }
-}
 
 /**
  * Get Chat Conversation
