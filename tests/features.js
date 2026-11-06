@@ -19,7 +19,7 @@ const englishLeft = () => {
   await p.evaluate(() => document.getElementById('fees').scrollIntoView()); await p.waitForTimeout(800); await p.screenshot({ path: out + '/ms-fees.png' });
   await p.click('.lang-switch [data-lang-set="en"]'); await p.waitForLoadState('load'); await p.waitForTimeout(800);
   ok('switch back to English', await p.evaluate(() => document.documentElement.lang) === 'en' && !/lang=/.test(p.url()), p.url());
-  for (const lang of ['ms', 'zh']) for (const pg of ['index', 'advisory', 'academy', 'programmes', 'about', 'faq', 'contact', 'insights']) {
+  for (const lang of ['ms', 'zh']) for (const pg of ['index', 'advisory', 'academy', 'programmes', 'about', 'faq', 'contact', 'insights', 'tools']) {
     await p.goto(B + pg + '.html?lang=' + lang, { waitUntil: 'load' }); await p.waitForTimeout(1500);
     const e2 = await p.evaluate(englishLeft);
     ok(lang + ': ' + pg + ' translated', e2.length < 4, e2.length + ' ' + JSON.stringify(e2.slice(0, 4)));

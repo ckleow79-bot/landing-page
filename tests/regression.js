@@ -7,7 +7,7 @@ const B = 'http://localhost:5700/';
   // 1. sweep: errors + overflow + hidden-focusable count
   for (const vp of [{ w: 1440, h: 900, t: 'd' }, { w: 1024, h: 768, t: 't' }, { w: 390, h: 844, t: 'm', mobile: true }]) {
     const ctx = await b.newContext({ viewport: { width: vp.w, height: vp.h }, isMobile: !!vp.mobile, hasTouch: !!vp.mobile });
-    for (const pg of ['index', 'advisory', 'academy', 'programmes', 'insights', 'about', 'faq', 'contact', 'privacy-policy', 'cookie-policy', 'terms-of-service', '404']) {
+    for (const pg of ['index', 'advisory', 'academy', 'programmes', 'insights', 'about', 'faq', 'tools', 'contact', 'privacy-policy', 'cookie-policy', 'terms-of-service', '404']) {
       const p = await ctx.newPage(); const errs = [];
       p.on('pageerror', e => errs.push(e.message)); p.on('console', m => m.type() === 'error' && !/ERR_TUNNEL|net::|Failed to load resource/.test(m.text()) && errs.push(m.text()));
       await p.goto(B + pg + '.html', { waitUntil: 'load' }); await p.waitForTimeout(1200);

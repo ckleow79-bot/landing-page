@@ -810,3 +810,34 @@ html[data-lang="ms"] .nav-link { font-size: 14.5px; }
 .ins-case-story { background: #FFE9C7; color: #8A4B00; }
 .ins-ruling-story { background: #DDF4F1; color: #0B6F66; }
 @media (prefers-reduced-motion: reduce) { .ins-series-card { transition: none; } }
+
+/* Free tax tools page */
+.tl-jump { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.6rem; }
+.tl-sec { padding: var(--sec-y, 96px) 0; }
+.tl-alt { background: var(--surface-alt, rgba(21,33,59,.03)); }
+.tl-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; padding: 1.6rem; background: var(--surface-card); border: 1px solid var(--border-soft); border-radius: var(--r-lg); box-shadow: var(--shadow-xs); }
+.tl-form { display: grid; gap: 1rem; align-content: start; }
+.tl-form .form-group { margin: 0; display: grid; gap: .35rem; }
+.tl-form input, .tl-form select { width: 100%; min-height: 44px; padding: .6rem .8rem; border: 1px solid var(--border-soft); border-radius: 10px; background: var(--surface-card); color: var(--text-strong); font: inherit; }
+.tl-seg { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.tl-seg legend { width: 100%; margin-bottom: .5rem; font-weight: 700; color: var(--text-strong); }
+.tl-seg label { cursor: pointer; }
+.tl-seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tl-seg span { display: inline-block; padding: .5rem .95rem; border: 1.5px solid var(--border-soft); border-radius: 999px; font-weight: 600; transition: background .2s, border-color .2s, color .2s; }
+.tl-seg input:checked + span { background: var(--bk-ink, #15213B); border-color: var(--bk-ink, #15213B); color: #fff; }
+.tl-seg input:focus-visible + span { outline: 3px solid var(--bk-amber, #FFB23E); outline-offset: 2px; }
+.tl-result { padding: 1.2rem 1.3rem; border-radius: var(--r-md, 14px); background: var(--bk-ink, #15213B); color: #fff; align-self: start; }
+.tl-result .tl-k { margin: 0; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+.tl-total { margin: .2rem 0 .8rem; font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; color: var(--bk-amber, #FFB23E); font-variant-numeric: tabular-nums; }
+.tl-rows { list-style: none; margin: 0 0 .8rem; padding: 0; }
+.tl-rows li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .3rem 1rem; padding: .45rem 0; border-bottom: 1px dashed rgba(255,255,255,.2); font-size: .93rem; }
+.tl-rows b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.tl-note, .tl-empty { margin: .6rem 0 0; font-size: .88rem; opacity: .85; }
+.tl-dates { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; align-content: start; }
+.tl-dates li { display: grid; grid-template-columns: auto 1fr; gap: .1rem .9rem; padding: .7rem .9rem; border: 1px solid var(--border-soft); border-left: 4px solid var(--border-soft); border-radius: 10px; }
+.tl-dates li.is-soon { border-left-color: var(--bk-amber, #FFB23E); }
+.tl-dates time { font-weight: 700; color: var(--text-strong); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tl-dates em { grid-column: 2; font-style: normal; font-size: .85rem; opacity: .7; }
+.tl-source { margin-top: 1rem; font-size: .85rem; opacity: .75; max-width: 70ch; }
+@media (max-width: 860px) { .tl-card { grid-template-columns: minmax(0, 1fr); padding: 1.1rem; } }
+@media (max-width: 480px) { .tl-dates li { grid-template-columns: minmax(0, 1fr); } .tl-dates em { grid-column: 1; } }

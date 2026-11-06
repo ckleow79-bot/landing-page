@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" class="has-gsap">
+<head>
+    <meta charset="UTF-8">
+    <script>try{if(sessionStorage.getItem('bk-wipe')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('wipe-in')}catch(e){}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Tax Tools | B &amp; K Group: Stamp Duty Calculator and Tax Deadline Calendar</title>
+    <meta name="description" content="Free Malaysian stamp duty calculator for property transfers, loans and tenancy agreements, and a tax deadline calendar for companies, individuals and employers.">
+    <link rel="preload" href="assets/fonts/bricolage-grotesque-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/public-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
+
+    <meta property="og:title" content="Free Tax Tools | B &amp; K Group">
+    <meta property="og:description" content="Free Malaysian stamp duty calculator and tax deadline calendar.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bkcorporate.com/tools.html">
+    <meta property="og:image" content="https://bkcorporate.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Tax Tools | B &amp; K Group">
+    <meta name="twitter:description" content="Free Malaysian stamp duty calculator and tax deadline calendar.">
+    <meta name="twitter:image" content="https://bkcorporate.com/assets/images/og-image.jpg">
+    <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png">
+    <link rel="canonical" href="https://bkcorporate.com/tools.html">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="header-container"></div>
+    <main id="main">
+        <section class="page-hero-cine" data-theme-dark>
+            <div class="container">
+                <p class="hero-kicker">Free tax tools</p>
+                <h1 class="reveal-up">Quick answers you can work out yourself.</h1>
+                <p class="reveal-up">A stamp duty calculator and a tax deadline calendar. Free, no sign-up, and nothing you type leaves your browser.</p>
+                <div class="tl-jump">
+                    <a href="#stamp-duty" class="btn btn-primary">Stamp duty calculator</a>
+                    <a href="#deadlines" class="btn btn-outline">Tax deadline calendar</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="tl-sec" id="stamp-duty" aria-labelledby="sd-title">
+            <div class="container">
+                <div class="section-header">
+                    <p class="hero-kicker">Stamp duty calculator</p>
+                    <h2 class="section-title" id="sd-title">How much stamp duty will you pay?</h2>
+                    <p class="section-subtitle">For property transfers, loan agreements and tenancy agreements in Malaysia.</p>
+                </div>
+                <div class="tl-card">
+                    <form id="sd-form" class="tl-form" novalidate>
+                        <fieldset class="tl-seg">
+                            <legend>What are you stamping?</legend>
+                            <label><input type="radio" name="sd-kind" value="transfer" checked> <span>Property transfer</span></label>
+                            <label><input type="radio" name="sd-kind" value="loan"> <span>Loan agreement</span></label>
+                            <label><input type="radio" name="sd-kind" value="tenancy"> <span>Tenancy agreement</span></label>
+                        </fieldset>
+                        <div data-for="transfer">
+                            <div class="form-group"><label for="sd-price">Purchase price (RM)</label><input type="text" inputmode="decimal" id="sd-price" autocomplete="off" placeholder="e.g. 650000"></div>
+                            <div class="form-group"><label for="sd-mv">Market value (RM, if known)</label><input type="text" inputmode="decimal" id="sd-mv" autocomplete="off"></div>
+                            <div class="form-group"><label for="sd-buyer">Buyer</label>
+                                <select id="sd-buyer">
+                                    <option value="local">Malaysian citizen, PR or Malaysian company</option>
+                                    <option value="res">Foreign buyer, residential property</option>
+                                    <option value="other">Foreign buyer, other property</option>
+                                </select></div>
+                        </div>
+                        <div data-for="loan" hidden>
+                            <div class="form-group"><label for="sd-loan">Loan amount (RM)</label><input type="text" inputmode="decimal" id="sd-loan" autocomplete="off" placeholder="e.g. 500000"></div>
+                        </div>
+                        <div data-for="tenancy" hidden>
+                            <div class="form-group"><label for="sd-rent">Monthly rent (RM)</label><input type="text" inputmode="decimal" id="sd-rent" autocomplete="off" placeholder="e.g. 2500"></div>
+                            <div class="form-group"><label for="sd-term">Tenancy period</label>
+                                <select id="sd-term">
+                                    <option value="1">Up to 1 year</option>
+                                    <option value="3">Over 1 year, up to 3 years</option>
+                                    <option value="5">Over 3 years, up to 5 years</option>
+                                    <option value="7">Over 5 years</option>
+                                </select></div>
+                        </div>
+                    </form>
+                    <div class="tl-result" id="sd-result" aria-live="polite"></div>
+                </div>
+                <p class="tl-source">Rates as at 7 November 2026, from LHDN's stamp duty guideline on the First Schedule of the Stamp Act 1949 (30 June 2026) and the Budget 2026 speech. General guide only, not advice on your case.</p>
+            </div>
+        </section>
+
+        <section class="tl-sec tl-alt" id="deadlines" aria-labelledby="dl-title">
+            <div class="container">
+                <div class="section-header">
+                    <p class="hero-kicker">Tax deadline calendar</p>
+                    <h2 class="section-title" id="dl-title">What's due, and when?</h2>
+                    <p class="section-subtitle">Pick who you are. We list your deadlines for the next 12 months, and you can add them to your own calendar.</p>
+                </div>
+                <div class="tl-card">
+                    <form id="dl-form" class="tl-form" novalidate>
+                        <fieldset class="tl-seg">
+                            <legend>Deadlines for</legend>
+                            <label><input type="radio" name="dl-who" value="company" checked> <span>Company</span></label>
+                            <label><input type="radio" name="dl-who" value="individual"> <span>Individual</span></label>
+                            <label><input type="radio" name="dl-who" value="employer"> <span>Employer</span></label>
+                        </fieldset>
+                        <div data-for="company">
+                            <div class="form-group"><label for="dl-fye">Financial year ends in</label><select id="dl-fye"></select></div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="dl-ics">Add to my calendar (.ics)</button>
+                    </form>
+                    <ol class="tl-dates" id="dl-list" aria-live="polite"></ol>
+                </div>
+                <p class="tl-source">Based on LHDN's 2026 return filing programme (updated 1 April 2026) and the CP204 rules in s.107C of the Income Tax Act 1967. e-Filing grace periods are set by LHDN each year; dates for 2027 assume the same rules. General guide only, not advice on your case.</p>
+            </div>
+        </section>
+
+        <section class="tl-sec">
+            <div class="container">
+                <div class="faq-cta">
+                    <h2>Need a second pair of eyes?</h2>
+                    <div class="faq-cta-btns">
+                        <a href="contact.html#quote" class="btn btn-primary">Request a quote</a>
+                        <a href="advisory.html#letter-decoder" class="btn btn-outline">Decode an LHDN letter</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <div id="chatbot-container"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/icons.js"></script>
+
+    <script src="js/vendor/gsap.min.js"></script>
+    <script src="js/vendor/ScrollTrigger.min.js"></script>
+    <script src="js/vendor/lenis.min.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cinematic.js"></script>
+    <script src="js/programmes.js"></script>
+    <script src="js/next-ribbon.js"></script>
+    <script src="js/motion.js"></script>
+    <script src="js/tools.js"></script>
+</body>
+</html>
