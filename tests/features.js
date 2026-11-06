@@ -55,7 +55,7 @@ const englishLeft = () => {
   await p.goto(B + 'faq.html#firms', { waitUntil: 'load' }); await p.waitForTimeout(1200);
   ok('faq #firms opens', await p.$eval('#firms', e => e.open));
   await p.goto(B + 'insights.html', { waitUntil: 'load' }); await p.waitForTimeout(1000);
-  ok('insights empty state + rss', !!(await p.$('.ins-empty')) && !!(await p.$('link[type="application/rss+xml"]')));
+  ok('insights list shows published posts + rss', (await p.$$('a[href^="insight-"]')).length >= 2 && !!(await p.$('link[type="application/rss+xml"]')));
   // phone
   const m = await (await b.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true })).newPage();
   await m.goto(B + 'advisory.html', { waitUntil: 'load' }); await m.waitForTimeout(2000);

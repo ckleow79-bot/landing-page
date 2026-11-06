@@ -1,1 +1,24 @@
-[]
+[
+ {
+  "slug": "ismail-idris-land-trading",
+  "title": "150 lots, 11 years, RM44 million: investment or trade? (Ismail bin Idris v KPHDN)",
+  "type": "case-note",
+  "series": "case-story",
+  "date": "2026-11-06",
+  "as_at": "2026-11-06",
+  "topic": "Case law",
+  "summary": "The Penang High Court agreed with LHDN that a RM44 million sale of 150 land lots held for 11 years was business income, not a capital gain. Holding land for a long time did not settle it.",
+  "type_label": "Case story"
+ },
+ {
+  "slug": "pr-4-2026-small-value-assets",
+  "title": "The RM2,000 rule: small value assets, explained with a restaurant (Public Ruling No. 4/2026)",
+  "type": "update",
+  "series": "ruling-story",
+  "date": "2026-11-06",
+  "as_at": "2026-11-06",
+  "topic": "Income tax",
+  "summary": "LHDN's updated public ruling on small value assets, published 30 September 2026. Items up to RM2,000 each can get a 100% special allowance; SMEs have no annual cap, other companies and LLPs are capped at RM20,000.",
+  "type_label": "Ruling story"
+ }
+]
