@@ -46,6 +46,20 @@
 
         <section class="ins-latest" id="latest" aria-labelledby="ins-latest-title">
             <div class="container">
+                <div class="ins-series">
+                    <button type="button" class="ins-series-card" data-ins="case-story" aria-pressed="false">
+                        <span class="ins-type ins-case-story">Case story</span>
+                        <h3>Tax cases, told as stories</h3>
+                        <p>A real decision in a few short scenes, why the court decided as it did, and what it means for you.</p>
+                        <span class="ins-flow">Scenes · Why · Key points</span>
+                    </button>
+                    <button type="button" class="ins-series-card" data-ins="ruling-story" aria-pressed="false">
+                        <span class="ins-type ins-ruling-story">Ruling story</span>
+                        <h3>Rulings and guidelines, step by step</h3>
+                        <p>A new public ruling or guideline followed through one business, with the traps marked and the key points at the end.</p>
+                        <span class="ins-flow">Steps · Plot twists · Key points</span>
+                    </button>
+                </div>
                 <div class="ins-head">
                     <div>
                         <p class="hero-kicker">Tax updates and case notes</p>
@@ -53,6 +67,8 @@
                     </div>
                     <div class="ins-filter" role="group" aria-label="Filter by type">
                         <button type="button" class="category-btn active" data-ins="all" aria-pressed="true">All</button>
+                        <button type="button" class="category-btn" data-ins="case-story" aria-pressed="false">Case stories</button>
+                        <button type="button" class="category-btn" data-ins="ruling-story" aria-pressed="false">Ruling stories</button>
                         <button type="button" class="category-btn" data-ins="update" aria-pressed="false">Tax updates</button>
                         <button type="button" class="category-btn" data-ins="case-note" aria-pressed="false">Case notes</button>
                         <button type="button" class="category-btn" data-ins="practice-note" aria-pressed="false">Practice notes</button>

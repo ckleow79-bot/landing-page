@@ -960,7 +960,17 @@
   "Hi B&K, I would like to invite Keith to speak at our event on ... (audience about ...).": "Hai B&K, saya ingin menjemput Keith berceramah di acara kami pada ... (anggaran hadirin ...).",
   "Hi B&K, I have an urgent LHDN deadline on ... about ...": "Hai B&K, saya ada tarikh akhir LHDN yang mendesak pada ... berkenaan ...",
   "Hi B&K, I have a question about ...": "Hai B&K, saya ada soalan tentang ...",
-  "Hi B & K, I read your note and have a question:": "Hai B & K, saya telah membaca nota anda dan ada soalan:"
+  "Hi B & K, I read your note and have a question:": "Hai B & K, saya telah membaca nota anda dan ada soalan:",
+  "Case story": "Kisah kes",
+  "Ruling story": "Kisah ketetapan",
+  "Case stories": "Kisah kes",
+  "Ruling stories": "Kisah ketetapan",
+  "Tax cases, told as stories": "Kes cukai, diceritakan sebagai kisah",
+  "A real decision in a few short scenes, why the court decided as it did, and what it means for you.": "Keputusan sebenar dalam beberapa babak ringkas, sebab mahkamah memutuskan begitu, dan maksudnya untuk anda.",
+  "Scenes · Why · Key points": "Babak · Sebab · Perkara utama",
+  "Rulings and guidelines, step by step": "Ketetapan dan garis panduan, langkah demi langkah",
+  "A new public ruling or guideline followed through one business, with the traps marked and the key points at the end.": "Ketetapan umum atau garis panduan baharu diikuti melalui satu perniagaan, dengan perangkap ditandakan dan perkara utama di akhir.",
+  "Steps · Plot twists · Key points": "Langkah · Kejutan · Perkara utama"
  },
  "html": {
   "Financial <em class=\"bk-marker\">control.</em>": "Kawalan <em class=\"bk-marker\">kewangan.</em>",
@@ -996,6 +1006,7 @@
   "No. As a matter of professional ethics we neither pay nor accept referral fees or commissions, and we do not work under another firm's name. If you recommend B &amp; K to a client, the client engages us directly. We are glad to train your team: see <a href=\"academy.html#in-house\">in-house training</a>.": "Tidak. Atas dasar etika profesional, kami tidak membayar dan tidak menerima yuran rujukan atau komisen, dan kami tidak bekerja di bawah nama firma lain. Jika anda mengesyorkan B &amp; K kepada klien, klien tersebut melantik kami secara terus. Kami dengan senang hati melatih pasukan anda: lihat <a href=\"academy.html#in-house\">latihan dalaman</a>.",
   "Yes. Keith speaks at conferences, association and chamber events, post-Budget briefings and webinars, in English or Mandarin. The fee is on request, depending on format and travel. Send the date and audience through the <a href=\"contact.html?topic=speaking#quote\">speaking enquiry</a>.": "Ya. Keith berceramah di persidangan, acara persatuan dan dewan perniagaan, taklimat pasca-Belanjawan dan webinar, dalam bahasa Inggeris atau Mandarin. Yuran atas permintaan, bergantung pada format dan perjalanan. Hantar tarikh dan maklumat hadirin melalui <a href=\"contact.html?topic=speaking#quote\">pertanyaan ceramah</a>.",
   "Something else? <a href=\"advisory.html#who\">Startups, listed groups, foreign companies and accounting firms</a> · <a href=\"about.html#speaking\">Book Keith to speak</a> · <a href=\"advisory.html#fees\">Fee guide</a>": "Perkara lain? <a href=\"advisory.html#who\">Syarikat permulaan, kumpulan tersenarai, syarikat asing dan firma perakaunan</a> · <a href=\"about.html#speaking\">Jemput Keith berceramah</a> · <a href=\"advisory.html#fees\">Panduan yuran</a>",
-  "<strong>The first 15-minute call is free.</strong> Clients outside KL are served by video call, on site when needed.": "<strong>Panggilan pertama 15 minit adalah percuma.</strong> Pelanggan di luar KL dilayan melalui panggilan video, dan di lokasi apabila perlu."
+  "<strong>The first 15-minute call is free.</strong> Clients outside KL are served by video call, on site when needed.": "<strong>Panggilan pertama 15 minit adalah percuma.</strong> Pelanggan di luar KL dilayan melalui panggilan video, dan di lokasi apabila perlu.",
+  "The first stories in this series are in final review. <a href=\"#subscribe\">Subscribe</a> to get them first.": "Kisah pertama dalam siri ini sedang dalam semakan akhir. <a href=\"#subscribe\">Langgan</a> untuk menerimanya terlebih dahulu."
  }
 }

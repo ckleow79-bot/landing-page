@@ -20,6 +20,20 @@ status: draft           # change to: published  (only published posts go live)
 ...
 ```
 
+## Story format (optional)
+
+Add `series: case-story` (a tax case) or `series: ruling-story` (a public ruling or guideline)
+to the front matter. The post is then labelled "Case story" / "Ruling story" and appears under
+that filter on the Insights page (and still under its `type`). Inside the post:
+
+- A paragraph starting `**Scene 1: ...**` or `**Step 1: ...**` becomes a numbered story card.
+- `## Key points` and `## Where this stands` sections are drawn as boxes.
+
+Shape that works: hook question in the title, 3 to 5 scenes or steps in plain words, then
+"Why" (the law, with section numbers), "Plot twists" (traps), Key points (5 or 6 lines),
+Where this stands (appeal window, as-at date). Keep humour on the situation, never on the
+taxpayer. Examples: `content/insights/_drafts/` (local only).
+
 Supported Markdown: `##`/`###` headings, paragraphs, `-` and `1.` lists, `**bold**`, `*italic*`, `[links](https://...)`, `>` quotes.
 
 Netlify runs `python3 tools/build-insights.py` on every deploy. It builds `insight-<slug>.html`,

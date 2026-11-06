@@ -991,7 +991,17 @@
   "Hi B&K, I would like to invite Keith to speak at our event on ... (audience about ...).": "您好 B&K，我想邀请 Keith 在我们于 … 举办的活动中演讲（听众约 … 人）。",
   "Hi B&K, I have an urgent LHDN deadline on ... about ...": "您好 B&K，我有一个紧急的 LHDN 期限，日期 …，关于 …",
   "Hi B&K, I have a question about ...": "您好 B&K，我有一个关于 … 的问题",
-  "Hi B & K, I read your note and have a question:": "您好 B & K，我读了你们的文章，有一个问题："
+  "Hi B & K, I read your note and have a question:": "您好 B & K，我读了你们的文章，有一个问题：",
+  "Case story": "案例故事",
+  "Ruling story": "税务裁定故事",
+  "Case stories": "案例故事",
+  "Ruling stories": "税务裁定故事",
+  "Tax cases, told as stories": "税务案例，用故事来讲",
+  "A real decision in a few short scenes, why the court decided as it did, and what it means for you.": "用几个简短场景讲述真实判决：法庭为何这样判，以及对您有什么影响。",
+  "Scenes · Why · Key points": "场景 · 原因 · 重点",
+  "Rulings and guidelines, step by step": "税务裁定与指南，一步一步看",
+  "A new public ruling or guideline followed through one business, with the traps marked and the key points at the end.": "以一家企业为例，逐步走过新的税务裁定或指南，标出陷阱，最后总结重点。",
+  "Steps · Plot twists · Key points": "步骤 · 意外转折 · 重点"
  },
  "html": {
   "Financial <em class=\"bk-marker\">control.</em>": "财务<em class=\"bk-marker\">握得住。</em>",
@@ -1027,6 +1037,7 @@
   "No. As a matter of professional ethics we neither pay nor accept referral fees or commissions, and we do not work under another firm's name. If you recommend B &amp; K to a client, the client engages us directly. We are glad to train your team: see <a href=\"academy.html#in-house\">in-house training</a>.": "不会。基于专业道德，我们既不支付也不收取任何转介费或佣金，也不以其他事务所的名义工作。如果您向客户推荐 B &amp; K，客户将直接委托我们。我们很乐意为您的团队提供培训：请参阅<a href=\"academy.html#in-house\">内训</a>。",
   "Yes. Keith speaks at conferences, association and chamber events, post-Budget briefings and webinars, in English or Mandarin. The fee is on request, depending on format and travel. Send the date and audience through the <a href=\"contact.html?topic=speaking#quote\">speaking enquiry</a>.": "可以。Keith 在研讨会、协会及商会活动、财政预算案后简报及网络研讨会上演讲，可用英语或华语主讲。费用请洽询，视形式及行程而定。请通过<a href=\"contact.html?topic=speaking#quote\">演讲邀约</a>发送日期及听众资料。",
   "Something else? <a href=\"advisory.html#who\">Startups, listed groups, foreign companies and accounting firms</a> · <a href=\"about.html#speaking\">Book Keith to speak</a> · <a href=\"advisory.html#fees\">Fee guide</a>": "其他需要？<a href=\"advisory.html#who\">初创公司、上市集团、外国公司及会计事务所</a> · <a href=\"about.html#speaking\">邀请 Keith 演讲</a> · <a href=\"advisory.html#fees\">收费指南</a>",
-  "<strong>The first 15-minute call is free.</strong> Clients outside KL are served by video call, on site when needed.": "<strong>首次15分钟通话免费。</strong>吉隆坡以外的客户以视频通话服务，需要时可到场。"
+  "<strong>The first 15-minute call is free.</strong> Clients outside KL are served by video call, on site when needed.": "<strong>首次15分钟通话免费。</strong>吉隆坡以外的客户以视频通话服务，需要时可到场。",
+  "The first stories in this series are in final review. <a href=\"#subscribe\">Subscribe</a> to get them first.": "本系列的首批故事正在最后审阅中。<a href=\"#subscribe\">订阅</a>即可第一时间收到。"
  }
 }

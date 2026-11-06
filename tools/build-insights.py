@@ -26,6 +26,14 @@ from email.utils import format_datetime
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://bkcorporate.com/'
 TYPES = {'update': 'Tax update', 'case-note': 'Case note', 'practice-note': 'Practice note'}
+# optional `series:` in front matter: the story format (scenes or steps, then key points)
+SERIES = {'case-story': 'Case story', 'ruling-story': 'Ruling story'}
+# these ## sections are drawn as boxes
+BOXES = {'key points': 'post-box post-key', 'where this stands': 'post-box post-status'}
+
+
+def label(p):
+    return SERIES.get(p.get('series')) or TYPES.get(p['type'], 'Insight')
 
 
 def parse(path):
@@ -49,7 +57,7 @@ def parse(path):
     for k in ('title', 'type', 'date', 'summary', 'status'):
         if not meta.get(k):
             raise SystemExit(f'{path}: front matter needs "{k}"')
-    meta['slug'] = meta.get('slug') or re.sub(r'^\d+-', '', os.path.splitext(os.path.basename(path))[0])
+    meta['slug'] = meta.get('slug') or re.sub(r'^\d{4}-\d{2}(-\d{2})?-', '', os.path.splitext(os.path.basename(path))[0])
     meta['body_md'] = body.strip()
     return meta
 
@@ -70,12 +78,15 @@ def inline(t):
 
 
 def md(text):
-    out, para, lst = [], [], None
+    out, para, lst, box = [], [], None, False
 
     def flush():
         nonlocal para, lst
         if para:
-            out.append('<p>' + '<br>'.join(inline(x) for x in para) + '</p>')
+            # "**Scene 2: ...**" / "**Step 3: ...**" opens a numbered story card
+            sc = re.match(r'^\*\*(Scene|Step)\s+(\d+)', para[0])
+            cls = f' class="post-step" data-n="{sc.group(2)}"' if sc else ''
+            out.append(f'<p{cls}>' + '<br>'.join(inline(x) for x in para) + '</p>')
             para = []
         if lst:
             tag, items = lst
@@ -91,7 +102,12 @@ def md(text):
         ol = re.match(r'^\s*\d+\.\s+(.*)$', s)
         q = re.match(r'^>\s?(.*)$', s)
         if h:
-            flush(); n = len(h.group(1)); out.append(f'<h{n}>{inline(h.group(2))}</h{n}>')
+            flush(); n = len(h.group(1))
+            if n == 2:
+                if box: out.append('</section>'); box = False
+                cls = BOXES.get(h.group(2).strip().lower())
+                if cls: out.append(f'<section class="{cls}">'); box = True
+            out.append(f'<h{n}>{inline(h.group(2))}</h{n}>')
         elif ul or ol:
             tag = 'ul' if ul else 'ol'
             if para: flush()
@@ -104,6 +120,7 @@ def md(text):
             if lst: flush()
             para.append(s.strip())
     flush()
+    if box: out.append('</section>')
     return '\n'.join(out)
 
 
@@ -117,14 +134,14 @@ def fmt_date(d):
 
 def page(p, rel=''):
     e = lambda v: html.escape(str(v or ''))
-    label = TYPES.get(p['type'], 'Insight')
+    label_ = label(p)
     src = ''.join(f'<li><a href="{e(s["url"])}" target="_blank" rel="noopener">{e(s["title"])}</a></li>' for s in p['sources'])
     ld = {
         '@context': 'https://schema.org', '@type': 'Article', 'headline': p['title'], 'description': p['summary'],
         'datePublished': p['date'], 'dateModified': p.get('as_at') or p['date'],
         'author': {'@type': 'Person', 'name': 'Keith Leow', 'jobTitle': 'Licensed Tax Agent'},
         'publisher': {'@type': 'Organization', 'name': 'B & K Group', 'url': SITE},
-        'mainEntityOfPage': SITE + f'insight-{p["slug"]}.html', 'articleSection': label,
+        'mainEntityOfPage': SITE + f'insight-{p["slug"]}.html', 'articleSection': label_,
         'citation': [s['url'] for s in p['sources']]
     }
     draft = p['status'] != 'published'
@@ -153,7 +170,7 @@ def page(p, rel=''):
     <main id="main">
         <section class="page-hero-cine post-hero" data-theme-dark>
             <div class="container">
-                <p class="hero-kicker"><a href="{rel}insights.html">Insights</a> · {e(label)}{' · DRAFT FOR REVIEW' if draft else ''}</p>
+                <p class="hero-kicker"><a href="{rel}insights.html">Insights</a> · {e(label_)}{' · DRAFT FOR REVIEW' if draft else ''}</p>
                 <h1>{e(p["title"])}</h1>
                 <p class="post-meta">Keith Leow, Licensed Tax Agent · {e(fmt_date(p["date"]))}{(' · information as at ' + e(fmt_date(p["as_at"]))) if p.get("as_at") else ''}</p>
             </div>
@@ -198,7 +215,7 @@ def feed(posts):
     <link>{SITE}insight-{e(p["slug"])}.html</link>
     <guid isPermaLink="true">{SITE}insight-{e(p["slug"])}.html</guid>
     <pubDate>{format_datetime(d)}</pubDate>
-    <category>{e(TYPES.get(p["type"], "Insight"))}</category>
+    <category>{e(label(p))}</category>
     <description>{e(p["summary"])}</description>
   </item>
 '''
@@ -239,9 +256,9 @@ def main():
             os.remove(os.path.join(ROOT, f))
     for p in pub:
         open(os.path.join(ROOT, f'insight-{p["slug"]}.html'), 'w', encoding='utf-8', newline='\n').write(page(p))
-    listing = [{k: p.get(k) for k in ('slug', 'title', 'type', 'date', 'as_at', 'topic', 'summary')} for p in pub]
-    for x in listing:
-        x['type_label'] = TYPES.get(x['type'], 'Insight')
+    listing = [{k: p.get(k) for k in ('slug', 'title', 'type', 'series', 'date', 'as_at', 'topic', 'summary')} for p in pub]
+    for x, p in zip(listing, pub):
+        x['type_label'] = label(p)
     json.dump(listing, open(os.path.join(ROOT, 'data', 'insights.json'), 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
     open(os.path.join(ROOT, 'feed.xml'), 'w', encoding='utf-8', newline='\n').write(feed(pub))
     print(f'insights: {len(pub)} published, {len(posts) - len(pub)} not published')
