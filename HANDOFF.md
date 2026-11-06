@@ -28,7 +28,7 @@ Netlify (project snazzy-choux-2ee2b7) runs both build steps; preview: https://de
 
 ## Decisions Keith has made (do not re-ask)
 
-- Prices approved, all **excl. 8% SST**, "final fee confirmed in an engagement letter after scoping": free 15-min call; 60-min consultation from RM 500 (credited if engaged); desk audit from RM 3,000; field audit from RM 8,000 (up to 3 years); investigation from RM 15,000 (quoted per case); Form Q / DRP from RM 5,000; e-Invoice health check from RM 2,500 (fixed); e-Invoice implementation from RM 6,000; Form C from RM 2,500/yr; management accounts review from RM 2,500/month; fractional CFO from RM 6,000/month; in-house training from RM 8,000/day (up to 25 pax).
+- Prices approved, all **excl. 8% SST**, "final fee confirmed in an engagement letter after scoping": free 15-min call; 60-min consultation from RM 1,000 (credited in full if engaged); reply to an LHDN request for documents from RM 3,000; general audit (desk) from RM 5,000 and comprehensive audit (field) from RM 8,000, each up to 2 YAs, extra years quoted separately; investigation from RM 20,000 (quoted per case, in phases, led by Keith) (quoted per case); Form Q / DRP from RM 5,000; e-Invoice health check from RM 3,000 (fixed); e-Invoice implementation from RM 6,000; Form C from RM 2,500/yr; management accounts review from RM 3,000/month; fractional CFO from RM 6,000/month; in-house training from RM 8,000/day (up to 25 pax).
 - CPD: "7 CPD hours per full day, subject to each professional body's assessment and decision". Never name a body or promise recognition.
 - Travel: fee covers the course/work only; flights and hotel outside the Klang Valley charged separately.
 - No referral fees paid or received (professional ethics); the client engages B & K directly.

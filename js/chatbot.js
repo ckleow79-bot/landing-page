@@ -23,7 +23,7 @@
             ])
         }),
         fees: () => ({
-            say: [T('The first 15-minute call is free. A 60-minute consultation is from RM 500, credited to the fee if you engage us. Starting fees for audits, appeals, e-Invoice, CFO work and training are in the fee guide. All fees exclude SST; the final fee is confirmed in an engagement letter.', '首次15分钟通话免费。60分钟咨询从 RM 500 起，若正式委托可抵扣费用。审计、上诉、电子发票、CFO 及培训的起价列于收费指南。所有费用不含 SST，最终费用以委托书为准。')],
+            say: [T('The first 15-minute call is free. A 60-minute consultation is from RM 1,000, credited in full to the fee if you engage us. Starting fees for audits, appeals, e-Invoice, CFO work and training are in the fee guide. All fees exclude SST; the final fee is confirmed in an engagement letter.', '首次15分钟通话免费。60分钟咨询从 RM 1,000 起，若正式委托可全额抵扣费用。审计、上诉、电子发票、CFO 及培训的起价列于收费指南。所有费用不含 SST，最终费用以委托书为准。')],
             links: [
                 ['advisory.html#fees', T('See the fee guide', '查看收费指南')],
                 ['contact.html#quote', T('Request a quote', '索取报价')]
