@@ -10,9 +10,9 @@
     const lang = (window.BKi18n && window.BKi18n.lang) || 'en';
     const zh = lang === 'zh';
     const T = {
-        zh: { tag: '下一场', starts: '倒数', today: '今天开始', details: '查看详情', close: '关闭提示', d: '天', h: '小时', m: '分', label: '下一场课程' },
-        ms: { tag: 'Seterusnya', starts: 'Bermula dalam', today: 'Bermula hari ini', details: 'Butiran', close: 'Tutup', d: 'h', h: 'j', m: 'm', label: 'Program seterusnya' },
-        en: { tag: 'Next up', starts: 'Starts in', today: 'Starts today', details: 'Details', close: 'Dismiss', d: 'd', h: 'h', m: 'm', label: 'Next programme' }
+        zh: { tag: '下一场', starts: '倒数', today: '今天开始', details: '报名', close: '关闭提示', d: '天', h: '小时', m: '分', s: '秒', label: '下一场课程' },
+        ms: { tag: 'Seterusnya', starts: 'Bermula dalam', today: 'Bermula hari ini', details: 'Daftar', close: 'Tutup', d: 'h', h: 'j', m: 'm', s: 's', label: 'Program seterusnya' },
+        en: { tag: 'Next up', starts: 'Starts in', today: 'Starts today', details: 'Register', close: 'Dismiss', d: 'd', h: 'h', m: 'm', s: 's', label: 'Next programme' }
     }[lang] || {};
     const fmt = new Intl.DateTimeFormat(zh ? 'zh-CN' : (window.BKi18n && BKi18n.lang === 'ms' ? 'ms-MY' : 'en-MY'), { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Kuala_Lumpur' });
     const KEY = 'bk-ribbon-dismissed';
@@ -35,11 +35,12 @@
 
     const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-    function countdown(ms) {
-        if (ms <= 0) return T.today;
-        const m = Math.floor(ms / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mm = m % 60;
-        const parts = d > 0 ? [d + T.d, h + T.h] : [h + T.h, mm + T.m];
-        return `${T.starts} ${parts.join(' ')}`;
+    // [value, unit] pairs: d h m s, or h m s on the last day
+    function parts(ms) {
+        const t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60;
+        const p2 = n => String(n).padStart(2, '0');
+        const list = [[p2(h), T.h], [p2(m), T.m], [p2(sec), T.s]];
+        return d > 0 ? [[String(d), T.d]].concat(list) : list;
     }
 
     function setHeight(px) { document.documentElement.style.setProperty('--ribbon-h', px + 'px'); }
@@ -67,11 +68,11 @@
         bar.setAttribute('data-i18n-skip', '');
         bar.innerHTML = `
             <div class="nr-in">
-                <span class="nr-tag">${T.tag}</span>
+                <span class="nr-tag"><i class="nr-dot" aria-hidden="true"></i><span class="nr-tag-t">${T.tag}</span></span>
                 <span class="nr-title" data-i18n-skip>${esc(title)}${city ? ' · ' + esc(city) : ''}</span>
                 <span class="nr-meta" data-i18n-skip>${esc(fmt.format(new Date(next.start_date)))}${next.venue && next.venue.indexOf(',') > 0 ? ' · ' + esc(next.venue.slice(0, next.venue.lastIndexOf(','))) : ''}</span>
                 <span class="nr-count" aria-live="off"></span>
-                <a class="nr-cta" href="programmes.html?open=${encodeURIComponent(next.slug)}">${T.details}</a>
+                <a class="nr-cta" href="programmes.html?open=${encodeURIComponent(next.slug)}">${T.details}<span class="nr-arrow" aria-hidden="true">&rarr;</span></a>
             </div>
             <button type="button" class="nr-x" aria-label="${T.close}">&times;</button>`;
         setHeight(bar.offsetHeight);
@@ -89,10 +90,29 @@
         };
         window.addEventListener('scroll', onScroll, { passive: true });
 
+        // ticking countdown; each unit that changes rolls in (CSS turns the roll off for reduced motion)
         const out = bar.querySelector('.nr-count');
-        const tick = () => { out.textContent = countdown(next._start - Date.now()); };
+        let shown = [];
+        const tick = () => {
+            const ms = next._start - Date.now();
+            if (ms <= 0) { out.textContent = T.today; clearInterval(timer); return; }
+            const p = parts(ms);
+            if (p.length !== shown.length) {
+                out.innerHTML = `<span class="nr-sl">${T.starts}</span>` + p.map(() => '<span class="nr-u"><b></b><small></small></span>').join('');
+                shown = [];
+            }
+            out.querySelectorAll('.nr-u').forEach((u, i) => {
+                if (shown[i] && shown[i][0] === p[i][0]) return;
+                const b = document.createElement('b');
+                b.textContent = p[i][0];
+                if (shown.length) b.className = 'roll';
+                u.replaceChild(b, u.firstChild);
+                u.lastChild.textContent = p[i][1];
+            });
+            shown = p;
+        };
+        const timer = setInterval(tick, 1000);
         tick();
-        const timer = setInterval(tick, 30000);
 
         bar.querySelector('.nr-x').addEventListener('click', () => {
             clearInterval(timer);
