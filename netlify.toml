@@ -28,6 +28,14 @@
   from = "/contact"
   to = "/contact.html"
   status = 200
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 200
+[[redirects]]
+  from = "/tools"
+  to = "/tools.html"
+  status = 200
 # Old template URLs
 [[redirects]]
   from = "/products.html"
