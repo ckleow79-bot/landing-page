@@ -2,40 +2,26 @@
 <html lang="en" class="has-gsap">
 <head>
     <meta charset="UTF-8">
+    <script>try{if(sessionStorage.getItem('bk-wipe')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('wipe-in')}catch(e){}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upcoming Seminars &amp; Programmes | B &amp; K Training Services PLT &amp; High Impact Training Services PLT</title>
-    <meta name="description" content="Calendar of HRD Corp claimable tax seminars, e-Invoice and SST updates, tax audit masterclasses and AI in Finance workshops in Malaysia. Register online.">
-    <link rel="stylesheet" href="css/tokens/fonts.css">
-    <link rel="stylesheet" href="css/tokens/colors.css">
-    <link rel="stylesheet" href="css/tokens/typography.css">
-    <link rel="stylesheet" href="css/tokens/spacing.css">
-    <link rel="stylesheet" href="css/tokens/theme-dark.css">
-    <link rel="stylesheet" href="css/tokens/signature.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pages.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/chatbot.css">
-    <link rel="stylesheet" href="css/cinematic.css">
-    <link rel="stylesheet" href="css/brand.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Calendar of tax seminars, e-Invoice and SST updates, tax audit masterclasses and AI in Finance workshops in Malaysia. HRD Corp claimable sessions are marked. Register online.">
+    <link rel="preload" href="assets/fonts/bricolage-grotesque-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/public-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
 
     <meta property="og:title" content="Upcoming Seminars &amp; Programmes | B &amp; K Training Services PLT &amp; High Impact Training Services PLT">
-    <meta property="og:description" content="Calendar of HRD Corp claimable tax seminars, e-Invoice and SST updates, tax audit masterclasses and AI in Finance workshops in Malaysia. Register online.">
+    <meta property="og:description" content="Calendar of tax seminars, e-Invoice and SST updates, tax audit masterclasses and AI in Finance workshops in Malaysia. HRD Corp claimable sessions are marked. Register online.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://bkcorporate.com/programmes.html">
     <meta property="og:image" content="https://bkcorporate.com/assets/images/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Upcoming Seminars &amp; Programmes | B &amp; K Training Services PLT &amp; High Impact Training Services PLT">
-    <meta name="twitter:description" content="Calendar of HRD Corp claimable tax seminars, e-Invoice and SST updates, tax audit masterclasses and AI in Finance workshops in Malaysia. Register online.">
+    <meta name="twitter:description" content="Calendar of tax seminars, e-Invoice and SST updates, tax audit masterclasses and AI in Finance workshops in Malaysia. HRD Corp claimable sessions are marked. Register online.">
     <meta name="twitter:image" content="https://bkcorporate.com/assets/images/og-image.jpg">
     <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
     <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png">
     <link rel="canonical" href="https://bkcorporate.com/programmes.html">
-
-    <!-- Google Analytics 4 - replace GA_MEASUREMENT_ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'GA_MEASUREMENT_ID');</script>
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -51,13 +37,23 @@
     </script>
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-container"></div>
-    <main>
+    <main id="main">
         <section class="page-hero-cine" data-theme-dark>
             <div class="container">
                 <p class="hero-kicker">B &amp; K Training Services PLT · High Impact Training Services PLT · B &amp; K Academy PLT</p>
                 <h1 class="reveal-up">Seminars, masterclasses<br>and CPD programmes.</h1>
-                <p class="reveal-up">Practitioner-led sessions on Malaysian taxation, e-Invoice, SST, post-Budget analysis, M&amp;A and AI in Finance. B &amp; K Training Services PLT is an HRD Corp registered training provider. Programmes marked HRD Corp claimable can be funded under the SBL-Khas scheme.</p>
+                <p class="reveal-up">Practitioner-led sessions on Malaysian taxation, e-Invoice, SST, post-Budget analysis, M&amp;A and AI in Finance. Sessions marked HRD Corp claimable are registered by our training partner High Impact Training Services PLT and can be funded under HRD Corp Claimable Courses (HRD CC, formerly SBL-Khas).</p>
+            </div>
+        </section>
+
+        <!-- ===== Iris photo stage ===== -->
+        <section class="stage-iris" aria-labelledby="si-title">
+            <div class="si-pin">
+                <div class="si-photo"><picture><source media="(max-width: 767px)" type="image/avif" srcset="assets/images/training/auditorium-800.avif"><source media="(max-width: 767px)" srcset="assets/images/training/auditorium-800.webp"><source type="image/avif" srcset="assets/images/training/auditorium.avif"><img src="assets/images/training/auditorium.webp" alt="A full auditorium at a B &amp; K public seminar" loading="lazy" width="1600" height="860"></picture></div>
+                <h2 class="si-title" id="si-title">Taught by people who still do the work.</h2>
+                <p class="si-cap"><span>Public seminars</span><span>In-house workshops</span><span>English · BM · 中文</span></p>
             </div>
         </section>
 
@@ -79,10 +75,10 @@
                         <h2>How registration and HRD Corp claims work.</h2>
                     </div>
                     <div class="story-steps">
-                        <div class="story-step"><span class="n bk-coin">1</span><div><h3>Register</h3><p>Use the Register button on any programme. You will receive an acknowledgement and a proforma invoice within one business day.</p></div></div>
-                        <div class="story-step"><span class="n bk-coin">2</span><div><h3>HRD Corp grant</h3><p>Employers registered with HRD Corp apply for the grant on e-TRiS before the programme date. We supply the course outline, trainer profile and quotation needed for the application.</p></div></div>
-                        <div class="story-step"><span class="n bk-coin">3</span><div><h3>Attend and claim CPD</h3><p>Certificates of attendance state CPD hours for MIA, CTIM and MFPC purposes. Materials are distributed digitally after the session.</p></div></div>
-                        <div class="story-step"><span class="n bk-coin">4</span><div><h3>In-house option</h3><p>Any public programme can be delivered in-house, in English or Mandarin, and tailored to your industry. Minimum group size applies.</p></div></div>
+                        <div class="story-step"><span class="n bk-coin">1</span><div><h3>Register</h3><p>Use the Register button on any programme. You will receive an acknowledgement the same business day, followed by a proforma invoice.</p></div></div>
+                        <div class="story-step"><span class="n bk-coin">2</span><div><h3>HRD Corp grant</h3><p>For sessions marked HRD Corp claimable, apply under HRD Corp Claimable Courses (HRD CC, formerly SBL-Khas) on e-TRiS before the programme date, naming High Impact Training Services PLT as the training provider. HRD Corp pays the course fee from your levy balance; you do not pay it upfront. We send the course details you need for the application.</p></div></div>
+                        <div class="story-step"><span class="n bk-coin">3</span><div><h3>Attend and keep your records</h3><p>Each full day carries 7 CPD hours of content; recognition is subject to each professional body's own assessment and decision. Every participant receives a certificate of attendance, with course materials in hard copy and soft copy.</p></div></div>
+                        <div class="story-step"><span class="n bk-coin">4</span><div><h3>In-house option</h3><p>Any public programme can be delivered in-house, in English, Bahasa Malaysia or Mandarin, and tailored to your industry, for groups of 2 to 50. In-house fees start from RM 8,000 a day (excl. SST); travel outside the Klang Valley is charged separately.</p></div></div>
                     </div>
                 </div>
             </div>
@@ -103,17 +99,20 @@
 
     <div id="footer-container"></div>
     <div id="chatbot-container"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/icons.js"></script>
 
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>
     <script src="js/vendor/lenis.min.js"></script>
-    <script src="js/vendor/anime.min.js"></script>
     <script src="js/vendor/supabase.min.js"></script>
     <script src="js/supabase.js"></script>
-    <script src="js/animations.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
     <script src="js/cinematic.js"></script>
+    <script src="js/stages.js"></script>
     <script src="js/programmes.js"></script>
+    <script src="js/next-ribbon.js"></script>
+    <script src="js/motion.js"></script>
 </body>
 </html>

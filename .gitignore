@@ -25,3 +25,13 @@ wp-config.php
 __pycache__/
 *.pyc
 dashboard/ingestion/autocount-excel/out/
+
+# Private working files: never publish (public repository)
+review/
+content/insights/_drafts/
+audit-report-PR3.md
+count-up-preview.png
+i18n-keys.json
+tests/out/
+*.xlsx
+preview-insight-*.html

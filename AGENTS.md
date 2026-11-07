@@ -1,5 +1,7 @@
 # AGENTS.md
 
+> **Partly out of date.** For current commands, decisions and rules read `CLAUDE.md` and `HANDOFF.md`, which take precedence. Analytics (GA4) and Google Fonts are no longer used except Noto Sans SC in 中文 mode; styles are bundled into `css/site.css`; the local server runs on port 5700.
+
 ## Project Information
 - **Project Name**: B & K Group Website (Advisory, Academy, Programme Calendar) + Finance Dashboard data layer
 - **Type**: Static HTML/CSS/JS Website with Supabase Backend; `dashboard/` holds the separate finance-dashboard scaffold
@@ -10,15 +12,14 @@
 
 ### Start Development Server
 ```bash
-npm install
 npm start
-# Serves on http://localhost:5500
+# python3 -m http.server 5700  ->  http://localhost:5700
 ```
 
 ### Build for Production
 ```bash
 npm run build
-# Minifies CSS and JS files
+# css/site.css bundle + Insights pages (tools/bundle-css.py, tools/build-insights.py)
 ```
 
 ### Optimize Images

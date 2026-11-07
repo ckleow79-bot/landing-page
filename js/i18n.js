@@ -1,0 +1,216 @@
+/**
+ * English / Bahasa Malaysia / 中文 switch.
+ *
+ * One HTML source per page. English is the source text; data/i18n/zh.json and ms.json map
+ * English strings to Simplified Chinese and Bahasa Malaysia. Two kinds of keys:
+ *   - "text":  a plain text node, whitespace-collapsed
+ *   - "html":  the innerHTML of a "leaf block" (an element whose descendants are
+ *              all inline tags such as <em>, <a>, <strong>, <br>), whitespace-collapsed
+ * Anything without a translation stays in English, so a missing key never breaks a page.
+ *
+ * Load this as the first script at the end of <body>, before cinematic.js splits
+ * the hero heading into words. Switching language reloads the page so every
+ * animation is built once, in the right language.
+ */
+(function () {
+    'use strict';
+
+    const KEY = 'bk-lang';
+    const SKIP = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'SVG', 'svg', 'CODE', 'PRE', 'TEXTAREA', 'TEMPLATE', 'IFRAME']);
+    const INLINE = new Set(['A', 'ABBR', 'B', 'BR', 'CODE', 'EM', 'I', 'MARK', 'SMALL', 'SPAN', 'STRONG', 'SUB', 'SUP', 'TIME', 'U', 'WBR']);
+    const ATTRS = ['placeholder', 'aria-label', 'title', 'alt'];
+
+    const params = new URLSearchParams(location.search);
+    const collect = params.get('i18n') === 'collect';
+    let lang = 'en';
+    try { lang = params.get('lang') || localStorage.getItem(KEY) || 'en'; } catch (e) { lang = params.get('lang') || 'en'; }
+    const LANGS = ['en', 'ms', 'zh'];
+    if (LANGS.indexOf(lang) < 0) lang = 'en';
+
+    const api = window.BKi18n = {
+        lang,
+        t: (en, zh, ms) => (lang === 'zh' && zh ? zh : lang === 'ms' && ms ? ms : en),
+        // dictionary lookup for strings built in JS; keeps leading/trailing spaces
+        tr(en) {
+            if (!dict || en == null) return en;
+            const k = norm(String(en)), v = dict.text[k];
+            if (!v || v === k) return en;
+            // a full-width colon already carries its own space
+            return String(en).match(/^\s*/)[0] + v + (/[：，。]$/.test(v) ? '' : String(en).match(/\s*$/)[0]);
+        },
+        set(next) {
+            try { localStorage.setItem(KEY, next); } catch (e) { /* private mode: fall back to the URL */ }
+            const url = new URL(location.href);
+            url.searchParams.delete('lang');
+            if (next !== 'en') url.searchParams.set('lang', next);
+            location.replace(url.toString());
+        }
+    };
+
+    const norm = s => s.replace(/\s+/g, ' ').trim();
+    // A "leaf block" mixes its own words with inline elements that also carry words,
+    // e.g. <p>Read <a>s.82</a> first</p>. Those are translated as one HTML string so
+    // word order can change. Anything else is walked node by node.
+    const hasWords = s => /[A-Za-z]/.test(s);
+    const isLeafBlock = el => {
+        if (!el.firstElementChild) return false;
+        const all = el.getElementsByTagName('*');
+        let wordyChild = false;
+        for (let i = 0; i < all.length; i++) {
+            if (!INLINE.has(all[i].tagName)) return false;
+            if (!wordyChild && hasWords(all[i].textContent)) wordyChild = true;
+        }
+        if (!wordyChild) return false;
+        for (let c = el.firstChild; c; c = c.nextSibling) if (c.nodeType === 3 && hasWords(c.nodeValue)) return true;
+        return false;
+    };
+    const skipped = el => SKIP.has(el.tagName) || el.hasAttribute('data-i18n-skip') || el.namespaceURI === 'http://www.w3.org/2000/svg';
+
+    /* ---------- collect mode: lists every key on the page (used to build zh.json) ---------- */
+    const found = { text: new Set(), html: new Set() };
+    window.__i18nKeys = () => ({ text: [...found.text], html: [...found.html] });
+
+    let dict = null;
+
+    function translateAttrs(el) {
+        ATTRS.forEach(a => {
+            const v = el.getAttribute && el.getAttribute(a);
+            if (!v || !/[A-Za-z]/.test(v)) return;
+            const k = norm(v);
+            if (collect) { found.text.add(k); return; }
+            if (dict.text[k] && dict.text[k] !== k) el.setAttribute(a, dict.text[k]);
+        });
+    }
+
+    // pre-filled WhatsApp text and email subject/body follow the page language
+    function translateHref(el) {
+        // <a data-msg="sentence" data-msg-tail="title">: translated sentence + untranslated tail (post titles)
+        const mk = el.getAttribute('data-msg');
+        if (mk && /^https:\/\/wa\.me\//.test(el.getAttribute('href') || '')) {
+            if (collect) { found.text.add(norm(mk)); return; }
+            const t = dict.text[norm(mk)];
+            if (t && t !== norm(mk)) el.setAttribute('href', el.getAttribute('href').split('?')[0] + '?text=' + encodeURIComponent(t + ' ' + (el.getAttribute('data-msg-tail') || '')));
+            return;
+        }
+        const h = el.getAttribute('href') || '';
+        const q = h.indexOf('?');
+        if (q < 0 || !/^(https:\/\/wa\.me\/|mailto:)/.test(h)) return;
+        let changed = false;
+        const parts = h.slice(q + 1).split('&').map(kv => {
+            const i = kv.indexOf('='), k = kv.slice(0, i);
+            if (i < 0 || ['text', 'subject', 'body'].indexOf(k) < 0) return kv;
+            let v; try { v = decodeURIComponent(kv.slice(i + 1)); } catch (e) { return kv; }
+            const key = norm(v);
+            if (!/[A-Za-z]/.test(key)) return kv;
+            if (collect) { found.text.add(key); return kv; }
+            const t = dict.text[key];
+            if (!t || t === key) return kv;
+            changed = true;
+            return k + '=' + encodeURIComponent(t);
+        });
+        if (changed) el.setAttribute('href', h.slice(0, q + 1) + parts.join('&'));
+    }
+
+    function walk(node) {
+        if (node.nodeType === 3) {
+            const k = norm(node.nodeValue);
+            if (!k || !/[A-Za-z]/.test(k)) return;
+            if (collect) { found.text.add(k); return; }
+            const zh = dict.text[k];
+            if (zh && zh !== k) {
+                const lead = node.nodeValue.match(/^\s*/)[0] ? ' ' : '';
+                const tail = node.nodeValue.match(/\s*$/)[0] ? ' ' : '';
+                node.nodeValue = lead + zh + tail;
+            }
+            return;
+        }
+        if (node.nodeType !== 1) return;
+        if (node.tagName === 'TEXTAREA') { translateAttrs(node); return; } // placeholder only, never the typed text
+        if (skipped(node)) return;
+        translateAttrs(node);
+        if (node.tagName === 'A') translateHref(node);
+        if (isLeafBlock(node)) {
+            const k = norm(node.innerHTML);
+            if (/[A-Za-z]/.test(node.textContent)) {
+                if (collect) { found.html.add(k); return; }
+                if (dict.html[k] && dict.html[k] !== k) { node.innerHTML = dict.html[k]; node.querySelectorAll('*').forEach(translateAttrs); node.querySelectorAll('a').forEach(translateHref); return; }
+            }
+        }
+        for (let c = node.firstChild; c; c = c.nextSibling) walk(c);
+    }
+
+    function translateTitle() {
+        const k = norm(document.title);
+        if (collect) { found.text.add(k); return; }
+        if (dict.text[k]) document.title = dict.text[k];
+        const md = document.querySelector('meta[name="description"]');
+        if (md && dict.text[norm(md.content)]) md.content = dict.text[norm(md.content)];
+    }
+
+    function observe() {
+        let busy = false;
+        new MutationObserver(muts => {
+            if (busy) return;
+            busy = true;
+            muts.forEach(m => {
+                if (m.type === 'characterData') walk(m.target);
+                m.addedNodes.forEach(n => {
+                    // a leaf block whose text was replaced: retry the parent as a whole first
+                    const p = n.parentNode;
+                    if (p && p.nodeType === 1 && !skipped(p) && isLeafBlock(p)) walk(p); else walk(n);
+                });
+            });
+            busy = false;
+        }).observe(document.body, { childList: true, subtree: true, characterData: true });
+    }
+
+    function toggleUi() {
+        document.addEventListener('click', e => {
+            const b = e.target.closest('[data-lang-set]');
+            if (!b) return;
+            e.preventDefault();
+            const next = b.getAttribute('data-lang-set');
+            if (next !== lang) api.set(next);
+        });
+        const sync = () => document.querySelectorAll('[data-lang-set]').forEach(b => {
+            const on = b.getAttribute('data-lang-set') === lang;
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            b.classList.toggle('is-on', on);
+        });
+        sync();
+        new MutationObserver(sync).observe(document.getElementById('header-container') || document.body, { childList: true });
+    }
+
+    // keep the language when moving between pages opened with ?lang=zh (and ?lang=en resets it)
+    if (lang !== 'en' || params.get('lang')) { try { localStorage.setItem(KEY, lang); } catch (e) { /* ignore */ } }
+
+    document.documentElement.setAttribute('data-lang', lang);
+    toggleUi();
+
+    if (collect) { translateTitle(); walk(document.body); observe(); return; }
+    if (lang === 'en') return;
+
+    document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'ms';
+    // Chinese headings: Noto Sans SC from Google Fonts (sliced by unicode-range, only needed glyphs download)
+    if (lang === 'zh') {
+        const gf = document.createElement('link');
+        gf.rel = 'stylesheet';
+        gf.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;800&display=swap';
+        document.head.appendChild(gf);
+    }
+    // synchronous load so the page is translated before animations measure it
+    try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'data/i18n/' + lang + '.json', false);
+        xhr.send();
+        if (xhr.status !== 200) throw new Error(xhr.status);
+        dict = JSON.parse(xhr.responseText);
+        dict.text = dict.text || {}; dict.html = dict.html || {};
+    } catch (e) {
+        document.documentElement.lang = 'en';
+        return;
+    }
+    translateTitle();
+    walk(document.body);
+    observe();
+})();

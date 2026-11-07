@@ -3,7 +3,7 @@
   "@type": "Organization",
   "name": "B & K Group",
   "url": "https://bkcorporate.com",
-  "logo": "https://bkcorporate.com/assets/images/logo.png",
+  "logo": "https://bkcorporate.com/assets/brand/logo.svg",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "B-23-01, Residensi Berpadu, No. 10, Jalan Lang Emas",

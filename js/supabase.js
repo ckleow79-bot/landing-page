@@ -1,427 +1,214 @@
 /**
- * Supabase Integration JavaScript File
- * B & K Group Website
+ * Forms and data: Supabase client, quote form, newsletter.
+ *
+ * - The client is created as soon as this file runs and exposed as window.supabaseClient,
+ *   with window.BKSupabaseReady resolving when it is ready (programmes.js waits for it).
+ * - Every form is always handled here (preventDefault), so nothing ever ends up in the URL,
+ *   even when the Supabase library failed to load.
+ * - When the database cannot be reached the visitor is told plainly and offered
+ *   WhatsApp / email with their details filled in. Nothing pretends to be sent.
+ * - Access to stored data is admin-only (see migrations/003_admin_only_access.sql).
  */
+(function () {
+    'use strict';
 
-// Supabase configuration - Loaded from environment variables via window.ENV or inline config
-// For development: values are injected from .env file
-// For production: set window.ENV before loading this script, or replace values below
-const SUPABASE_URL = (typeof window !== 'undefined' && window.ENV && window.ENV.SUPABASE_URL) 
-    ? window.ENV.SUPABASE_URL 
-    : 'https://uloodavzquardkeecrlx.supabase.co';
-    
-const SUPABASE_KEY = (typeof window !== 'undefined' && window.ENV && window.ENV.SUPABASE_KEY) 
-    ? window.ENV.SUPABASE_KEY 
-    : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsb29kYXZ6cXVhcmRrZWVjcmx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTc3MjMsImV4cCI6MjA4ODQ5MzcyM30.VqUNZWMKcqLolTnFDlOP874871r6AQmIEVnihdrAtwk';
+    const SUPABASE_URL = (window.ENV && window.ENV.SUPABASE_URL) || 'https://uloodavzquardkeecrlx.supabase.co';
+    const SUPABASE_KEY = (window.ENV && window.ENV.SUPABASE_KEY) || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsb29kYXZ6cXVhcmRrZWVjcmx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTc3MjMsImV4cCI6MjA4ODQ5MzcyM30.VqUNZWMKcqLolTnFDlOP874871r6AQmIEVnihdrAtwk';
+    const WA = '601130636198';
+    const MAIL = 'keith@bkcorporate.com';
+    // English source text, translated from data/i18n/<lang>.json; the inline Chinese is the fallback
+    const T = (en, cn) => {
+        const i = window.BKi18n;
+        if (!i || i.lang === 'en') return en;
+        const v = i.tr ? i.tr(en) : en;
+        return v !== en ? v : (i.lang === 'zh' && cn ? cn : en);
+    };
 
-let supabaseClient = null;
+    let client = null;
+    try {
+        if (window.supabase && typeof window.supabase.createClient === 'function') client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch (e) { client = null; }
+    window.supabaseClient = client;
+    window.BKSupabaseReady = Promise.resolve(client);
 
-/**
- * Validation Functions
- */
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+    /* ---------- helpers ---------- */
+    const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    const validPhone = v => /^[\d\s\-+()]{8,}$/.test(v);
+    const optText = sel => (sel && sel.value ? sel.options[sel.selectedIndex].text : '');
 
-function validatePhone(phone) {
-    if (!phone) return true; // Phone is optional
-    const phoneRegex = /^[\d\s\-\+\(\)]{8,}$/;
-    return phoneRegex.test(phone);
-}
-
-function validateRequired(value) {
-    return value.trim().length > 0;
-}
-
-function showFieldError(fieldId, message) {
-    const field = document.getElementById(fieldId);
-    if (!field) return;
-    
-    // Remove existing error
-    const existingError = field.parentElement.querySelector('.field-error');
-    if (existingError) {
-        existingError.remove();
+    function fieldError(input, msg) {
+        if (!input) return;
+        input.classList.add('error');
+        input.setAttribute('aria-invalid', 'true');
+        let el = input.parentElement.querySelector('.field-error');
+        if (!el) { el = document.createElement('span'); el.className = 'field-error'; el.id = input.id + '-err'; input.parentElement.appendChild(el); }
+        el.textContent = msg;
+        input.setAttribute('aria-describedby', el.id);
+        input.addEventListener('input', () => { input.classList.remove('error'); input.removeAttribute('aria-invalid'); el.remove(); }, { once: true });
     }
-    
-    // Add error styling
-    field.classList.add('error');
-    
-    // Create error message
-    const errorEl = document.createElement('span');
-    errorEl.className = 'field-error';
-    errorEl.textContent = message;
-    errorEl.style.color = '#e53e3e';
-    errorEl.style.fontSize = '0.875rem';
-    errorEl.style.marginTop = '0.25rem';
-    errorEl.style.display = 'block';
-    
-    field.parentElement.appendChild(errorEl);
-    
-    // Remove error on input
-    field.addEventListener('input', function removeError() {
-        field.classList.remove('error');
-        const error = field.parentElement.querySelector('.field-error');
-        if (error) error.remove();
-        field.removeEventListener('input', removeError);
-    }, { once: true });
-}
-
-function clearAllFieldErrors() {
-    const errors = document.querySelectorAll('.field-error');
-    errors.forEach(error => error.remove());
-    
-    const errorFields = document.querySelectorAll('.error');
-    errorFields.forEach(field => field.classList.remove('error'));
-}
-
-/**
- * Initialize Supabase Client
- */
-function initSupabase() {
-    if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'https://your-supabase-project.supabase.co') {
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        window.supabaseClient = supabaseClient; // exposed for programmes.js
-        console.log('Supabase initialized successfully');
-        
-        // Initialize forms after Supabase is ready
-        initContactForm();
-        initNewsletterForm();
-        initInvestorForm();
-    } else {
-        console.warn('Supabase not configured or library not loaded');
+    function clearErrors(form) {
+        form.querySelectorAll('.field-error').forEach(e => e.remove());
+        form.querySelectorAll('.error').forEach(e => { e.classList.remove('error'); e.removeAttribute('aria-invalid'); });
     }
-}
+    function status(el, msg, type, keep) {
+        el.textContent = msg;
+        el.className = 'form-message ' + type;
+        el.style.display = 'block';
+        el.setAttribute('role', type === 'error' ? 'alert' : 'status');
+        if (!keep && type === 'success') setTimeout(() => { el.style.display = 'none'; }, 8000);
+    }
 
-/**
- * Initialize Contact Form
- */
-function initContactForm() {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
+    /** The message could not be sent: say so and offer one-tap WhatsApp / email with everything filled in. */
+    function fallback(el, lines, subject, prefer) {
+        const body = lines.filter(Boolean).join('\n');
+        el.textContent = '';
+        el.className = 'form-message error';
+        el.style.display = 'block';
+        el.setAttribute('role', 'alert');
+        const p = document.createElement('p');
+        p.textContent = T('Sorry, the form could not be sent and your message has NOT reached us. Please use one of these instead (your details are filled in). We reply the same business day.',
+                          '抱歉，表格暂时无法发送，您的信息尚未送出。请用以下方式联系我们（内容已帮您填好），我们会在同一个工作日内回复。');
+        const row = document.createElement('div'); row.className = 'form-fallback';
+        const wa = document.createElement('a'); wa.className = 'btn btn-primary btn-sm'; wa.target = '_blank'; wa.rel = 'noopener';
+        wa.href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(body); wa.textContent = 'WhatsApp';
+        const em = document.createElement('a'); em.className = 'btn btn-outline btn-sm';
+        em.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body); em.textContent = T('Email', '电邮');
+        if (prefer === 'email') { em.className = 'btn btn-primary btn-sm'; wa.className = 'btn btn-outline btn-sm'; row.append(em, wa); } else row.append(wa, em);
+        el.append(p, row);
+        el.setAttribute('tabindex', '-1');
+        el.focus({ preventScroll: true });
+        el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+    window.BKFormFallback = fallback; // used by the programme registration modal
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        const messageEl = document.getElementById('contact-message-status');
-        
-        // Clear previous errors
-        clearAllFieldErrors();
-        
-        // Collect form data
-        const name = form.querySelector('#contact-name').value.trim();
-        const email = form.querySelector('#contact-email').value.trim();
-        const company = form.querySelector('#contact-company').value.trim();
-        const phone = form.querySelector('#contact-phone').value.trim();
-        const industry = form.querySelector('#contact-industry').value;
-        const message = form.querySelector('#contact-message').value.trim();
-        
-        // Validate form
-        let isValid = true;
-        
-        if (!validateRequired(name)) {
-            showFieldError('contact-name', 'Please enter your name');
-            isValid = false;
-        }
-        
-        if (!validateRequired(email)) {
-            showFieldError('contact-email', 'Please enter your email address');
-            isValid = false;
-        } else if (!validateEmail(email)) {
-            showFieldError('contact-email', 'Please enter a valid email address (e.g., name@example.com)');
-            isValid = false;
-        }
-        
-        if (phone && !validatePhone(phone)) {
-            showFieldError('contact-phone', 'Please enter a valid phone number with at least 8 digits');
-            isValid = false;
-        }
-        
-        if (!validateRequired(message)) {
-            showFieldError('contact-message', 'Please enter your message');
-            isValid = false;
-        }
-        
-        if (!isValid) {
-            showFormMessage(messageEl, 'Please correct the errors above and try again.', 'error');
-            return;
-        }
-        
-        // Show loading state
-        submitBtn.innerHTML = '<span class="loading"></span> Sending...';
-        submitBtn.disabled = true;
-        
-        // Prepare form data with type
-        const formData = {
-            name: name,
-            email: email,
-            company: company || null,
-            phone: phone || null,
-            industry: industry || null,
-            message: message,
-            type: 'general',
-            created_at: new Date().toISOString()
-        };
-
-        try {
-            if (supabaseClient) {
-                // Submit to Supabase
-                const { data, error } = await supabaseClient
-                    .from('contact_submissions')
-                    .insert([formData]);
-
-                if (error) {
-                    if (error.code === '23505') {
-                        throw new Error('duplicate');
-                    } else if (error.code === '23514') {
-                        throw new Error('constraint');
-                    }
-                    throw error;
-                }
-                
-                showFormMessage(messageEl, `Thank you, ${name}! Your message has been received. Our team will contact you within 24-48 hours.`, 'success');
-                form.reset();
-                
-                // Trigger success animation
-                if (typeof showSuccessAnimation === 'function') {
-                    showSuccessAnimation(form);
-                }
-            } else {
-                // Fallback: Simulate submission for demo
-                console.log('Form data (Supabase not configured):', formData);
-                showFormMessage(messageEl, `Thank you, ${name}! Your message has been received. Our team will contact you within 24-48 hours.`, 'success');
-                form.reset();
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            
-            let errorMessage = 'Sorry, there was an error sending your message. Please try again later.';
-            
-            if (error.message === 'duplicate') {
-                errorMessage = 'It looks like you\'ve already submitted this message. Please wait a moment before trying again.';
-            } else if (error.message === 'constraint') {
-                errorMessage = 'Some information you provided doesn\'t meet our requirements. Please check and try again.';
-            } else if (!navigator.onLine) {
-                errorMessage = 'You appear to be offline. Please check your internet connection and try again.';
-            } else if (error.code) {
-                errorMessage = `Server error (${error.code}): Please try again later or contact us directly at info@yourcompany.com`;
-            }
-            
-            showFormMessage(messageEl, errorMessage, 'error');
-        } finally {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }
-    });
-}
-
-/**
- * Initialize Newsletter Form
- */
-function initNewsletterForm() {
-    const forms = document.querySelectorAll('#newsletter-form, #blog-newsletter-form');
-    
-    forms.forEach(form => {
+    /* ---------- quote / contact form ---------- */
+    function initContact() {
+        const form = document.getElementById('contact-form');
         if (!form) return;
-        
-        form.addEventListener('submit', async (e) => {
+        const $ = id => form.querySelector('#' + id);
+        form.addEventListener('submit', async e => {
             e.preventDefault();
-            
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            const emailInput = form.querySelector('input[type="email"]');
-            const messageEl = form.querySelector('.form-message') || document.createElement('div');
-            
-            if (!form.querySelector('.form-message')) {
-                messageEl.className = 'form-message';
-                form.appendChild(messageEl);
-            }
-            
-            // Show loading state
-            submitBtn.innerHTML = '<span class="loading"></span> Subscribing...';
-            submitBtn.disabled = true;
-            
-            const formData = {
-                email: emailInput.value,
-                created_at: new Date().toISOString(),
-                status: 'active'
+            clearErrors(form);
+            const msgEl = document.getElementById('contact-message-status');
+            const btn = form.querySelector('button[type="submit"]');
+            const d = {
+                name: $('contact-name').value.trim(),
+                email: $('contact-email').value.trim(),
+                phone: $('contact-phone').value.trim(),
+                company: $('contact-company').value.trim(),
+                topic: $('contact-industry').value,
+                topicText: optText($('contact-industry')),
+                location: optText($('contact-location')),
+                urgency: optText($('contact-urgency')),
+                message: $('contact-message').value.trim(),
+                reply: (form.querySelector('input[name="reply"]:checked') || {}).value || 'whatsapp'
             };
+            const speak = d.topic === 'speaking' ? [
+                $('sp-date') && $('sp-date').value ? T('Event date: ', '活动日期：') + $('sp-date').value : '',
+                $('sp-aud') && $('sp-aud').value ? T('Audience: ', '听众人数：') + $('sp-aud').value : '',
+                optText($('sp-lang')) ? T('Language: ', '语言：') + optText($('sp-lang')) : '',
+                optText($('sp-fmt')) ? T('Format: ', '形式：') + optText($('sp-fmt')) : ''
+            ].filter(Boolean) : [];
+            const inhouse = d.topic === 'inhouse' ? [
+                $('ih-pax') && $('ih-pax').value ? T('Participants: ', '人数：') + $('ih-pax').value : '',
+                optText($('ih-lang')) ? T('Language: ', '语言：') + optText($('ih-lang')) : '',
+                $('ih-month') && $('ih-month').value ? T('Preferred month: ', '希望月份：') + $('ih-month').value : '',
+                optText($('ih-hrdc')) ? T('HRD Corp claim: ', 'HRD Corp 申索：') + optText($('ih-hrdc')) : ''
+            ].filter(Boolean) : [];
 
-            try {
-                if (supabaseClient) {
-                    // Check if email already exists
-                    const { data: existing } = await supabaseClient
-                        .from('newsletter_subscribers')
-                        .select('email')
-                        .eq('email', formData.email)
-                        .single();
-
-                    if (existing) {
-                        showFormMessage(messageEl, 'You are already subscribed to our newsletter!', 'success');
-                    } else {
-                        // Insert new subscriber
-                        const { error } = await supabaseClient
-                            .from('newsletter_subscribers')
-                            .insert([formData]);
-
-                        if (error) throw error;
-                        
-                        showFormMessage(messageEl, 'Thank you for subscribing to our newsletter!', 'success');
-                        form.reset();
-                    }
-                } else {
-                    console.log('Newsletter subscription (Supabase not configured):', formData);
-                    showFormMessage(messageEl, 'Thank you for subscribing to our newsletter!', 'success');
-                    form.reset();
-                }
-            } catch (error) {
-                console.error('Error subscribing:', error);
-                showFormMessage(messageEl, 'Sorry, there was an error. Please try again.', 'error');
-            } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-    });
-}
-
-/**
- * Initialize Investor Form
- */
-function initInvestorForm() {
-    const form = document.getElementById('investor-form');
-    if (!form) return;
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        const messageEl = document.getElementById('investor-message-status');
-        
-        // Show loading state
-        submitBtn.innerHTML = '<span class="loading"></span> Sending...';
-        submitBtn.disabled = true;
-        
-        const formData = {
-            name: form.querySelector('#investor-name').value,
-            email: form.querySelector('#investor-email').value,
-            organization: form.querySelector('#investor-organization').value,
-            inquiry_type: form.querySelector('#investor-type').value,
-            message: form.querySelector('#investor-message').value,
-            created_at: new Date().toISOString()
-        };
-
-        try {
-            if (supabaseClient) {
-                const { data, error } = await supabaseClient
-                    .from('contact_submissions')
-                    .insert([{ ...formData, type: 'investor' }]);
-
-                if (error) throw error;
-                
-                showFormMessage(messageEl, 'Thank you for your inquiry! Our investor relations team will respond shortly.', 'success');
-                form.reset();
+            let ok = true;
+            if (!d.name) { fieldError($('contact-name'), T('Please enter your name', '请填写姓名')); ok = false; }
+            // only one way to reach them was given: reply that way instead of raising an error
+            const pick = v => { const r = form.querySelector('input[name="reply"][value="' + v + '"]'); if (r) r.checked = true; d.reply = v; };
+            if (d.email && !d.phone && d.reply !== 'email' && d.reply !== 'video') pick('email');
+            else if (d.phone && !d.email && d.reply === 'email') pick('whatsapp');
+            const replyText = { whatsapp: 'WhatsApp', email: T('Email', '电邮'), video: T('Video call', '视频通话'), phone: T('Phone call', '电话') }[d.reply];
+            const needPhone = d.reply === 'whatsapp' || d.reply === 'phone';
+            if (!d.phone && !d.email) {
+                fieldError(needPhone ? $('contact-phone') : $('contact-email'), T('Please give a phone number or an email so we can reply', '请留下电话或电邮，以便我们回复')); ok = false;
             } else {
-                console.log('Investor form data (Supabase not configured):', formData);
-                showFormMessage(messageEl, 'Thank you for your inquiry! Our investor relations team will respond shortly.', 'success');
-                form.reset();
+                if (d.phone && !validPhone(d.phone)) { fieldError($('contact-phone'), T('Please check the number (at least 8 digits)', '请检查号码（至少8位数字）')); ok = false; }
+                else if (needPhone && !d.phone) { fieldError($('contact-phone'), T('You chose ' + replyText + ': please add a number', '您选择了' + replyText + '，请填写号码')); ok = false; }
+                if (d.email && !validEmail(d.email)) { fieldError($('contact-email'), T('Please check the email address', '请检查电邮地址')); ok = false; }
+                else if (d.reply === 'email' && !d.email) { fieldError($('contact-email'), T('You chose email: please add your email address', '您选择了电邮，请填写电邮地址')); ok = false; }
             }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            showFormMessage(messageEl, 'Sorry, there was an error. Please try again.', 'error');
-        } finally {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
+            if (!d.message) { fieldError($('contact-message'), T('Please tell us briefly what you need', '请简单说明您的需要')); ok = false; }
+            if (!ok) { status(msgEl, T('Please correct the highlighted fields.', '请更正标示的栏位。'), 'error', true); const f = form.querySelector('.error'); if (f) f.focus(); msgEl.scrollIntoView({ block: 'nearest' }); return; }
+
+            const header = [d.location && T('Location: ', '地点：') + d.location, d.urgency && T('Urgency: ', '紧急程度：') + d.urgency, T('Reply by: ', '回复方式：') + replyText].concat(inhouse, speak).filter(Boolean).join(' | ');
+            const isSpeak = d.topic === 'speaking';
+            const lines = [
+                isSpeak ? T('Speaking enquiry from the B & K website', 'B & K 网站演讲邀请') : T('Quote request from the B & K website', 'B & K 网站报价请求'),
+                T('Name: ', '姓名：') + d.name,
+                d.phone && T('Phone / WhatsApp: ', '电话／WhatsApp：') + d.phone,
+                d.email && T('Email: ', '电邮：') + d.email,
+                d.company && T('Company: ', '公司：') + d.company,
+                d.topicText && T('Topic: ', '主题：') + d.topicText,
+                header, '', d.message
+            ];
+            const subject = (isSpeak ? T('Speaking enquiry', '演讲邀请') : T('Quote request', '报价请求')) + ': ' +
+                [isSpeak ? '' : d.topicText, d.company || d.name].filter(Boolean).join(' – ');
+            if (!client) { fallback(msgEl, lines, subject, d.reply); return; }
+            const original = btn.textContent; btn.disabled = true; btn.textContent = T('Sending…', '发送中…');
+            try {
+                const { error } = await client.from('contact_submissions').insert([{
+                    name: d.name, email: d.email || '', phone: d.phone || '', company: d.company || null,
+                    industry: d.topic || null, message: header ? '[' + header + '] ' + d.message : d.message, type: 'quote'
+                }]);
+                if (error) throw error;
+                status(msgEl, T(`Thank you, ${d.name}. Your request has reached us. We reply the same business day.`, `谢谢您，${d.name}。我们已收到您的请求，会在同一个工作日内回复。`), 'success', true);
+                msgEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                form.reset(); toggleInhouse();
+                if (typeof gtag === 'function') gtag('event', 'quote_request', { topic: d.topic });
+            } catch (err) {
+                fallback(msgEl, lines, subject, d.reply);
+            } finally { btn.disabled = false; btn.textContent = original; }
+        });
+        const sel = $('contact-industry');
+        function toggleInhouse() {
+            const box = document.getElementById('inhouse-fields');
+            if (box) box.hidden = !(sel && sel.value === 'inhouse');
+            const sp = document.getElementById('speak-fields');
+            const speaking = !!(sel && sel.value === 'speaking');
+            if (sp) sp.hidden = !speaking;
+            const b = form.querySelector('button[type="submit"]');
+            if (b && !b.disabled) { b.dataset.label = b.dataset.label || b.textContent; b.textContent = speaking ? T('Send a speaking enquiry', '发送演讲邀请') : b.dataset.label; }
         }
-    });
-}
-
-/**
- * Show Form Message
- */
-function showFormMessage(element, message, type) {
-    element.textContent = message;
-    element.className = `form-message ${type}`;
-    element.style.display = 'block';
-    
-    // Auto-hide after 5 seconds
-    setTimeout(() => {
-        element.style.display = 'none';
-    }, 5000);
-}
-
-/**
- * Save Chat Conversation
- */
-async function saveChatConversation(visitorId, messages) {
-    if (!supabaseClient) {
-        console.log('Chat conversation (Supabase not configured):', { visitorId, messages });
-        return;
+        if (sel) { sel.addEventListener('change', toggleInhouse); toggleInhouse(); }
     }
 
-    try {
-        const { error } = await supabaseClient
-            .from('chat_conversations')
-            .upsert({
-                visitor_id: visitorId,
-                messages: JSON.stringify(messages),
-                updated_at: new Date().toISOString()
-            }, {
-                onConflict: 'visitor_id'
+    /* ---------- newsletter ---------- */
+    function subscribeByMail(el, email) {
+        status(el, T('Subscriptions are offline right now. Tap below to send us a one-line email and we will add you.', '订阅功能暂时无法使用。请点击下方按钮发一封简短电邮，我们会为您加入。'), 'error', true);
+        const a = document.createElement('a'); a.className = 'btn btn-primary btn-sm'; a.style.marginTop = '.6rem';
+        a.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent(T('Subscribe: B & K tax updates', '订阅：B & K 税务快讯')) + '&body=' + encodeURIComponent(T('Please add this email to the B & K tax update list. I consent to receiving these emails.', '请将此电邮加入 B & K 税务快讯名单。我同意接收这些电邮。') + '\n' + email);
+        a.textContent = T('Email us to subscribe', '电邮订阅');
+        el.appendChild(document.createElement('br')); el.appendChild(a);
+    }
+    function initNewsletter() {
+        document.querySelectorAll('.newsletter-form').forEach(form => {
+            form.addEventListener('submit', async e => {
+                e.preventDefault();
+                const input = form.querySelector('input[type="email"]');
+                const consent = form.querySelector('input[type="checkbox"]');
+                let msgEl = form.querySelector('.form-message');
+                if (!msgEl) { msgEl = document.createElement('div'); msgEl.className = 'form-message'; form.appendChild(msgEl); }
+                const email = (input && input.value.trim()) || '';
+                if (!validEmail(email)) { status(msgEl, T('Please enter a valid email address.', '请输入有效的电邮地址。'), 'error', true); input && input.focus(); return; }
+                if (consent && !consent.checked) { status(msgEl, T('Please tick the consent box to subscribe.', '请勾选同意栏以订阅。'), 'error', true); consent.focus(); return; }
+                if (!client) { subscribeByMail(msgEl, email); return; }
+                try {
+                    const { error } = await client.from('newsletter_subscribers').insert([{ email, consent: true }]);
+                    if (error && error.code !== '23505') throw error;
+                    status(msgEl, error ? T('You are already subscribed. Thank you!', '您已订阅，谢谢！') : T('Thank you for subscribing.', '感谢您的订阅。'), 'success');
+                    form.reset();
+                } catch (err) {
+                    subscribeByMail(msgEl, email);
+                }
             });
-
-        if (error) throw error;
-    } catch (error) {
-        console.error('Error saving chat:', error);
+        });
     }
-}
 
-/**
- * Get Chat Conversation
- */
-async function getChatConversation(visitorId) {
-    if (!supabaseClient) return null;
-
-    try {
-        const { data, error } = await supabaseClient
-            .from('chat_conversations')
-            .select('messages')
-            .eq('visitor_id', visitorId)
-            .single();
-
-        if (error) throw error;
-        
-        return data ? JSON.parse(data.messages) : null;
-    } catch (error) {
-        console.error('Error retrieving chat:', error);
-        return null;
-    }
-}
-
-/**
- * Generate Unique Visitor ID
- */
-function generateVisitorId() {
-    return 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-}
-
-/**
- * Get or Create Visitor ID
- */
-function getVisitorId() {
-    let visitorId = localStorage.getItem('chat_visitor_id');
-    if (!visitorId) {
-        visitorId = generateVisitorId();
-        localStorage.setItem('chat_visitor_id', visitorId);
-    }
-    return visitorId;
-}
-
-// Initialize Supabase when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Wait a moment for Supabase library to load
-    setTimeout(initSupabase, 100);
-});
+    function boot() { initContact(); initNewsletter(); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();

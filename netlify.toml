@@ -1,7 +1,7 @@
-# Netlify configuration for bkcorporate.com (static site, no build step)
+# Netlify configuration for bkcorporate.com (static site; the only build step bundles css/ into css/site.css)
 [build]
   publish = "."
-  command = ""
+  command = "python3 tools/bundle-css.py && python3 tools/build-insights.py"
 
 # Clean URLs: /programmes -> /programmes.html
 [[redirects]]
@@ -27,6 +27,14 @@
 [[redirects]]
   from = "/contact"
   to = "/contact.html"
+  status = 200
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 200
+[[redirects]]
+  from = "/tools"
+  to = "/tools.html"
   status = 200
 # Old template URLs
 [[redirects]]
@@ -66,7 +74,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
 
 [[headers]]
   for = "/js/vendor/*"

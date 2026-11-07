@@ -84,9 +84,21 @@ function initMobileMenu() {
     
     if (!menuToggle || !navMenu) return;
 
+    if (menuToggle.dataset.bound) return;
+    menuToggle.dataset.bound = '1';
+    const syncAria = () => {
+        const open = navMenu.classList.contains('active');
+        menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    new MutationObserver(syncAria).observe(navMenu, { attributes: true, attributeFilter: ['class'] });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) { menuToggle.click(); menuToggle.focus(); }
+    });
     menuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
         document.body.classList.toggle('menu-open');
+        if (navMenu.classList.contains('active')) { const f = navMenu.querySelector('a, button'); if (f) setTimeout(() => f.focus(), 50); }
         
         // Animate hamburger to X
         const spans = menuToggle.querySelectorAll('span');
@@ -376,7 +388,7 @@ function initProjectFilters() {
                 const category = card.getAttribute('data-category');
                 
                 if (filter === 'all' || category === filter) {
-                    card.style.display = 'block';
+                    card.style.display = '';
                     card.style.animation = 'fadeInUp 0.5s ease forwards';
                 } else {
                     card.style.display = 'none';
@@ -390,7 +402,7 @@ function initProjectFilters() {
  * Initialize Blog Category Filtering
  */
 function initBlogFilters() {
-    const categoryButtons = document.querySelectorAll('.category-btn');
+    const categoryButtons = document.querySelectorAll('.categories-filter .category-btn[data-category]');
     const blogCards = document.querySelectorAll('.blog-card');
 
     if (categoryButtons.length === 0 || blogCards.length === 0) return;
@@ -406,7 +418,7 @@ function initBlogFilters() {
                 const cardCategory = card.getAttribute('data-category');
                 
                 if (category === 'all' || cardCategory === category) {
-                    card.style.display = 'block';
+                    card.style.display = '';
                     card.style.animation = 'fadeInUp 0.5s ease forwards';
                 } else {
                     card.style.display = 'none';

@@ -64,12 +64,28 @@
             });
         }
         const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-        tl.from(hero.querySelectorAll('.hero-layer'), { opacity: 0, scale: 1.08, duration: 1.6, stagger: 0.1 }, 0)
-          .from(hero.querySelector('.hero-kicker'), { y: 20, opacity: 0, duration: 0.8 }, 0.3)
-          .from(hero.querySelectorAll('h1 .word'), { yPercent: 110, opacity: 0, duration: 1.1, stagger: 0.045 }, 0.45)
-          .from(hero.querySelector('p.lead'), { y: 24, opacity: 0, duration: 0.9 }, 1.0)
-          .from(hero.querySelectorAll('.hero-ctas .btn'), { y: 18, opacity: 0, duration: 0.7, stagger: 0.1 }, 1.15)
-          .from(hero.querySelector('.hero-scroll-cue'), { opacity: 0, duration: 0.8 }, 1.6);
+        // "Open the books": two ledger covers swing open to reveal the room
+        // the book opens once per visit; later home visits go straight to the headline
+        let book = hero.querySelector('.book');
+        let seen = false;
+        try { seen = sessionStorage.getItem('bk-book') === '1'; sessionStorage.setItem('bk-book', '1'); } catch (e) { /* ignore */ }
+        if (book && seen) { book.remove(); book = null; hero.classList.add('is-open'); }
+        const o = book ? 1.0 : 0;
+        if (book) {
+            const L = book.querySelector('.book-l'), R = book.querySelector('.book-r');
+            tl.from(book.querySelectorAll('.book-label'), { opacity: 0, y: 14, duration: 0.6, ease: 'power2.out' }, 0)
+              .to(book.querySelectorAll('.book-clasp'), { scaleY: 0.2, opacity: 0, duration: 0.3, ease: 'back.in(2)' }, 0.25)
+              .to(L, { rotateY: -100, xPercent: -6, duration: 1.2, ease: 'power3.inOut' }, 0.5)
+              .to(R, { rotateY: 100, xPercent: 6, duration: 1.2, ease: 'power3.inOut' }, 0.5)
+              .to(book.querySelectorAll('.book-cover'), { opacity: 0, duration: 0.35, ease: 'none' }, 1.3)
+              .add(() => hero.classList.add('is-open'));
+        }
+        tl.from(hero.querySelectorAll('.hero-layer'), { opacity: 0, scale: 1.08, duration: 1.6, stagger: 0.1 }, o * 0.6)
+          .from(hero.querySelector('.hero-kicker'), { y: 20, opacity: 0, duration: 0.8 }, 0.3 + o)
+          .from(hero.querySelectorAll('h1 .word'), { yPercent: 110, opacity: 0, duration: 1.1, stagger: 0.045 }, 0.45 + o)
+          .from(hero.querySelector('p.lead'), { y: 24, opacity: 0, duration: 0.9 }, 1.0 + o)
+          .fromTo(hero.querySelectorAll('.hero-ctas .btn'), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.1 }, 1.15 + o)
+          .from(hero.querySelector('.hero-scroll-cue'), { opacity: 0, duration: 0.8 }, 1.6 + o);
 
         // Parallax layers on scroll
         hero.querySelectorAll('.hero-layer').forEach((layer, i) => {
@@ -123,15 +139,38 @@
         });
     }
 
-    /* ---------- Counters ---------- */
+    /* ---------- Counters ----------
+     * Big numbers count up from zero when they scroll into view. The real figure
+     * is in the HTML so it shows without JS or with reduced motion. Each card in a
+     * .numbers-grid also draws an amber rule and lifts its label, staggered. */
     function initCounters() {
-        document.querySelectorAll('[data-count]').forEach(el => {
-            const target = parseFloat(el.dataset.count), dec = (el.dataset.decimals | 0);
-            const obj = { v: 0 };
+        const fmt = (v, dec) => v.toLocaleString('en-MY', { maximumFractionDigits: dec, minimumFractionDigits: dec });
+        function run(el, delay) {
+            const target = parseFloat(el.dataset.count);
+            if (isNaN(target)) return;
+            const dec = (el.dataset.decimals | 0), obj = { v: 0 };
+            el.dataset.counting = '1';
+            el.textContent = fmt(0, dec);
+            gsap.fromTo(el, { filter: 'blur(6px)', opacity: 0.35 }, { filter: 'blur(0px)', opacity: 1, duration: 0.9, delay, ease: 'power2.out' });
+            gsap.to(obj, { v: target, duration: 2.2, delay, ease: 'expo.out', onUpdate: () => { el.textContent = fmt(obj.v, dec); }, onComplete: () => { el.textContent = fmt(target, dec); } });
+        }
+        document.querySelectorAll('.numbers-grid').forEach(grid => {
+            const cards = grid.querySelectorAll('.number');
+            grid.classList.add('is-counting');
+            // the real figures stay visible until the grid scrolls in, then count up from zero
             ScrollTrigger.create({
-                trigger: el, start: 'top 85%', once: true,
-                onEnter: () => gsap.to(obj, { v: target, duration: 1.8, ease: 'power3.out', onUpdate: () => { el.firstChild.nodeValue = obj.v.toLocaleString('en-MY', { maximumFractionDigits: dec, minimumFractionDigits: dec }); } })
+                trigger: grid, start: 'top 82%', once: true,
+                onEnter: () => cards.forEach((c, i) => {
+                    const d = i * 0.16;
+                    setTimeout(() => c.classList.add('is-in'), d * 1000);
+                    c.querySelectorAll('[data-count]').forEach(el => run(el, d));
+                })
             });
+        });
+        // stray counters outside a numbers grid
+        document.querySelectorAll('[data-count]').forEach(el => {
+            if (el.closest('.numbers-grid')) return;
+            ScrollTrigger.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => run(el, 0) });
         });
     }
 

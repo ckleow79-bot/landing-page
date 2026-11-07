@@ -2,23 +2,13 @@
 <html lang="en" class="has-gsap">
 <head>
     <meta charset="UTF-8">
+    <script>try{if(sessionStorage.getItem('bk-wipe')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('wipe-in')}catch(e){}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact B &amp; K Group | Book a Confidential Tax Consultation</title>
     <meta name="description" content="Speak to a licensed tax agent in Kuala Lumpur about tax audits, planning, SST, e-Invoice, fractional CFO services or in-house training.">
-    <link rel="stylesheet" href="css/tokens/fonts.css">
-    <link rel="stylesheet" href="css/tokens/colors.css">
-    <link rel="stylesheet" href="css/tokens/typography.css">
-    <link rel="stylesheet" href="css/tokens/spacing.css">
-    <link rel="stylesheet" href="css/tokens/theme-dark.css">
-    <link rel="stylesheet" href="css/tokens/signature.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pages.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/chatbot.css">
-    <link rel="stylesheet" href="css/cinematic.css">
-    <link rel="stylesheet" href="css/brand.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" href="assets/fonts/bricolage-grotesque-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/public-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
 
     <meta property="og:title" content="Contact B &amp; K Group | Book a Confidential Tax Consultation">
     <meta property="og:description" content="Speak to a licensed tax agent in Kuala Lumpur about tax audits, planning, SST, e-Invoice, fractional CFO services or in-house training.">
@@ -32,10 +22,6 @@
     <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
     <link rel="icon" type="image/png" sizes="256x256" href="assets/brand/favicon-256.png">
     <link rel="canonical" href="https://bkcorporate.com/contact.html">
-
-    <!-- Google Analytics 4 - replace GA_MEASUREMENT_ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'GA_MEASUREMENT_ID');</script>
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,12 +32,13 @@
     </script>
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-container"></div>
-    <main>
+    <main id="main">
         <section class="page-hero-cine" data-theme-dark>
             <div class="container">
                 <p class="hero-kicker">Contact</p>
-                <h1 class="reveal-up">Talk to a licensed tax agent.</h1>
+                <h1 class="reveal-up">Request a quote for advisory or training.</h1>
                 <p class="reveal-up">Initial consultations are confidential. Please do not upload or paste sensitive documents here; we will arrange a secure channel.</p>
             </div>
         </section>
@@ -60,42 +47,121 @@
             <div class="container">
                 <div class="contact-grid">
                     <div class="contact-info reveal-stagger">
-                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-details"><h3>Office</h3><p>B-23-01, Residensi Berpadu, No. 10, Jalan Lang Emas,<br>51200 Segambut, Kuala Lumpur, Malaysia</p></div></div>
-                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div class="contact-details"><h3>Phone</h3><p><a href="tel:+601130636198">+60 11-3063 6198</a></p></div></div>
-                        <div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div class="contact-details"><h3>WhatsApp</h3><p><a href="https://wa.me/601130636198" target="_blank" rel="noopener">+60 11-3063 6198</a></p></div></div>
-                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div class="contact-details"><h3>Email</h3><p><a href="mailto:keith@bkcorporate.com">keith@bkcorporate.com</a></p></div></div>
-                        <div class="contact-item"><div class="contact-icon"><i class="far fa-clock"></i></div><div class="contact-details"><h3>Hours</h3><p>Mon to Fri, 9:00 to 18:00 (MYT)</p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-marker-alt"></use></svg></div><div class="contact-details"><h3>Office</h3><p>B-23-01, Residensi Berpadu, No. 10, Jalan Lang Emas,<br>51200 Segambut, Kuala Lumpur, Malaysia</p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#phone"></use></svg></div><div class="contact-details"><h3>Phone</h3><p><a href="tel:+601130636198">+60 11-3063 6198</a></p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#whatsapp"></use></svg></div><div class="contact-details"><h3>WhatsApp</h3><p><a href="https://wa.me/601130636198?text=Hi%20B%26K%2C%20I%20would%20like%20to%20ask%20about%20..." target="_blank" rel="noopener">+60 11-3063 6198</a></p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#envelope"></use></svg></div><div class="contact-details"><h3>Email</h3><p><a href="mailto:keith@bkcorporate.com">keith@bkcorporate.com</a></p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#clock"></use></svg></div><div class="contact-details"><h3>Hours</h3><p>Mon to Fri, 9:00 to 18:00 (MYT)</p></div></div>
                     </div>
-                    <div class="contact-form-container reveal-up">
-                        <form class="contact-form" id="contact-form">
+                    <div class="contact-form-container reveal-up" id="quote">
+                        <form class="contact-form" id="contact-form" novalidate>
                             <div class="form-row">
-                                <div class="form-group"><label for="contact-name">Full Name *</label><input type="text" id="contact-name" name="name" required></div>
-                                <div class="form-group"><label for="contact-email">Email Address *</label><input type="email" id="contact-email" name="email" required></div>
+                                <div class="form-group"><label for="contact-name">Full name *</label><input type="text" id="contact-name" name="name" autocomplete="name" required></div>
+                                <div class="form-group"><label for="contact-email">Email</label><input type="email" id="contact-email" name="email" autocomplete="email" aria-describedby="reach-hint"></div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group"><label for="contact-company">Company</label><input type="text" id="contact-company" name="company"></div>
-                                <div class="form-group"><label for="contact-phone">Phone</label><input type="tel" id="contact-phone" name="phone"></div>
+                                <div class="form-group"><label for="contact-company">Company</label><input type="text" id="contact-company" name="company" autocomplete="organization"></div>
+                                <div class="form-group"><label for="contact-phone">Mobile / WhatsApp</label><input type="tel" id="contact-phone" name="phone" autocomplete="tel" placeholder="With country code, e.g. +60 12-345 6789" aria-describedby="reach-hint"></div>
                             </div>
+                            <p class="form-hint" id="reach-hint">* Give us a phone number <strong>or</strong> an email, whichever you prefer.</p>
+                            <fieldset class="reply-pref">
+                                <legend>How should we reply?</legend>
+                                <div class="reply-opts">
+                                    <label><input type="radio" name="reply" value="whatsapp" checked> <span>WhatsApp</span></label>
+                                    <label><input type="radio" name="reply" value="email"> <span>Email</span></label>
+                                    <label><input type="radio" name="reply" value="video"> <span>Video call</span></label>
+                                    <label><input type="radio" name="reply" value="phone"> <span>Phone call</span></label>
+                                </div>
+                            </fieldset>
                             <div class="form-group">
-                                <label for="contact-industry">Topic</label>
+                                <label for="contact-industry">What do you need help with?</label>
                                 <select id="contact-industry" name="industry">
                                     <option value="">Select a topic</option>
                                     <option value="audit">Tax audit / investigation</option>
+                                    <option value="ja">JA / appeal (Form Q)</option>
                                     <option value="compliance">Tax compliance &amp; planning</option>
                                     <option value="sst">SST / e-Invoice</option>
                                     <option value="cfo">Fractional CFO / financial review</option>
                                     <option value="cosec">Company secretarial</option>
-                                    <option value="ma">M&amp;A / restructuring</option>
+                                    <option value="ma">M&amp;A / restructuring / second opinion</option>
+                                    <option value="personal">Personal or property tax (rental, RPGT, succession)</option>
+                                    <option value="startup">Startup: compliance, CFO, incentives review</option>
+                                    <option value="setup">Setting up in Malaysia (foreign company)</option>
                                     <option value="inhouse">In-house training</option>
-                                    <option value="speaking">Speaking / media</option>
+                                    <option value="speaking">Book Keith to speak / media</option>
+                                    <option value="firm">Accounting firm</option>
                                     <option value="other">Other</option>
                                 </select>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group"><label for="contact-location">Where are you or your business based?</label>
+                                    <select id="contact-location" name="location">
+                                        <option value="">Select a state</option>
+                                        <option>Kuala Lumpur</option><option>Selangor</option><option>Putrajaya</option><option>Johor</option><option>Penang</option><option>Perak</option><option>Negeri Sembilan</option><option>Melaka</option><option>Pahang</option><option>Kedah</option><option>Kelantan</option><option>Terengganu</option><option>Perlis</option><option>Sabah</option><option>Sarawak</option><option>Labuan</option><option>Outside Malaysia</option>
+                                    </select></div>
+                                <div class="form-group"><label for="contact-urgency">How urgent is it?</label>
+                                    <select id="contact-urgency" name="urgency">
+                                        <option value="">Select</option>
+                                        <option value="urgent">Deadline within 14 days (e.g. an LHDN letter)</option>
+                                        <option value="month">Within 30 days</option>
+                                        <option value="soon">Within the next 3 months</option>
+                                        <option value="planning">Planning ahead</option>
+                                    </select></div>
+                            </div>
+                            <fieldset class="inhouse-fields" id="inhouse-fields" hidden>
+                                <legend>In-house training details</legend>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="ih-pax">Number of participants</label><input type="number" id="ih-pax" name="ih_pax" min="2" max="50" inputmode="numeric" placeholder="2 to 50"></div>
+                                    <div class="form-group"><label for="ih-lang">Language of delivery</label><select id="ih-lang" name="ih_lang"><option value="">Select</option><option value="en">English</option><option value="bm">Bahasa Malaysia</option><option value="zh">Mandarin</option><option value="mixed">Mixed</option></select></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="ih-month">Preferred month</label><input type="month" id="ih-month" name="ih_month"></div>
+                                    <div class="form-group"><label for="ih-hrdc">Claim under HRD Corp?</label><select id="ih-hrdc" name="ih_hrdc"><option value="">Select</option><option value="yes">Yes, HRD Corp Claimable Courses</option><option value="no">No</option><option value="unsure">Not sure yet</option></select></div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="inhouse-fields" id="speak-fields" hidden>
+                                <legend>Event details</legend>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="sp-date">Event date</label><input type="date" id="sp-date" name="sp_date"></div>
+                                    <div class="form-group"><label for="sp-aud">Expected audience</label><input type="number" id="sp-aud" name="sp_aud" min="1" inputmode="numeric" placeholder="e.g. 150"></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="sp-lang">Language</label><select id="sp-lang" name="sp_lang"><option value="">Select</option><option value="en">English</option><option value="bm">Bahasa Malaysia</option><option value="zh">Mandarin</option></select></div>
+                                    <div class="form-group"><label for="sp-fmt">Format</label><select id="sp-fmt" name="sp_fmt"><option value="">Select</option><option value="keynote">Keynote / talk</option><option value="panel">Panel</option><option value="budget">Post-Budget briefing</option><option value="webinar">Webinar</option></select></div>
+                                </div>
+                            </fieldset>
                             <div class="form-group"><label for="contact-message">Message *</label><textarea id="contact-message" name="message" rows="5" required placeholder="Briefly describe the matter and any deadlines. No confidential documents, please."></textarea></div>
                             <label class="prog-check"><input type="checkbox" required> I consent to B &amp; K Group processing my personal data to respond to this enquiry, per the <a href="privacy-policy.html" target="_blank">Privacy Notice</a> (PDPA 2010). *</label>
-                            <button type="submit" class="btn btn-primary btn-full">Send message</button>
-                            <div class="form-message" id="contact-message-status"></div>
+                            <button type="submit" class="btn btn-primary btn-full">Request a quote</button>
+                            <p class="form-promise"><svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#clock"></use></svg> We reply the same business day (Mon to Fri). Urgent LHDN deadline? <a href="https://wa.me/601130636198?text=Hi%20B%26K%2C%20I%20have%20an%20urgent%20LHDN%20deadline%20on%20...%20about%20..." target="_blank" rel="noopener">WhatsApp us</a>.</p>
+                            <div class="form-message" id="contact-message-status" aria-live="polite"></div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="service-area" aria-labelledby="sa-title">
+            <div class="container">
+                <div class="sa-grid">
+                    <div class="sa-copy">
+                        <p class="hero-kicker">Where we work</p>
+                        <h2 id="sa-title">Office in Kuala Lumpur. Clients across Malaysia.</h2>
+                        <ul class="sa-list">
+                            <li><strong>Advisory</strong> Meetings at our Segambut office, at your premises in the Klang Valley, or online for clients in other states.</li>
+                            <li><strong>Public seminars</strong> Held in Kuala Lumpur and Selangor, Johor Bahru and Kuching, plus live webinars. See <a href="programmes.html">upcoming dates</a>.</li>
+                            <li><strong>In-house training</strong> Delivered at your office anywhere in Malaysia, in English, Bahasa Malaysia or Mandarin.</li>
+                        </ul>
+                    </div>
+                    <div class="sa-map" data-map-src="https://www.google.com/maps?q=Residensi+Berpadu,+Jalan+Lang+Emas,+51200+Segambut,+Kuala+Lumpur&amp;output=embed">
+                        <div class="sa-map-ph">
+                            <svg class="ic" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#map-marked-alt"></use></svg>
+                            <p>B-23-01, Residensi Berpadu, No. 10, Jalan Lang Emas,<br>51200 Segambut, Kuala Lumpur</p>
+                            <div class="sa-map-btns">
+                                <button type="button" class="btn btn-outline btn-sm" data-load-map>Show map</button>
+                                <a class="btn btn-primary btn-sm" href="https://www.google.com/maps/search/?api=1&amp;query=Residensi+Berpadu+Jalan+Lang+Emas+Segambut+Kuala+Lumpur" target="_blank" rel="noopener">Directions</a>
+                            </div>
+                            <small>The map loads from Google only when you click.</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,24 +171,34 @@
         document.addEventListener('DOMContentLoaded', function () {
             var t = new URLSearchParams(location.search).get('topic');
             var s = document.getElementById('contact-industry');
-            if (t && s && [...s.options].some(o => o.value === t)) s.value = t;
+            if (t && s && [...s.options].some(o => o.value === t)) { s.value = t; s.dispatchEvent(new Event('change')); }
+            var m = document.querySelector('.sa-map');
+            var b = m && m.querySelector('[data-load-map]');
+            if (b) b.addEventListener('click', function () {
+                var f = document.createElement('iframe');
+                f.src = m.getAttribute('data-map-src'); f.title = 'Map: B & K Group office, Segambut, Kuala Lumpur';
+                f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade';
+                m.innerHTML = ''; m.appendChild(f);
+            });
         });
         </script>
     </main>
 
     <div id="footer-container"></div>
     <div id="chatbot-container"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/icons.js"></script>
 
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>
     <script src="js/vendor/lenis.min.js"></script>
-    <script src="js/vendor/anime.min.js"></script>
     <script src="js/vendor/supabase.min.js"></script>
     <script src="js/supabase.js"></script>
-    <script src="js/animations.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
     <script src="js/cinematic.js"></script>
     <script src="js/programmes.js"></script>
+    <script src="js/next-ribbon.js"></script>
+    <script src="js/motion.js"></script>
 </body>
 </html>

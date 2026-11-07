@@ -4,13 +4,11 @@
   "description": "B & K Group website: advisory, academy and programme calendar",
   "main": "index.html",
   "scripts": {
-    "start": "npx live-server --port=5500",
-    "build": "npm run minify:css && npm run minify:js",
-    "minify:css": "cleancss -o css/main.min.css css/main.css css/pages.css css/responsive.css css/animations.css css/chatbot.css css/cinematic.css",
-    "minify:js": "terser js/supabase.js js/animations.js js/chatbot.js js/main.js js/cinematic.js js/programmes.js -o js/bundle.min.js",
-    "lint:html": "htmlhint *.html",
-    "optimize:images": "imagemin assets/images/* --out-dir=assets/images/optimized",
-    "test": "echo \"No tests specified\" && exit 0"
+    "start": "python3 -m http.server 5700",
+    "build": "python3 tools/bundle-css.py && python3 tools/build-insights.py",
+    "build:clients": "python3 tools/build-clients.py",
+    "i18n:collect": "node tools/i18n-collect.js i18n-keys.json",
+    "test": "node tests/regression.js tests/out && node tests/features.js tests/out"
   },
   "keywords": [
     "tax",
@@ -25,11 +23,7 @@
   "author": "B & K Group",
   "license": "MIT",
   "devDependencies": {
-    "clean-css-cli": "^5.6.2",
-    "htmlhint": "^1.1.4",
-    "imagemin-cli": "^7.0.0",
-    "live-server": "^1.2.2",
-    "terser": "^5.19.2"
+    "playwright": "^1.48.0"
   },
   "repository": {
     "type": "git",
